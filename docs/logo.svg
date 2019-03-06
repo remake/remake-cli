@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="258px" height="48px" viewBox="0 0 258 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>logo</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(-443.000000, -44.000000)">
+            <g id="logo" transform="translate(443.000000, 44.000000)">
+                <path d="M19.3720707,31.6999592 L15.0149831,45.4953119 L38.957329,45.4953119 L35.4926601,31.6999592 L19.3720707,31.6999592 Z" id="Rectangle-Copy-15" stroke="#1656DB" stroke-width="4.10925397"></path>
+                <rect id="Rectangle-3-Copy" fill="#FFFFFF" opacity="0.59" x="2.98475308" y="22.0138606" width="47.1970651" height="12.3277619"></rect>
+                <path d="M15.7410719,18.1981247 L9.9093063,35.0719941 L44.2942275,35.0719941 L38.6293472,18.1981247 L15.7410719,18.1981247 Z" id="Rectangle-Copy-16" stroke="#EC135F" stroke-width="4.10925397"></path>
+                <rect id="Rectangle-3" fill="#FFFFFF" opacity="0.59" x="4.36363636" y="5.87036282" width="45.8181818" height="17.6110885"></rect>
+                <path d="M9.70343512,5.28332654 L3.10950298,22.894415 L52.0114087,22.894415 L45.5857413,5.28332654 L9.70343512,5.28332654 Z" id="Rectangle-Copy-17" stroke="#E8590C" stroke-width="4.10925397"></path>
+                <text id="Remake.js" font-family="Gilmer-Heavy, Gilmer" font-size="38.7443946" font-weight="600" letter-spacing="-0.545454545">
+                    <tspan x="66.7871993" y="38" fill="#0C2D72">Re</tspan>
+                    <tspan x="115.32786" y="38" fill="#0F2F70">make</tspan>
+                    <tspan x="217.794651" y="38" fill="#1656DB">.j</tspan>
+                    <tspan x="238.361859" y="38" fill="#1656DB">s</tspan>
+                </text>
+                <path d="M27.3363229,37.8638402 L27.3363229,3.81573583" id="Path-2-Copy-12" stroke="#192E5B" stroke-width="4.69629026" stroke-linecap="round"></path>
+                <path d="M20.2918875,9.62113062 L27.1853854,2.72763274 C27.3000113,2.61300678 27.4858567,2.61300678 27.6004827,2.72763274 L34.4939806,9.62113062" id="Path-3-Copy-4" stroke="#152E63" stroke-width="4.40277212" stroke-linecap="round"></path>
+                <rect id="Rectangle-4-Copy" fill="#EC135F" x="17.6502242" y="33.0207909" width="20.2527517" height="4.10925397"></rect>
+                <rect id="Rectangle-4" fill="#E8590C" x="17.6502242" y="20.839788" width="20.2527517" height="4.10925397"></rect>
+            </g>
+        </g>
+    </g>
+</svg>
