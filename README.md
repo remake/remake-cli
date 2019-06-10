@@ -9,10 +9,11 @@
 * Perfect for small teams and solo developers who want to build web apps with vanilla HTML, CSS, and JS
 * It’s just a few powerful utility libraries — which means there's just a few medium-sized concepts to get familiar with (instead of several really big ones)
 
-
 **IMPORTANT:** This is a work in progress. It's not fully-functional yet. 
 
 **WEBSITE:** In development at http://site.remakejs.com
+
+**NOTE:** Additional explanation of Remake's goals: https://gist.github.com/panphora/1116ebec18a45620fe83d7f867c2c20a
 
 
 ## How to install:
