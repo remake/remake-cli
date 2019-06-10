@@ -15,6 +15,8 @@
 
 **NOTE:** Additional explanation of Remake's goals: https://gist.github.com/panphora/1116ebec18a45620fe83d7f867c2c20a
 
+**PUBLIC ROADMAP:** https://trello.com/b/BXvugSjT
+
 
 ## How to install:
 
