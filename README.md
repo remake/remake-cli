@@ -10,6 +10,8 @@
 * It’s just a few powerful utility libraries — which means there's just a few medium-sized concepts to get familiar with (instead of several really big ones)
 
 
+**IMPORTANT:** This is a work in progress. It's not fully-functional yet. 
+
 
 ## How to install:
 
