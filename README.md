@@ -12,6 +12,8 @@
 
 **IMPORTANT:** This is a work in progress. It's not fully-functional yet. 
 
+**WEBSITE:** In development at http://site.remakejs.com
+
 
 ## How to install:
 
