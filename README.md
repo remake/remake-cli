@@ -11,6 +11,8 @@
 
 **IMPORTANT:** This is a work in progress. It's not fully-functional yet. 
 
+**QUICK REFERENCE OF ALL ATTRIBUTES:** https://gist.github.com/panphora/0a71e6394d96ee9efd9d5711702bfc1c
+
 **WEBSITE:** In development at http://site.remakejs.com
 
 **NOTE:** Additional explanation of Remake's goals: https://gist.github.com/panphora/1116ebec18a45620fe83d7f867c2c20a
