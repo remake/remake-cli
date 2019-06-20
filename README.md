@@ -9,7 +9,9 @@
 * Perfect for small teams and solo developers who want to build web apps with vanilla HTML, CSS, and JS
 * It’s just a few powerful utility libraries — which means there's just a few medium-sized concepts to get familiar with (instead of several really big ones)
 
-**IMPORTANT:** This is a work in progress. It's not fully-functional yet. 
+**IMPORTANT:** This is a work in progress. This framework isn't fully-functional yet. 
+
+**BASIC EXAMPLE APP (with annotated source code):** https://gist.github.com/panphora/5f5657e8bb3b418d55eb68d7e17f1ed8
 
 **QUICK REFERENCE OF ALL ATTRIBUTES:** https://gist.github.com/panphora/0a71e6394d96ee9efd9d5711702bfc1c
 
