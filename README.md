@@ -2,14 +2,14 @@
 
 ## Build web apps quickly
 
-* Server rendered web apps with automatic data syncing
-* Give users the ability to move/edit/add/remove data _with no extra work on your part_
-* Small API: Learn a few special data attributes to start building web apps today
-* Your web app is server rendered, so it'll be fast, accessible, and Remake.js isn't required on read-only pages
-* All of Remake's powers come from native HTML data attributes -- you don't need to touch JavaScript!
-* Perfect for projects that you want to release quickly and test with users ASAP
+* **Low-code framework:** All of Remake.js's powers come from HTML data attributes, which means you can build an entire web app with _just HTML_
+* **Auto-save:** User data is automatically extracted from the DOM and saved
+* **Easy to edit data:** Powerful inline edit areas are built in, giving your users the ability to easily move, edit, add, and remove data from the page
+* **Easy to learn:** A small API means that learning less than a dozen special data attributes gives you the ability to create a full web application today
+* **A great user experience** Remake.js works exclusively with server rendered web apps, which means it'll be fast, use native browser features for routing and form handling, be accessible out of the gate, and _the entire framework isn't required on read-only pages_
+* **Great developer experience:** Because of how easy it is to learn and build with, Remake.js excels at helping you create products _very quickly_
 
-**This is an alpha release.**
+**This is an early alpha release.**
 
 ## How to get started
 
@@ -23,6 +23,7 @@
 
 ---
 
+**Note:** The documentation in the rest of this README is a thorough explanation of all the parts of Remake.js. However, if you're just getting started, it's recommended to start with the [Annotated Todos App](https://quickstart.remakejs.com/) or the [Quick Reference](https://quickref.remakejs.com).
 
 ## A High Level Overview
 
