@@ -1,10 +1,10 @@
 {
   "name": "remakejs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A framework for building web apps quickly",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/panphora/remakejs"
+    "type": "git",
+    "url": "https://github.com/panphora/remakejs"
   },
   "main": "index.js",
   "scripts": {
