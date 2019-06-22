@@ -9,17 +9,21 @@
 * Perfect for small teams and solo developers who want to build web apps with vanilla HTML, CSS, and JS
 * It’s just a few powerful utility libraries — which means there's just a few medium-sized concepts to get familiar with (instead of several really big ones)
 
-**IMPORTANT:** This is a work in progress. This framework isn't fully-functional yet. 
+**IMPORTANT:** This is a work in progress. This framework is close to a public release, but isn't fully-functional yet. 
 
-**BASIC EXAMPLE APP (with annotated source code):** https://gist.github.com/panphora/5f5657e8bb3b418d55eb68d7e17f1ed8
+**BASIC EXAMPLE APP (with annotated source code):** https://quickstart.remakejs.com/
 
-**QUICK REFERENCE OF ALL ATTRIBUTES:** https://gist.github.com/panphora/0a71e6394d96ee9efd9d5711702bfc1c
+**NEW! DOWNLOAD A FULL REMAKE.JS TODOS APP:** https://github.com/panphora/remake-todos
 
-**WEBSITE:** In development at http://site.remakejs.com
+**QUICK REFERENCE OF ALL ATTRIBUTES:** https://quickref.remakejs.com
 
-**NOTE:** Additional explanation of Remake's goals: https://gist.github.com/panphora/1116ebec18a45620fe83d7f867c2c20a
+**WEBSITE:** Currently in development at https://site.remakejs.com/
 
-**PUBLIC ROADMAP:** https://trello.com/b/BXvugSjT
+**NOTE:** Additional explanation of Remake's goals: https://goals.remakejs.com/
+
+**PUBLIC ROADMAP:** https://roadmap.remakejs.com
+
+**LIKE WHAT YOU SEE? SIGN UP!** https://newsletter.remakejs.com/*
 
 
 ## How to install:
