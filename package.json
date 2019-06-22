@@ -1,7 +1,7 @@
 {
   "name": "remakejs",
   "version": "0.1.0",
-  "description": "Powerful utility libraries for building performant web apps",
+  "description": "A framework for building web apps quickly",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
