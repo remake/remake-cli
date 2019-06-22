@@ -1,49 +1,27 @@
 # RemakeJS
 
-## Super-powered HTML for quickly building fast-loading, dynamic, server-rendered web apps that feel modern and are easy to use
+## Build web apps quickly
 
-* Fast initial load times for all users 
-* Smooth interactions that feel like using a Single Page Application
-* No complex framework API to figure out — use simple data attributes for tasks that would've taken dozens of lines of code before
-* Modify the DOM directly — there's nothing in your way
-* Perfect for small teams and solo developers who want to build web apps with vanilla HTML, CSS, and JS
-* It’s just a few powerful utility libraries — which means there's just a few medium-sized concepts to get familiar with (instead of several really big ones)
+* Server rendered web apps with automatic data syncing
+* Give users the ability to move/edit/add/remove data _with no extra work on your part_
+* Small API: Learn a few special data attributes to start building web apps today
+* Your web app is server rendered, so it'll be fast, accessible, and Remake.js isn't required on read-only pages
+* All of Remake's powers come from native HTML data attributes -- you don't need to touch JavaScript!
+* Perfect for projects that you want to release quickly and test with users ASAP
 
-**IMPORTANT:** This is a work in progress. This framework is close to a public release, but isn't fully-functional yet. 
+**This is an alpha release.**
 
-**BASIC EXAMPLE APP (with annotated source code):** https://quickstart.remakejs.com/
+## How to get started
 
-**NEW! DOWNLOAD A FULL REMAKE.JS TODOS APP:** https://github.com/panphora/remake-todos
-
-**QUICK REFERENCE OF ALL ATTRIBUTES:** https://quickref.remakejs.com
-
-**WEBSITE:** Currently in development at https://site.remakejs.com/
-
-**NOTE:** Additional explanation of Remake's goals: https://goals.remakejs.com/
-
-**PUBLIC ROADMAP:** https://roadmap.remakejs.com
-
-**LIKE WHAT YOU SEE? SIGN UP!** https://newsletter.remakejs.com/*
+1. [Download the (_new!_) example todos app](https://github.com/panphora/remake-todos), with Remake.js included 
+2. Get it running locally by using the instructions in the [README](https://github.com/panphora/remake-todos/blob/master/README.md)
+3. Read through the [annotated source code](https://quickstart.remakejs.com/)
+4. Read through the Remake.js [quick reference sheet](https://quickref.remakejs.com)
+5. Provide feedback by [messaging me](https://twitter.com/panphora) on Twitter
+6. Sign up for [the newsletter](https://newsletter.remakejs.com/) to get updates as this framework develops
 
 
-## How to install:
-
-```
-npm install remakejs --save
-```
-
-```javascript
-import Remake from "remakejs";
-
-// respond to changes to the data
-Remake.onChange(onChangeCallbacks); // TODO put this later in the docs
-
-// respond to changes to the data that require a save
-Remake.onSave(onSaveCallbacks); // TODO put this later in the docs
-```
-
-If you want to play around with some code right away, skip to **What can we build with this?**.
-
+---
 
 
 ## A High Level Overview
