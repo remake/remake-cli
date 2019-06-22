@@ -6,7 +6,8 @@
     "type": "git",
     "url": "https://github.com/panphora/remakejs"
   },
-  "main": "index.js",
+  "main": "dist/bundle.cjs.js",
+  "module": "dist/bundle.es6.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

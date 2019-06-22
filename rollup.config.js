@@ -1,24 +1,24 @@
 import resolve from 'rollup-plugin-node-resolve';
 
-export default {
-  input: 'index.js',
-  output: {
-    file: 'bundle.js',
-    format: 'cjs',
-    name: 'MyModule'
-  },
-  plugins: [
-    resolve({
+export default [
+  {
+    input: 'index.js',
+    output: {
+      file: 'dist/bundle.cjs.js',
+      format: 'cjs'
+    },
+    plugins: [
+      resolve({})
+    ]
+  },{
+    input: 'index.js',
+    output: {
+      file: 'dist/bundle.es6.js',
+      format: 'esm'
+    },
+    plugins: [
+      resolve({})
+    ]
+  }
+]
 
-      // // the fields to scan in a package.json to determine the entry point
-      // // if this list contains "browser", overrides specified in "pkg.browser"
-      // // will be used
-      // mainFields: ['module', 'main'], // Default: ['module', 'main']
-
-      // // If true, inspect resolved files to check that they are
-      // // ES2015 modules
-      // modulesOnly: true, // Default: false
-
-    })
-  ]
-};

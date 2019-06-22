@@ -1,5 +1,3 @@
-'use strict';
-
 // Public: Create a new SelectorSet.
 function SelectorSet() {
   // Construct new SelectorSet if called as a function.
@@ -4843,8 +4841,6 @@ var merge = createAssigner(function(object, source, srcIndex) {
   baseMerge(object, source, srcIndex);
 });
 
-console.log(123, merge);
-
 function initInputEventListeners (options) {
   merge(optionsData, options);
   
@@ -4877,4 +4873,4 @@ var index = {
   getDataAndDataSourceElemFromNodeAndAncestors 
 };
 
-module.exports = index;
+export default index;
