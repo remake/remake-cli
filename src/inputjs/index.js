@@ -10,7 +10,7 @@ import optionsData from './optionsData';
 import { enableSaveAttribute, initSaveFunctions, callSaveFunction } from './onSave';
 import initEditableAttribute from './editableAttribute';
 import initAddingItemEventListener from './addingItemEventListener';
-import merge from 'lodash.merge';
+import { merge } from 'lodash-es';
 
 function initInputEventListeners (options) {
   merge(optionsData, options);

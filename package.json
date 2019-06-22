@@ -11,5 +11,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "David Miranda",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "autosize": "^4.0.2",
+    "delegated-events": "^1.0.10",
+    "lodash-es": "^4.17.11"
+  },
+  "devDependencies": {
+    "rollup": "^1.16.2",
+    "rollup-plugin-node-resolve": "^5.0.4"
+  }
 }

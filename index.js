@@ -1,8 +1,8 @@
-import { $ } from './src/remakejs/queryjs';
+import { $ } from './src/queryjs';
 
-import { copyLayout } from './src/remakejs/copy-layout';
+import { copyLayout } from './src/copy-layout';
 
-import Switches from './remakejs/switchjs';
+import Switches from './src/switchjs';
 
 import { 
   initInputEventListeners,
@@ -10,7 +10,7 @@ import {
   callSaveFunction,
   callMultipleWatchFunctions,
   getValueAndDataSourceElemFromKeyName
-} from './src/remakejs/inputjs';
+} from './src/inputjs';
 
 import { 
   getDataFromRootNode,
@@ -19,7 +19,7 @@ import {
   setValueForKeyName,
   getDataFromNode,
   getDataAndDataSourceElemFromNodeAndAncestors 
-} from './src/remakejs/outputjs';
+} from './src/outputjs';
 
 export default {
   init: initInputEventListeners,
