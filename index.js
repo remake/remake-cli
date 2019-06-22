@@ -21,8 +21,10 @@ import {
   getDataAndDataSourceElemFromNodeAndAncestors 
 } from './src/outputjs';
 
-export default {
-  init: initInputEventListeners,
+let init = initInputEventListeners;
+
+export {
+  init,
   $,
   copyLayout,
   Switches,

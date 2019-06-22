@@ -4855,22 +4855,6 @@ function initInputEventListeners (options) {
   initAddingItemEventListener();
 }
 
-var index = {
-  init: initInputEventListeners,
-  $: $$1,
-  copyLayout,
-  Switches,
-  initInputEventListeners,
-  initSaveFunctions,
-  callSaveFunction,
-  callMultipleWatchFunctions,
-  getValueAndDataSourceElemFromKeyName,
-  getDataFromRootNode,
-  setLocationKeyValue,
-  getLocationKeyValue,
-  setValueForKeyName,
-  getDataFromNode,
-  getDataAndDataSourceElemFromNodeAndAncestors 
-};
+let init = initInputEventListeners;
 
-export default index;
+export { $$1 as $, Switches, callMultipleWatchFunctions, callSaveFunction, copyLayout, getDataAndDataSourceElemFromNodeAndAncestors, getDataFromNode, getDataFromRootNode, getLocationKeyValue, getValueAndDataSourceElemFromKeyName, init, initInputEventListeners, initSaveFunctions, setLocationKeyValue, setValueForKeyName };

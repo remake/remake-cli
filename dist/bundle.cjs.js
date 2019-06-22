@@ -1,5 +1,7 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 // Public: Create a new SelectorSet.
 function SelectorSet() {
   // Construct new SelectorSet if called as a function.
@@ -4857,22 +4859,20 @@ function initInputEventListeners (options) {
   initAddingItemEventListener();
 }
 
-var index = {
-  init: initInputEventListeners,
-  $: $$1,
-  copyLayout,
-  Switches,
-  initInputEventListeners,
-  initSaveFunctions,
-  callSaveFunction,
-  callMultipleWatchFunctions,
-  getValueAndDataSourceElemFromKeyName,
-  getDataFromRootNode,
-  setLocationKeyValue,
-  getLocationKeyValue,
-  setValueForKeyName,
-  getDataFromNode,
-  getDataAndDataSourceElemFromNodeAndAncestors 
-};
+let init = initInputEventListeners;
 
-module.exports = index;
+exports.$ = $$1;
+exports.Switches = Switches;
+exports.callMultipleWatchFunctions = callMultipleWatchFunctions;
+exports.callSaveFunction = callSaveFunction;
+exports.copyLayout = copyLayout;
+exports.getDataAndDataSourceElemFromNodeAndAncestors = getDataAndDataSourceElemFromNodeAndAncestors;
+exports.getDataFromNode = getDataFromNode;
+exports.getDataFromRootNode = getDataFromRootNode;
+exports.getLocationKeyValue = getLocationKeyValue;
+exports.getValueAndDataSourceElemFromKeyName = getValueAndDataSourceElemFromKeyName;
+exports.init = init;
+exports.initInputEventListeners = initInputEventListeners;
+exports.initSaveFunctions = initSaveFunctions;
+exports.setLocationKeyValue = setLocationKeyValue;
+exports.setValueForKeyName = setValueForKeyName;
