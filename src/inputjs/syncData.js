@@ -1,7 +1,6 @@
 import { getDataAndDataSourceElemFromNodeAndAncestors, setValueForKeyName } from "../outputjs";
 import { camelCaseToDash } from '../hummingbird/lib/string';
-import { forEachMatchingElem } from '../hummingbird/lib/dom';
-import { callWatchFunctionsOnElem } from './watchHelpers';
+import { callWatchFunctionsOnElem, getWatchElements } from './watchHelpers';
 
 let afterSyncCallbacks = [];
 export function afterSync (cb) {
@@ -64,6 +63,8 @@ export function triggerSyncAndSave (event) {
   });
 }
 
+
+// dataSourceElement: this is the element where the data is coming from
 function syncToLocationOrOutputKey ({targetElement, camelCaseKeyName, dashCaseKeyName, originalValue, dataSourceElem}) {
 
   let actualValue;
@@ -134,20 +135,18 @@ function syncToInputKeys ({targetElement, camelCaseKeyName, actualValue}) {
 
 export function callWatchFunctions ({dashCaseKeyName, parentOfTargetElements, value, dataSourceElem}) {
   
-  let watchAttrSelector = `[data-w-key-${dashCaseKeyName}]`;
+  // 1. Find ALL CHILD elements of the target element that match a `data-w-key` UNLESS they're children of another matching data-o-key element
+  let watchElems = getWatchElements({elementWithData: parentOfTargetElements, dashCaseKeyName});
 
-  // 1. Find ALL CHILD elements of the target element that match a `data-w-key`
-  forEachMatchingElem(parentOfTargetElements, watchAttrSelector, (matchingElem) => {
-
-    // 2. Call all the watch functions defined by this key
+  watchElems.forEach((watchElem) => {
+    // 2. Call all the watch functions defined by this attribute
     callWatchFunctionsOnElem({
-      watchElem: matchingElem, 
+      watchElem, 
       watchAttrName: `data-w-key-${dashCaseKeyName}`, 
       value: value, 
       dataSourceElem: dataSourceElem,
       dataTargetElem: parentOfTargetElements
     });      
-
   });
 
 }

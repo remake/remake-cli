@@ -1,1 +1,1 @@
-`rollup -c`
+rollup -c --watch

@@ -675,18 +675,6 @@ function forEachAncestorMatch ({elem, selector, callback}) {
   }
 }
 
-function forEachMatchingElem (parentElem, selector, callback) {
-  if (parentElem.matches(selector)) {
-    callback(parentElem);
-  }
-
-  let childMatches = Array.from(parentElem.querySelectorAll(selector));
-
-  childMatches.forEach((childMatch) => {
-    callback(childMatch);
-  });
-}
-
 
 // get an element's parents, optionally filtering them by a selector
 function getParents ({elem, selector, includeCurrentElement}) {
@@ -1872,6 +1860,18 @@ function callMultipleWatchFunctions (watchElems) {
   });
 }
 
+function getWatchElements ({elementWithData, dashCaseKeyName}) {
+  let watchSelector = `[data-w-key-${dashCaseKeyName}]`;
+  let nestedWatchSelector = `:scope [data-o-key-${dashCaseKeyName}] [data-w-key-${dashCaseKeyName}]`;
+
+  if (elementWithData.matches(watchSelector)) ;
+
+  let allWatchElements = Array.from(elementWithData.querySelectorAll(watchSelector));
+  let nestedWatchElements = Array.from(elementWithData.querySelectorAll(nestedWatchSelector));
+
+  return allWatchElements.filter(el => !nestedWatchElements.includes(el));
+}
+
 let afterSyncCallbacks = [];
 function afterSync (cb) {
   afterSyncCallbacks.push(cb);
@@ -1933,6 +1933,8 @@ function triggerSyncAndSave (event) {
   });
 }
 
+
+// dataSourceElement: this is the element where the data is coming from
 function syncToLocationOrOutputKey ({targetElement, camelCaseKeyName, dashCaseKeyName, originalValue, dataSourceElem}) {
 
   let actualValue;
@@ -2003,20 +2005,18 @@ function syncToInputKeys ({targetElement, camelCaseKeyName, actualValue}) {
 
 function callWatchFunctions ({dashCaseKeyName, parentOfTargetElements, value, dataSourceElem}) {
   
-  let watchAttrSelector = `[data-w-key-${dashCaseKeyName}]`;
+  // 1. Find ALL CHILD elements of the target element that match a `data-w-key` UNLESS they're children of another matching data-o-key element
+  let watchElems = getWatchElements({elementWithData: parentOfTargetElements, dashCaseKeyName});
 
-  // 1. Find ALL CHILD elements of the target element that match a `data-w-key`
-  forEachMatchingElem(parentOfTargetElements, watchAttrSelector, (matchingElem) => {
-
-    // 2. Call all the watch functions defined by this key
+  watchElems.forEach((watchElem) => {
+    // 2. Call all the watch functions defined by this attribute
     callWatchFunctionsOnElem({
-      watchElem: matchingElem, 
+      watchElem, 
       watchAttrName: `data-w-key-${dashCaseKeyName}`, 
       value: value, 
       dataSourceElem: dataSourceElem,
       dataTargetElem: parentOfTargetElements
     });      
-
   });
 
 }

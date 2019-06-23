@@ -136,3 +136,18 @@ export function callMultipleWatchFunctions (watchElems) {
 
   });
 }
+
+export function getWatchElements ({elementWithData, dashCaseKeyName}) {
+  let watchSelector = `[data-w-key-${dashCaseKeyName}]`;
+  let nestedWatchSelector = `:scope [data-o-key-${dashCaseKeyName}] [data-w-key-${dashCaseKeyName}]`;
+  let watchElements = [];
+
+  if (elementWithData.matches(watchSelector)) {
+    watchElements.push(elementWithData);
+  }
+
+  let allWatchElements = Array.from(elementWithData.querySelectorAll(watchSelector));
+  let nestedWatchElements = Array.from(elementWithData.querySelectorAll(nestedWatchSelector));
+
+  return allWatchElements.filter(el => !nestedWatchElements.includes(el));
+}
