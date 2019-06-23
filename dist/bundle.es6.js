@@ -1861,13 +1861,16 @@ function callMultipleWatchFunctions (watchElems) {
 function getWatchElements ({elementWithData, dashCaseKeyName}) {
   let watchSelector = `[data-w-key-${dashCaseKeyName}]`;
   let nestedWatchSelector = `:scope [data-o-key-${dashCaseKeyName}] [data-w-key-${dashCaseKeyName}]`;
+  let watchElements = [];
 
-  if (elementWithData.matches(watchSelector)) ;
+  if (elementWithData.matches(watchSelector)) {
+    watchElements.push(elementWithData);
+  }
 
   let allWatchElements = Array.from(elementWithData.querySelectorAll(watchSelector));
   let nestedWatchElements = Array.from(elementWithData.querySelectorAll(nestedWatchSelector));
 
-  return allWatchElements.filter(el => !nestedWatchElements.includes(el));
+  return watchElements.concat(allWatchElements.filter(el => !nestedWatchElements.includes(el)));
 }
 
 let afterSyncCallbacks = [];
@@ -2745,7 +2748,7 @@ function initAddingItemEventListener () {
     let triggerElem = event.currentTarget;
     
     // parse the data attribute to get the selector and the template name
-    let [templateName, selector] = getAttributeValueAsArray(triggerElem, "data-i-new");
+    let [templateName, selector, position] = getAttributeValueAsArray(triggerElem, "data-i-new");
 
     // pass the template name into an endpoint and get the resulting html back
     ajaxPost("/new", {templateName}, function (res) {
@@ -2755,7 +2758,8 @@ function initAddingItemEventListener () {
       let listElem = findInParents(triggerElem, selector);
 
       // insert the rendered template into that element
-      listElem.insertAdjacentHTML("beforeend", htmlString);
+      let whereToInsert = position === "top" ? "afterbegin" : "beforeend";
+      listElem.insertAdjacentHTML(whereToInsert, htmlString);
 
       callSaveFunction({targetElement: listElem});
     });

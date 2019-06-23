@@ -149,5 +149,11 @@ export function getWatchElements ({elementWithData, dashCaseKeyName}) {
   let allWatchElements = Array.from(elementWithData.querySelectorAll(watchSelector));
   let nestedWatchElements = Array.from(elementWithData.querySelectorAll(nestedWatchSelector));
 
-  return allWatchElements.filter(el => !nestedWatchElements.includes(el));
+  return watchElements.concat(allWatchElements.filter(el => !nestedWatchElements.includes(el)));
 }
+
+
+
+
+
+
