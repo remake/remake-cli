@@ -2,12 +2,12 @@
 
 ## Build web apps quickly
 
-* **Low-code framework:** All of Remake.js's powers come from HTML data attributes, which means you can build an entire web app with _just HTML_
-* **Easy to edit data:** Powerful inline edit areas are built in, giving your users the ability to easily move, edit, add, and remove data from the page
+* **Low-code framework:** All of Remake's powers come from data attributes, which means you can build an entire web app with just HTML
+* **Easy to edit data:** Powerful inline edit areas are built in, giving your users the ability to easily edit and remove data from the page
 * **Auto-save:** User data is automatically extracted from the DOM and saved
-* **Easy to learn:** A small API means that learning less than a dozen special data attributes gives you the ability to create a full web application today
-* **A great experience for your users** Remake.js works exclusively with server rendered web apps, which means it'll be fast, use native browser features for routing and form handling, be accessible out of the gate, and _the entire framework isn't required on read-only pages_
-* **An enjoyable development process:** Because of how easy it is to learn and build with, Remake.js excels at helping you create products _very quickly_
+* **Easy to learn:** A small API means that learning a dozen special data attributes will give you the ability to create a web application
+* **A great experience for your users** Remake is for server-rendered web apps, which means your pages will load and render quickly, use native browser features (like routing and form handling), be accessible out of the gate, and you don't need to include Remake on non-editable pages
+* **An enjoyable development process:** Because of how easy it is to learn and build with, Remake.js excels at helping you create new products _quickly_
 
 **This is an early alpha release.**
 
