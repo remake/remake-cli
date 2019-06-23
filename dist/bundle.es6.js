@@ -2209,6 +2209,15 @@ function initChoiceAndToggleEventListeners () {
     setValue({elem: event.currentTarget, keyName, attributeValue});
   });
 
+  // plain toggle, using a <div> or <button> or <a>
+    // data-i-toggle data-i-key="done" data-i-value="true"
+    // finds matching data-o-key-* and alternates between setting "true" and ""
+  $$1.on("click", "[data-i-toggle]", function (event) {
+    let keyName = event.currentTarget.getAttribute("data-i-toggle");
+
+    // set value
+    setValue({elem: event.currentTarget, keyName, attributeValue: "true", toggleValue: true});
+  });
 
   // <radio> AND <select>
   $$1.on("change", "[data-i][type='radio'], select[data-i]", function (event) {
@@ -2234,20 +2243,27 @@ function initChoiceAndToggleEventListeners () {
 }
 
 
-function setValue ({elem, keyName, attributeValue}) {
+function setValue ({elem, keyName, attributeValue, toggleValue}) {
 
   // 1. form the output attribute key name
   let dashCaseKeyName = camelCaseToDash(keyName);
   let attributeName = "data-o-key-" + dashCaseKeyName;
 
   // 2. look for the closest element with that output attribute
-  let choiceElement = elem.closest("[" + attributeName + "]");
+  let dataSourceElem = elem.closest("[" + attributeName + "]");
 
   // 3. set the `data-o-key-*` attribute representing the selected choice on the choice element
-  choiceElement.setAttribute(attributeName, attributeValue);
+  if (!toggleValue) {
+    dataSourceElem.setAttribute(attributeName, attributeValue);
+  } else {
+    if (!dataSourceElem.getAttribute(attributeName)) {
+      dataSourceElem.setAttribute(attributeName, attributeValue);
+    } else {
+      dataSourceElem.setAttribute(attributeName, "");
+    }
+  }
 
   // 4. call watch functions since the data is changing
-  let dataSourceElem = choiceElement;
   callWatchFunctions({
     dashCaseKeyName: dashCaseKeyName, 
     parentOfTargetElements: dataSourceElem, 
