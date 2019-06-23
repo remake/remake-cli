@@ -4,7 +4,8 @@ import { callWatchFunctions } from "./syncData";
 
 export default function () {
 
-  $.on("input", "[data-i]", function (event) {
+  // <input> and <textarea>
+  $.on("input", "input[data-i], textarea[data-i]", function (event) {
     // 2. get the key name inside the name attribute
     let camelCaseKeyName = event.currentTarget.getAttribute("name");
     // 3. convert camel case to dash case

@@ -4,7 +4,7 @@ import { callWatchFunctions } from './syncData';
 
 export default function () {
 
-  // plain choice
+  // plain choice, using a <div> or <button> or <a>
   $.on("click", "[data-i][data-i-key][data-i-value]", function (event) {
     // get key name and value we want to change
     let keyName = event.currentTarget.getAttribute("data-i-key");

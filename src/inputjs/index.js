@@ -1,7 +1,7 @@
 import initInboundDataSyncEventListener from './inboundDataSyncEventListener';
 import { initSaveEventListener } from './saveEventListener';
 import { initRemoveAndHideEventListeners } from './removeAndHideEventListeners';
-import initChoiceEventListener from './choiceEventListener';
+import initChoiceAndToggleEventListeners from './choiceAndToggleEventListeners';
 import initInputElementEventListener from './inputElementEventListener';
 import initClickToSaveEventListener from './clickToSaveEventListener';
 import { callMultipleWatchFunctions, getValueAndDataSourceElemFromKeyName } from './watchHelpers';
@@ -19,7 +19,7 @@ function initInputEventListeners (options) {
   initInboundDataSyncEventListener();
   initSaveEventListener();
   initRemoveAndHideEventListeners();
-  initChoiceEventListener();
+  initChoiceAndToggleEventListeners();
   initInputElementEventListener();
   initClickToSaveEventListener();
   initEditableAttribute();
