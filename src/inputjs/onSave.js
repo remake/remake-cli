@@ -42,10 +42,11 @@ export function callSaveFunction ({elementDataWasSyncedInto, targetElement}) {
   }
 }
 
-function getSaveFuncNameAndPath (saveElement, isDataInsideElem) {
+export function getSaveFuncNameAndPath (saveElement, isDataInsideElem) {
   let dashCaseAttrName = isDataInsideElem ? "data-o-save-deep" : "data-o-save";
   let [ funcName, savePath ] = getAttributeValueAsArray(saveElement, dashCaseAttrName);
-  return [ funcName, savePath && savePath.substring(5) ]; // remove "path:" from the savePath
+  let formattedSavePath = savePath && savePath.startsWith("path:") && savePath.substring(5); // remove "path:" from the savePath
+  return [ funcName, formattedSavePath ]; 
 }
 
 

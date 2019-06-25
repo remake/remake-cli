@@ -9,7 +9,7 @@
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.es6.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "rollup -c --watch"
   },
   "author": "David Miranda",
   "license": "MIT",
