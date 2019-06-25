@@ -2078,8 +2078,7 @@ function initInboundDataSyncEventListener () {
   });
 }
 
-// PREFER USING THIS OVER THE "CLICK TO SAVE" IF THE DATA CAN BE PLACED IN AN INLINE EDIT FORM
-
+// IMPORTANT: PREFER USING THIS OVER THE "CLICK TO SAVE" IF THE DATA CAN BE PLACED IN AN INLINE EDIT FORM
 function initSaveEventListener () {
 
   // 1. watch for when a form with `data-i-sync` on it is submitted, either by pressing a `data-i-save` button or maybe by pressing enter in an input
@@ -2112,15 +2111,15 @@ function ajaxPost (url, data, callback) {
   ajaxSimple(url, "POST", data, callback);
 }
 
-let onSaveFunctions = {
+let saveFunctionsLookup = {
   // default save function posts data to /save endpoint
-  all: function (data) {
-    ajaxPost("/save", {data}, function (res) {});
+  defaultSave: function ({data, path, elem}) {
+    ajaxPost("/save", {data, path}, function (res) {});
   }
 };
 
 function initSaveFunctions (saveFunctions) {
-  Object.assign(onSaveFunctions, saveFunctions);
+  Object.assign(saveFunctionsLookup, saveFunctions);
 }
 
 function enableSaveAttribute (afterSync) {
@@ -2134,31 +2133,28 @@ function enableSaveAttribute (afterSync) {
 }
 
 function callSaveFunction ({elementDataWasSyncedInto, targetElement}) {
-  // allow alternate names: use `elementDataWasSyncedInto` when syncing, user `targetElement` when creating new data or removing data
+  // allow two different params that do the same things to be passed into this function: 
+  // use `elementDataWasSyncedInto` when syncing, user `targetElement` when creating new data or removing data
   elementDataWasSyncedInto = elementDataWasSyncedInto || targetElement;
   let saveElement = elementDataWasSyncedInto.closest("[data-o-save-deep], [data-o-save]");
     
   if (saveElement) {
-    let shouldParseChildElements = saveElement.matches("[data-o-save-deep]");
+    let isDataInsideElem = saveElement.matches("[data-o-save-deep]");
+    let [ saveFuncName, savePath ] = getSaveFuncNameAndPath(saveElement, isDataInsideElem);
 
-    if (shouldParseChildElements) {
-      let saveType = saveElement.getAttribute("data-o-save-deep");
-      let saveFunc = onSaveFunctions[saveType];
+    let saveFunc = saveFunctionsLookup[saveFuncName];
 
-      if (saveFunc) {
-        let dataFromSaveElement = getDataFromRootNode(saveElement);
-        saveFunc(dataFromSaveElement, elementDataWasSyncedInto);
-      }
-    } else {
-      let saveType = saveElement.getAttribute("data-o-save");
-      let saveFunc = onSaveFunctions[saveType];
-
-      if (saveFunc) {
-        let dataFromSaveElement = getDataFromNode(saveElement);
-        saveFunc(dataFromSaveElement, elementDataWasSyncedInto);
-      }
+    if (saveFunc) {
+      let dataFromSaveElement = isDataInsideElem ? getDataFromRootNode(saveElement) : getDataFromNode(saveElement);
+      saveFunc({data: dataFromSaveElement, elem: elementDataWasSyncedInto, path: savePath});
     }
   }
+}
+
+function getSaveFuncNameAndPath (saveElement, isDataInsideElem) {
+  let dashCaseAttrName = isDataInsideElem ? "data-o-save-deep" : "data-o-save";
+  let [ funcName, savePath ] = getAttributeValueAsArray(saveElement, dashCaseAttrName);
+  return [ funcName, savePath && savePath.substring(5) ]; // remove "path:" from the savePath
 }
 
 function initRemoveAndHideEventListeners () {
