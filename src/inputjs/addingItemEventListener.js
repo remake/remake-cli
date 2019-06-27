@@ -27,6 +27,11 @@ export default function () {
       recomputeSavePathOnListElems(listElem, whereToInsert);
 
       callSaveFunction({targetElement: listElem});
+
+      if (optionsData.addItemCallback) {
+        let itemElem = position === "top" ? listElem.firstElementChild : listElem.lastElementChild;
+        optionsData.addItemCallback({listElem, itemElem, templateName});
+      }
     });
 
   });
@@ -63,7 +68,7 @@ function recomputeSavePathOnListElems(listElem, whereToInsert) {
   // for all the elements inside the listElem, replace the number at the end of the path string with incrementing numbers starting with 0
   let childElems = listElem.children;
   let saveAttributeToSet = isNormalSave ? "data-o-save" : "data-o-save-deep";
-  let saveAttributeValueTemplate = saveFuncName + " " + savePath;
+  let saveAttributeValueTemplate = saveFuncName + " path:" + savePath;
   for (var i = 0; i < childElems.length; i++) {
     let listItemElem = childElems[i];
     let saveAttributeValue = saveAttributeValueTemplate.replace(endsWithPeriodOrNumberRegex, "." + i);
