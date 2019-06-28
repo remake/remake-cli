@@ -22,12 +22,12 @@
 
 ## Try one of these example web apps: (Built with Remake!)
 
+- [Todos](https://github.com/panphora/remake-todos)
+- [Progress update tracker](https://github.com/panphora/blipcat)
 - [Kanban board](https://github.com/panphora/task-fellow)
 
 ![Taskfellow screenshot](./docs/taskfellow.png)
 
-- [Todos](https://github.com/panphora/remake-todos)
-- [Progress update tracker](https://github.com/panphora/blipcat)
 
 
 ---
