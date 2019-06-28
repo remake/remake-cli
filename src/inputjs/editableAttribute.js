@@ -4,7 +4,7 @@ import { forEachAttr } from '../hummingbird/lib/dom';
 import { processAttributeString } from '../parse-data-attributes';
 import { copyLayout } from '../copy-layout';
 import Switches from '../switchjs';
-import autosize from 'autosize/src/autosize';
+import autosize from '../vendor/autosize';
 
 
 export default function () {

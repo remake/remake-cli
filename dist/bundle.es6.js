@@ -1,3 +1,63 @@
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
+
 // Public: Create a new SelectorSet.
 function SelectorSet() {
   // Construct new SelectorSet if called as a function.
@@ -529,86 +589,44 @@ function fire(target, name, detail) {
   }));
 }
 
-/*
-
-  # Description
-
-  A light jQuery replacement that takes a selector and returns an instance with helper methods.
-
-  # API
-
-  ## event delegation
-
-  $.on('click', '.js-button', func);
-  $.off('click', '.js-button', func);
-  $.fire(image, 'robot:singularity', {name: 'Hubot'});
-
-  ## instance methods
-
-  // get ONLY first elem (as an array)
-  $(".button:first")
-
-  // get all matching elems as an array
-  $(".button").arr;
-
-  // listen for events on matching elems (an alias for addEventListener)
-  $(".elem").on("click", func)
-
-  // loop through all matching elements
-  $(".button").arr.forEach(func);
-
-  // get first elem as a DOM Node
-  $(".button").get(0); 
-
-  // return undefined when index is out of bounds
-  $(".button").get(999); // -> undefined 
-
-  // attach data to a all matching elems
-  $(".elem").data("keyName", anything)
-
-  // get data from ONLY the first matching elem
-  $(".elem").data("keyName")
-
-  ## util
-
-  // convert an array-like object into an array
-  $.arr(arrLike) 
-
-  // set data directly on an elem
-  $.data(elem, "keyName", anything)
-
-*/
-
-var $$1 = function (selector) {
+var $$1 = function $(selector) {
   return new QueryObj(selector);
 };
 
 $$1.on = on;
 $$1.off = off;
 $$1.fire = fire;
+var data = [];
 
-let data = [];
 $$1.data = function (elem, key, value) {
   if (!elem || !key) {
     return;
-  }
+  } // get data:
 
-  // get data:
+
   if (!value) {
-    let match = data.find(item => item.elem === elem && item.key === key);
+    var match = data.find(function (item) {
+      return item.elem === elem && item.key === key;
+    });
     return match && match.value;
-  } 
-  
-  // set data:
+  } // set data:
+
+
   if (value) {
-    let existingIndex = data.findIndex(item => item.elem === elem && item.key === key);
-    
+    var existingIndex = data.findIndex(function (item) {
+      return item.elem === elem && item.key === key;
+    });
+
     if (existingIndex > -1) {
       data.splice(existingIndex, 1);
     }
 
-    data.push({key, value, elem});
-  } 
+    data.push({
+      key: key,
+      value: value,
+      elem: elem
+    });
+  }
 };
 
 $$1.arr = function (arrLike) {
@@ -619,113 +637,126 @@ $$1.arr = function (arrLike) {
   }
 };
 
-class QueryObj {
-  constructor(selector) {
-    let nodeList = document.querySelectorAll(selector);
-    let nodeListArr = Array.from(nodeList);
+var QueryObj =
+/*#__PURE__*/
+function () {
+  function QueryObj(selector) {
+    _classCallCheck(this, QueryObj);
+
+    var nodeList = document.querySelectorAll(selector);
+    var nodeListArr = Array.from(nodeList);
 
     if (selector.endsWith(":first")) {
-      nodeListArr = nodeListArr.slice(0,1);
+      nodeListArr = nodeListArr.slice(0, 1);
     }
 
     this.arr = nodeListArr;
   }
-  get(index) {
-    if (index === undefined) {
-      return this.arr;
+
+  _createClass(QueryObj, [{
+    key: "get",
+    value: function get(index) {
+      if (index === undefined) {
+        return this.arr;
+      }
+
+      try {
+        return this.arr[index];
+      } catch (err) {
+        return undefined;
+      }
     }
-    try {
-      return this.arr[index];
-    } catch (err) {
-      return undefined;
+  }, {
+    key: "data",
+    value: function data(key, value) {
+      for (var i = 0; i < this.arr.length; i++) {
+        var elem = this.arr[i];
+        $$1.data(elem, key, value);
+      }
     }
-  }
-  data(key, value) {
-    for (var i = 0; i < this.arr.length; i++) {
-      let elem = this.arr[i];
-      
-      $$1.data(elem, key, value);
+  }, {
+    key: "on",
+    value: function on(name, cb) {
+      this.arr.forEach(function (el) {
+        el.addEventListener(name, cb);
+      });
     }
-  }
-  on(name, cb) {
-    this.arr.forEach(el => {
-      el.addEventListener(name, cb);
-    });
-  }
-}
+  }]);
+
+  return QueryObj;
+}();
 
 window.$ = $$1;
 
 // TRAVERSING & ASSEMBLING DOM UTILS
-
-function forEachAncestorMatch ({elem, selector, callback}) {
-  let matchingElem = elem.closest(selector);
+function forEachAncestorMatch(_ref) {
+  var elem = _ref.elem,
+      selector = _ref.selector,
+      callback = _ref.callback;
+  var matchingElem = elem.closest(selector);
 
   if (matchingElem) {
     callback(matchingElem);
+    var matchingElemParent = matchingElem.parentNode;
 
-    let matchingElemParent = matchingElem.parentNode;
     if (matchingElemParent) {
-      forEachAncestorMatch({elem: matchingElemParent, selector, callback});
+      forEachAncestorMatch({
+        elem: matchingElemParent,
+        selector: selector,
+        callback: callback
+      });
     }
   }
 }
 
-
-// get an element's parents, optionally filtering them by a selector
-function getParents ({elem, selector, includeCurrentElement}) {
-  let parents = [];
+function getParents(_ref2) {
+  var elem = _ref2.elem,
+      selector = _ref2.selector,
+      includeCurrentElement = _ref2.includeCurrentElement;
+  var parents = [];
 
   if (!includeCurrentElement) {
     elem = elem.parentNode;
   }
 
-  for ( ; elem && elem !== document; elem = elem.parentNode ) {
-    if (!selector || (selector && elem.matches(selector))) {
+  for (; elem && elem !== document; elem = elem.parentNode) {
+    if (!selector || selector && elem.matches(selector)) {
       parents.push(elem);
     }
   }
 
   return parents;
-}
+} // recursively search inside all parent elements for a selector
 
-// recursively search inside all parent elements for a selector
-function findInParents (elem, selector) {
-  let foundElem = elem.parentElement.querySelector(selector);
+function findInParents(elem, selector) {
+  var foundElem = elem.parentElement.querySelector(selector);
+
   if (foundElem || elem.parentElement === document.documentElement) {
     return foundElem;
   } else {
     return findInParents(elem.parentElement, selector);
   }
-}
+} // LOOPING OVER ELEMENT ATTRIBUTES
 
-
-// LOOPING OVER ELEMENT ATTRIBUTES
-
-function forEachAttr (elem, fn) {
-  let attributes = elem.attributes;
-  let attributesLength = attributes.length;
+function forEachAttr(elem, fn) {
+  var attributes = elem.attributes;
+  var attributesLength = attributes.length;
 
   for (var i = 0; i < attributesLength; i++) {
-    let attrName = attributes[i].name;
-    let attrValue = attributes[i].value;
-
+    var attrName = attributes[i].name;
+    var attrValue = attributes[i].value;
     fn(attrName, attrValue);
   }
-}
+} // ELEMENT POSITION
 
-
-// ELEMENT POSITION
-
-function getElementOffset (el) {
-  let clientRect = el.getBoundingClientRect();
-  let top = clientRect.top + window.pageYOffset;
-  let left = clientRect.left + window.pageXOffset;
-  let right = clientRect.width + left;
-  let bottom = clientRect.height + top;
-  let width = right - left;
-  let height = bottom - top;
-
+function getElementOffset(el) {
+  var clientRect = el.getBoundingClientRect();
+  var top = clientRect.top + window.pageYOffset;
+  var left = clientRect.left + window.pageXOffset;
+  var right = clientRect.width + left;
+  var bottom = clientRect.height + top;
+  var width = right - left;
+  var height = bottom - top;
   return {
     top: top,
     right: right,
@@ -737,7 +768,6 @@ function getElementOffset (el) {
 }
 
 // Parses strings that can have multiple parameters and sub-parameters embedded
-
 // This function removes all spaces from a string if, and only if, they are inside a parenthesis
 // 1 split string into a letters array
 // 2 loop through letters
@@ -745,13 +775,13 @@ function getElementOffset (el) {
 // 4 if letter is ")", set flag to false
 // 5 if flag is set to true and letter is a space, remove the space
 // 6 combine all letters into a final string
-function removeSpacesInParentheses (str) {
-  let letters = str.split("");
-  let newLetters = [];
+function removeSpacesInParentheses(str) {
+  var letters = str.split("");
+  var newLetters = [];
+  var inParentheses = false;
 
-  let inParentheses = false;
-  for (let i = 0; i < letters.length; i++) {
-    let currentLetter = letters[i];
+  for (var i = 0; i < letters.length; i++) {
+    var currentLetter = letters[i];
 
     if (currentLetter === "(") {
       inParentheses = true;
@@ -763,58 +793,63 @@ function removeSpacesInParentheses (str) {
 
     newLetters.push(currentLetter);
   }
-  
-  return newLetters.join("");
-}
 
-// trims string, replaces multiple spaces with single spaces
-function formatSpaces (str) {
+  return newLetters.join("");
+} // trims string, replaces multiple spaces with single spaces
+
+
+function formatSpaces(str) {
   return str.trim().replace(/  +/g, " ");
 }
 
 function parseAttributeString(attributesString) {
-  let formattedString = removeSpacesInParentheses(formatSpaces(attributesString)); // => "switchName(no-auto,parent) switchName2(auto,parent)"
-  let separatedParamSections = formattedString.split(" "); // => ["switchName(no-auto,parent)", "switchName2(auto,parent)"]
-  let separatedAllParams = separatedParamSections.map((str) => str.replace(/\s|\)/g, "").split(/\(|,/)); // => [["switchName", "no-auto", "parent"], ["switchName2", "auto", "parent"]]
+  var formattedString = removeSpacesInParentheses(formatSpaces(attributesString)); // => "switchName(no-auto,parent) switchName2(auto,parent)"
+
+  var separatedParamSections = formattedString.split(" "); // => ["switchName(no-auto,parent)", "switchName2(auto,parent)"]
+
+  var separatedAllParams = separatedParamSections.map(function (str) {
+    return str.replace(/\s|\)/g, "").split(/\(|,/);
+  }); // => [["switchName", "no-auto", "parent"], ["switchName2", "auto", "parent"]]
 
   return separatedAllParams;
-}
+} // this parses multiple *repeating* parameters, each with possible *sub-parameters*
 
-// this parses multiple *repeating* parameters, each with possible *sub-parameters*
-function makeParseFunction (attributeName, keyNames) {
-  return function parseFunction (elem) { 
-    let attributesString = elem.getAttribute(attributeName); // e.g. "switchName(no-auto, parent) switchName2(auto, parent)"
+
+function makeParseFunction(attributeName, keyNames) {
+  return function parseFunction(elem) {
+    var attributesString = elem.getAttribute(attributeName); // e.g. "switchName(no-auto, parent) switchName2(auto, parent)"
 
     if (!attributesString) {
       return [];
     }
 
-    let parsedAttributeValues = parseAttributeString(attributesString); // e.g. [["switchName", "no-auto", "parent"], ["switchName2", "auto", "parent"]]        
+    var parsedAttributeValues = parseAttributeString(attributesString); // e.g. [["switchName", "no-auto", "parent"], ["switchName2", "auto", "parent"]]        
 
     return parsedAttributeValues.map(function (arrayOfValues) {
-      let returnObj = {};
+      var returnObj = {};
       keyNames.forEach(function (keyName, index) {
-        let val = arrayOfValues[index];
+        var val = arrayOfValues[index];
+
         if (val) {
           returnObj[keyName] = arrayOfValues[index];
         }
       });
       return returnObj;
     });
-  }
+  };
 }
 
-let parseSwitchAttributes = makeParseFunction("data-switches", ["name", "auto", "customName"]);
-let parseSwitchActionAttributes = makeParseFunction("data-switch-actions", ["name", "type", "context"]);
-let parseSwitchStopAttributes = makeParseFunction("data-switch-stop", ["name"]);
-let parseSwitchedOnAttributes = makeParseFunction("data-switched-on", ["name"]);
+var parseSwitchAttributes = makeParseFunction("data-switches", ["name", "auto", "customName"]);
+var parseSwitchActionAttributes = makeParseFunction("data-switch-actions", ["name", "type", "context"]);
+var parseSwitchStopAttributes = makeParseFunction("data-switch-stop", ["name"]);
+var parseSwitchedOnAttributes = makeParseFunction("data-switched-on", ["name"]);
 
-function parseStringWithIndefiniteNumberOfParams (attributesString) {
+function parseStringWithIndefiniteNumberOfParams(attributesString) {
   if (!attributesString) {
     return [];
   }
 
-  let parsedAttributeValues = parseAttributeString(attributesString); // e.g. [["func1", "1", "2"], ["func2"]]        
+  var parsedAttributeValues = parseAttributeString(attributesString); // e.g. [["func1", "1", "2"], ["func2"]]        
 
   return parsedAttributeValues.map(function (arrayOfValues) {
     return {
@@ -822,73 +857,64 @@ function parseStringWithIndefiniteNumberOfParams (attributesString) {
       args: arrayOfValues.slice(1)
     };
   });
-}
+} // this parses multiple parameters that *don't* repeat and *don't* have sub-parameters
 
-// this parses multiple parameters that *don't* repeat and *don't* have sub-parameters
-function makeSimpleParseFunction (attributeName, keyNames) {
-  return function parseFunction (elem) { 
-    let attributesString = elem.getAttribute(attributeName);
+
+function makeSimpleParseFunction(attributeName, keyNames) {
+  return function parseFunction(elem) {
+    var attributesString = elem.getAttribute(attributeName);
 
     if (!attributesString) {
       return {};
     }
 
     attributesString = formatSpaces(attributesString);
-    let parsedAttributeValues = attributesString.split(" "); // e.g. [".btn", "100", "-50", "both", ".btn--small"]
+    var parsedAttributeValues = attributesString.split(" "); // e.g. [".btn", "100", "-50", "both", ".btn--small"]
 
-    return parsedAttributeValues.reduce((accumulator, currentValue, index) => {
-
-      let keyName = keyNames[index];
-
+    return parsedAttributeValues.reduce(function (accumulator, currentValue, index) {
+      var keyName = keyNames[index];
       accumulator[keyName] = currentValue;
-
       return accumulator;
-
     }, {});
-  }
+  };
 }
 
-let parseCopyLayoutAttributes = makeSimpleParseFunction("data-copy-layout", ["selectorForPositionTarget", "xOffset", "yOffset", "dimensionsName", "selectorForDimensionsTarget"]);
-let parseCopyPositionAttributes = makeSimpleParseFunction("data-copy-position", ["selectorForPositionTarget", "xOffset", "yOffset"]);
-let parseCopyDimensionsAttributes = makeSimpleParseFunction("data-copy-dimensions", ["selectorForDimensionsTarget", "dimensionsName"]);
+var parseCopyLayoutAttributes = makeSimpleParseFunction("data-copy-layout", ["selectorForPositionTarget", "xOffset", "yOffset", "dimensionsName", "selectorForDimensionsTarget"]);
+var parseCopyPositionAttributes = makeSimpleParseFunction("data-copy-position", ["selectorForPositionTarget", "xOffset", "yOffset"]);
+var parseCopyDimensionsAttributes = makeSimpleParseFunction("data-copy-dimensions", ["selectorForDimensionsTarget", "dimensionsName"]);
 
-function getAttributeValueAsArray (elem, attributeName) {
+function getAttributeValueAsArray(elem, attributeName) {
   // get the value of the attribute
-  let attributesString = elem.getAttribute(attributeName);
+  var attributesString = elem.getAttribute(attributeName); // if it's an empty string or doesn't exist, return an empty array
 
-  // if it's an empty string or doesn't exist, return an empty array
   if (!attributesString) {
     return [];
-  }
+  } // trim and replace duplicate spaces
 
-  // trim and replace duplicate spaces
-  attributesString = formatSpaces(attributesString);
 
-  // return an array of the "words" in the string
+  attributesString = formatSpaces(attributesString); // return an array of the "words" in the string
+
   return attributesString.split(" ");
-}
-
-
-// -------------------------------------------------------------------------
+} // -------------------------------------------------------------------------
 //    advanced attribute parsing (supports args that have spaces in them!)
 // -------------------------------------------------------------------------
 
-let regexForPhrase = /^[^\(\):,]+$/;
-let regexForPhraseOrSpecialCharacter = /([^\(\):,]+|[\(\):,]|)/g;
 
-function getParts (attributeString) {
+var regexForPhrase = /^[^\(\):,]+$/;
+var regexForPhraseOrSpecialCharacter = /([^\(\):,]+|[\(\):,]|)/g;
+
+function getParts(attributeString) {
   return attributeString.match(regexForPhraseOrSpecialCharacter);
 }
 
-function assembleResult (parts) {
-  let currentObject;
-  let extractedObjects = [];
-  let isWithinParens = false;
-  let hasModifierBeenProcessed = false;
-
-  parts.forEach((currentPart, index) => {
-    let previousPart = parts[index - 1];
-    let nextPart = parts[index + 1];
+function assembleResult(parts) {
+  var currentObject;
+  var extractedObjects = [];
+  var isWithinParens = false;
+  var hasModifierBeenProcessed = false;
+  parts.forEach(function (currentPart, index) {
+    var previousPart = parts[index - 1];
+    var nextPart = parts[index + 1];
 
     if (!currentPart) {
       // remove empty strings
@@ -899,7 +925,7 @@ function assembleResult (parts) {
       isWithinParens = true;
     }
 
-    if (previousPart === ":" || (previousPart === "(" && nextPart !== ":" && nextPart !== ")")) {
+    if (previousPart === ":" || previousPart === "(" && nextPart !== ":" && nextPart !== ")") {
       hasModifierBeenProcessed = true;
     }
 
@@ -912,9 +938,8 @@ function assembleResult (parts) {
     if (regexForPhrase.test(currentPart) && nextPart === "(") {
       // create new object and add it to final array
       currentObject = {};
-      extractedObjects.push(currentObject);
+      extractedObjects.push(currentObject); // this part is the "name" if it comes right before "("
 
-      // this part is the "name" if it comes right before "("
       currentObject.name = currentPart.trim();
     }
 
@@ -926,23 +951,20 @@ function assembleResult (parts) {
     }
 
     if (isWithinParens && hasModifierBeenProcessed && regexForPhrase.test(currentPart)) {
-      currentObject.args = currentObject.args || [];
-      // it's one of the `args` if the modifier doesn't exist or has been processed and it's not a comma and it's before a ")"
+      currentObject.args = currentObject.args || []; // it's one of the `args` if the modifier doesn't exist or has been processed and it's not a comma and it's before a ")"
+
       currentObject.args.push(currentPart.trim());
     }
   });
-
   return extractedObjects;
 }
 
-function processAttributeString (attributeString) {
-  let parts = getParts(attributeString);
-  let extractedObjects = assembleResult(parts);
-
+function processAttributeString(attributeString) {
+  var parts = getParts(attributeString);
+  var extractedObjects = assembleResult(parts);
   return extractedObjects;
 }
 
-// Copy Layout Plugin
 // =====================
 //
 // [data-copy-layout]
@@ -957,25 +979,19 @@ function processAttributeString (attributeString) {
 //   - set the width and height of the target element to the dimensions of the clicked element
 //
 
-let lookupParser = [
-  {
-    selector: "[data-copy-layout]",
-    parser: parseCopyLayoutAttributes,
-    name: "both"
-  },
-  {
-    selector: "[data-copy-position]",
-    parser: parseCopyPositionAttributes,
-    name: "position"
-  },
-  {
-    selector: "[data-copy-dimensions]",
-    parser: parseCopyDimensionsAttributes,
-    name: "dimensions"
-  }
-];
-
-// Full specification for element with [data-copy-layout] attribute:
+var lookupParser = [{
+  selector: "[data-copy-layout]",
+  parser: parseCopyLayoutAttributes,
+  name: "both"
+}, {
+  selector: "[data-copy-position]",
+  parser: parseCopyPositionAttributes,
+  name: "position"
+}, {
+  selector: "[data-copy-dimensions]",
+  parser: parseCopyDimensionsAttributes,
+  name: "dimensions"
+}]; // Full specification for element with [data-copy-layout] attribute:
 // 
 // selectorForPositionTarget
 // - target to copy position to
@@ -998,63 +1014,48 @@ let lookupParser = [
 // - e.g. ".abc" or "#xyz" (any selector)
 // 
 
-$$1.on("click", "[data-copy-layout], [data-copy-position], [data-copy-dimensions]", (event) => {
-  let sourceElement = event.currentTarget;
+$$1.on("click", "[data-copy-layout], [data-copy-position], [data-copy-dimensions]", function (event) {
+  var sourceElement = event.currentTarget; // parse position/dimensions attributes of source element as a list
 
-  // parse position/dimensions attributes of source element as a list
-  let listOfElementLayoutData = getListOfElementLayoutData(sourceElement);
+  var listOfElementLayoutData = getListOfElementLayoutData(sourceElement); // loop through list of layout data 
 
-  // loop through list of layout data 
-  listOfElementLayoutData.forEach(({
-    selectorForPositionTarget,
-    xOffset,
-    yOffset,
-    dimensionsName,
-    selectorForDimensionsTarget,
-    copyMethod
-  }) => {
-
+  listOfElementLayoutData.forEach(function (_ref) {
+    var selectorForPositionTarget = _ref.selectorForPositionTarget,
+        xOffset = _ref.xOffset,
+        yOffset = _ref.yOffset,
+        dimensionsName = _ref.dimensionsName,
+        selectorForDimensionsTarget = _ref.selectorForDimensionsTarget,
+        copyMethod = _ref.copyMethod;
     // get offset data for the source element, so we can use it in both functions, i.e. copyDimensions AND copyPosition
-    let sourceElementOffsetData = getElementOffset(sourceElement);
+    var sourceElementOffsetData = getElementOffset(sourceElement); // check if we're copying dimensions
 
-    // check if we're copying dimensions
     if (copyMethod === "dimensions" || copyMethod === "both") {
-
       // if we don't have a dimensions target, set the target to the position's target (because that's the default)
       if (!selectorForDimensionsTarget) {
         selectorForDimensionsTarget = selectorForPositionTarget;
-      }
+      } // copy the dimensions from the source element onto the dimension's target
 
-      // copy the dimensions from the source element onto the dimension's target
+
       copyDimensions(sourceElementOffsetData, selectorForDimensionsTarget, dimensionsName);
+    } // check if we're copying position
 
-    }
 
-    // check if we're copying position
     if (copyMethod === "position" || copyMethod === "both") {
-
       // copy the position from the source element onto the position target
       copyPosition(sourceElementOffsetData, selectorForPositionTarget, xOffset, yOffset);
-
     }
-
   });
-
 });
 
-
-function getListOfElementLayoutData (sourceElement) {
-  let parsedData = [];
-
-  lookupParser.forEach((parser) => {
-
+function getListOfElementLayoutData(sourceElement) {
+  var parsedData = [];
+  lookupParser.forEach(function (parser) {
     // figure out the parser to use
     if (sourceElement.matches(parser.selector)) {
-
       // parse the attributes on the element
-      let elemData = parser.parser(sourceElement); // e.g. {"selectorForPositionTarget", "xOffset", "yOffset", "dimensionsName", "selectorForDimensionsElTarget
-
+      var elemData = parser.parser(sourceElement); // e.g. {"selectorForPositionTarget", "xOffset", "yOffset", "dimensionsName", "selectorForDimensionsElTarget
       // get the copy method
+
       elemData.copyMethod = parser.name;
 
       if (elemData.xOffset) {
@@ -1064,114 +1065,118 @@ function getListOfElementLayoutData (sourceElement) {
       if (elemData.yOffset) {
         elemData.yOffset = parseInt(elemData.yOffset, 10);
       }
-      
-      parsedData.push(elemData); 
+
+      parsedData.push(elemData);
     }
+  }); // return an array with all the parsed attributes
 
-  });
-
-  // return an array with all the parsed attributes
   return parsedData; // e.g. [{copyMethod, selectorForPositionTarget, xOffset, yOffset, dimensionsName, selectorForDimensionsElTarget
 }
 
-
-function copyDimensions (sourceElementOffsetData, selectorForDimensionsTarget, dimensionsName) {
+function copyDimensions(sourceElementOffsetData, selectorForDimensionsTarget, dimensionsName) {
   // get the new width and height data we want to set
-  let {width, height} = sourceElementOffsetData;
+  var width = sourceElementOffsetData.width,
+      height = sourceElementOffsetData.height; // loop through the target elements
 
-  // loop through the target elements
-  $$1(selectorForDimensionsTarget).arr.forEach((targetElem) => {
-
+  $$1(selectorForDimensionsTarget).arr.forEach(function (targetElem) {
     // if copying the width, set a new width
     if (dimensionsName === "width" || dimensionsName === "both") {
       targetElem.style.width = width + "px";
-    }
+    } // if copying the height, set a new height
 
-    // if copying the height, set a new height
+
     if (dimensionsName === "height" || dimensionsName === "both") {
       targetElem.style.height = height + "px";
     }
   });
 }
 
-
-function copyPosition (sourceElementOffsetData, selectorForPositionTarget, xOffset = 0, yOffset = 0) {
+function copyPosition(sourceElementOffsetData, selectorForPositionTarget) {
+  var xOffset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var yOffset = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
   // get the new position data we want to set
-  let {left, top} = sourceElementOffsetData;
+  var left = sourceElementOffsetData.left,
+      top = sourceElementOffsetData.top;
   left += xOffset;
-  top += yOffset;
+  top += yOffset; // loop through the target elements 
 
-  // loop through the target elements 
-  $$1(selectorForPositionTarget).arr.forEach((targetElem) => {
-
+  $$1(selectorForPositionTarget).arr.forEach(function (targetElem) {
     // set a new top position
-    targetElem.style.top = top + "px";
+    targetElem.style.top = top + "px"; // set a new left position
 
-    // set a new left position
     targetElem.style.left = left + "px";
-
   });
-}
+} // for external use. the other methods would need to be adapted before they're exported
 
-// for external use. the other methods would need to be adapted before they're exported
-function copyLayout ({sourceElem, targetElem, dimensionsName = "width", xOffset = 0, yOffset = 0} = {}) {
-  let sourceElemOffsetData = getElementOffset(sourceElem);
 
-  // copy position
-  let {left, top} = sourceElemOffsetData;
+function copyLayout() {
+  var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      sourceElem = _ref2.sourceElem,
+      targetElem = _ref2.targetElem,
+      _ref2$dimensionsName = _ref2.dimensionsName,
+      dimensionsName = _ref2$dimensionsName === void 0 ? "width" : _ref2$dimensionsName,
+      _ref2$xOffset = _ref2.xOffset,
+      xOffset = _ref2$xOffset === void 0 ? 0 : _ref2$xOffset,
+      _ref2$yOffset = _ref2.yOffset,
+      yOffset = _ref2$yOffset === void 0 ? 0 : _ref2$yOffset;
+
+  var sourceElemOffsetData = getElementOffset(sourceElem); // copy position
+
+  var left = sourceElemOffsetData.left,
+      top = sourceElemOffsetData.top;
   left += xOffset;
   top += yOffset;
   targetElem.style.top = top + "px";
-  targetElem.style.left = left + "px";
+  targetElem.style.left = left + "px"; // copy dimensions
 
-  // copy dimensions
-  let {width, height} = sourceElemOffsetData;
+  var width = sourceElemOffsetData.width,
+      height = sourceElemOffsetData.height;
+
   if (dimensionsName === "width" || dimensionsName === "both") {
     targetElem.style.width = width + "px";
   }
+
   if (dimensionsName === "height" || dimensionsName === "both") {
     targetElem.style.height = height + "px";
   }
 }
 
-function isStringANumber (str) {
+function isStringANumber(str) {
   return /^\d+$/.test(str);
-}
+} // won't work with consecutive hyphens
 
-// won't work with consecutive hyphens
 function dashToCamelCase(str) {
-  return str.replace(/-([a-z])/g, (match) => match[1].toUpperCase());
-}
+  return str.replace(/-([a-z])/g, function (match) {
+    return match[1].toUpperCase();
+  });
+} // won't work with two consecutive uppercase letters e.g. "thisIsABundle"
 
-// won't work with two consecutive uppercase letters e.g. "thisIsABundle"
-function camelCaseToDash (str) {
+function camelCaseToDash(str) {
   return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
 // Turn on, off, or toggle multiple switches by clicking an action trigger element
-
 document.addEventListener("click", function (event) {
-  let triggeredSwitches = [];
+  var triggeredSwitches = []; // 1. find all the action triggers that are ancestors of the clicked element (includes `stop` elements)
 
-  // 1. find all the action triggers that are ancestors of the clicked element (includes `stop` elements)
-  let actionElements = getActionElemsFromTargetAndParents(event.target);
+  var actionElements = getActionElemsFromTargetAndParents(event.target); // 2. parse each action trigger (get the name of the switch, the action, and the context)
 
-  // 2. parse each action trigger (get the name of the switch, the action, and the context)
-  let unfilteredActions = getActionsData(actionElements);
+  var unfilteredActions = getActionsData(actionElements); // 3. remove all actions that have been stopped
 
-  // 3. remove all actions that have been stopped
-  let {actionsToTrigger, stopActions} = processActions(unfilteredActions);
+  var _processActions = processActions(unfilteredActions),
+      actionsToTrigger = _processActions.actionsToTrigger,
+      stopActions = _processActions.stopActions; // 4. for each triggered switch
 
-  // 4. for each triggered switch
-  actionsToTrigger.forEach((actionToTrigger) => { // e.g. {name, type, context, elem}
+
+  actionsToTrigger.forEach(function (actionToTrigger) {
+    // e.g. {name, type, context, elem}
     // a. find the switch, using context if present
-    let targetSwitchElements = getTargetSwitchElements(actionToTrigger); 
-    
-    // b. get the switch data from the target elements using the switch name
-    let targetSwitches = getSwitchesByNameFromElements(actionToTrigger.name, targetSwitchElements);
+    var targetSwitchElements = getTargetSwitchElements(actionToTrigger); // b. get the switch data from the target elements using the switch name
 
-    // c. turn switch on or off, applying custom switch name if present
-    targetSwitches.forEach((targetSwitch) => { // e.g. {name, elem, customName, auto}
+    var targetSwitches = getSwitchesByNameFromElements(actionToTrigger.name, targetSwitchElements); // c. turn switch on or off, applying custom switch name if present
+
+    targetSwitches.forEach(function (targetSwitch) {
+      // e.g. {name, elem, customName, auto}
       if (actionToTrigger.type === "toggle") {
         toggle(targetSwitch, actionToTrigger);
       } else if (actionToTrigger.type === "on") {
@@ -1179,26 +1184,27 @@ document.addEventListener("click", function (event) {
       } else if (actionToTrigger.type === "off") {
         turnOff(targetSwitch, actionToTrigger);
       }
-    });
+    }); // c. keep track of all switches and their elements that were affected by this click
 
-    // c. keep track of all switches and their elements that were affected by this click
     triggeredSwitches = triggeredSwitches.concat(targetSwitches);
-  });
+  }); // 5. auto deactivate activated switches (if they should be)
 
-  // 5. auto deactivate activated switches (if they should be)
   automaticallyTurnOffOtherSwitches(triggeredSwitches, stopActions);
-  
 });
 
-function getActionElemsFromTargetAndParents (elem) {
-  let selector = "[data-switch-actions], [data-switch-stop]";
-  let actionElements = getParents({elem, selector, includeCurrentElement: true});
+function getActionElemsFromTargetAndParents(elem) {
+  var selector = "[data-switch-actions], [data-switch-stop]";
+  var actionElements = getParents({
+    elem: elem,
+    selector: selector,
+    includeCurrentElement: true
+  });
   return actionElements;
 }
 
-function getActionsData (actionElements) {
-  return actionElements.reduce((accumulator, actionElement) => {
-    let actionsList = [];
+function getActionsData(actionElements) {
+  return actionElements.reduce(function (accumulator, actionElement) {
+    var actionsList = [];
 
     if (actionElement.matches("[data-switch-actions]")) {
       actionsList = actionsList.concat(parseSwitchActionAttributes(actionElement)); // e.g. [{name: "switchName", type: "toggle", context: "ancestors"}]
@@ -1208,28 +1214,29 @@ function getActionsData (actionElements) {
       actionsList = actionsList.concat(parseSwitchStopAttributes(actionElement)); // e.g. [{name: "switchName"}]
     }
 
-    actionsList.forEach((action) => action.elem = actionElement);
-    return accumulator.concat(actionsList); 
+    actionsList.forEach(function (action) {
+      return action.elem = actionElement;
+    });
+    return accumulator.concat(actionsList);
   }, []);
-}
-
-// remove all actions targeting the same switch name as another action before them
-
+} // remove all actions targeting the same switch name as another action before them
 // Example:
 // [1(toggle), 2(stop), 2(on), 5(on), 6(on), 6(stop), 8(off), 1(on)]
 // 1 toggles, 2 does nothing, 5 turns on, 6 turns on, 8 turns off, and the last 1 doesn't fire
-function processActions (unfilteredActions) { // e.g. [{name: "switchName", type: "toggle", context: "ancestors", elem: elem}]
-  let processedActions = [];
-  let actionsToTrigger = [];
-  let stopActions = [];
 
-  // 1. loop through all unfiltered actions
-  unfilteredActions.forEach((unfilteredAction) => {
-    let isAlreadyProcessed = processedActions.some((processedAction) => processedAction.name === unfilteredAction.name);
 
-    // 2. check if action has already occurred earlier
+function processActions(unfilteredActions) {
+  // e.g. [{name: "switchName", type: "toggle", context: "ancestors", elem: elem}]
+  var processedActions = [];
+  var actionsToTrigger = [];
+  var stopActions = []; // 1. loop through all unfiltered actions
+
+  unfilteredActions.forEach(function (unfilteredAction) {
+    var isAlreadyProcessed = processedActions.some(function (processedAction) {
+      return processedAction.name === unfilteredAction.name;
+    }); // 2. check if action has already occurred earlier
+
     if (!isAlreadyProcessed) {
-
       // 3. if action is not a stop action, add action to actions that should be triggered
       if (unfilteredAction.type) {
         actionsToTrigger.push(unfilteredAction);
@@ -1240,24 +1247,33 @@ function processActions (unfilteredActions) { // e.g. [{name: "switchName", type
       processedActions.push(unfilteredAction);
     }
   });
-
-  return {actionsToTrigger, stopActions};
+  return {
+    actionsToTrigger: actionsToTrigger,
+    stopActions: stopActions
+  };
 }
 
-function getTargetSwitchElements (action) { 
+function getTargetSwitchElements(action) {
   // action: e.g. {name, type, context}
   // type is either "toggle" or "on" or "off"
   // context can either be "ancestors" or a number starting at 0
-  let {name, context, elem} = action;
-  let selector = `[data-switches~='${name}'], [data-switches*='${name}(']`; // matches a space separated name, as well as a name followed by an open parentheses anywhere in the attribute
-  let switchElements;
+  var name = action.name,
+      context = action.context,
+      elem = action.elem;
+  var selector = "[data-switches~='".concat(name, "'], [data-switches*='").concat(name, "(']"); // matches a space separated name, as well as a name followed by an open parentheses anywhere in the attribute
+
+  var switchElements;
 
   if (context) {
     if (context === "ancestors") {
-      switchElements = getParents({elem, selector, includeCurrentElement: true});
+      switchElements = getParents({
+        elem: elem,
+        selector: selector,
+        includeCurrentElement: true
+      });
     } else if (isStringANumber(context)) {
-      let positionNumber = parseInt(context, 10);
-      let allSwitchElements = $$1(selector).arr;
+      var positionNumber = parseInt(context, 10);
+      var allSwitchElements = $$1(selector).arr;
       switchElements = allSwitchElements.splice(positionNumber, 1); // splice will return elem at `positionNumber` index and wrap it an array
     }
   } else {
@@ -1267,71 +1283,77 @@ function getTargetSwitchElements (action) {
   return switchElements;
 }
 
-function getSwitchesByNameFromElements (switchName, switchElements) { // switchElements is elems with attr: e.g. data-switches="switchName(auto, customName)"
+function getSwitchesByNameFromElements(switchName, switchElements) {
+  // switchElements is elems with attr: e.g. data-switches="switchName(auto, customName)"
   // 1. loop through the switch elements
-  let switches = switchElements.map((switchElement) => {
-
+  var switches = switchElements.map(function (switchElement) {
     // 2. get all the switch data
-    let switchesList = parseSwitchAttributes(switchElement); // [{"name", "auto", "customName"}]
-
+    var switchesList = parseSwitchAttributes(switchElement); // [{"name", "auto", "customName"}]
     // 3. filter through the switch data until you find the current switch name
-    let switchData = switchesList.find((switchObj) => switchObj.name === switchName);
 
-    // 4. add the element to the switch data
+    var switchData = switchesList.find(function (switchObj) {
+      return switchObj.name === switchName;
+    }); // 4. add the element to the switch data
+
     switchData.elem = switchElement;
-
     return switchData;
   });
-
   return switches; // e.g. [{name, auto, customName, elem}]
 }
 
-function isOn (switchName, elem) {
-  return elem.matches(`[data-switched-on~=${switchName}]`);
+function isOn(switchName, elem) {
+  return elem.matches("[data-switched-on~=".concat(switchName, "]"));
 }
 
-function getTurnedOnSwitchNamesFromElem (elem) {
-  let switches = parseSwitchedOnAttributes(elem); // [{name}]
-  let switchNames = switches.map((switchObj) => switchObj.name); // ["switchName"]
+function getTurnedOnSwitchNamesFromElem(elem) {
+  var switches = parseSwitchedOnAttributes(elem); // [{name}]
+
+  var switchNames = switches.map(function (switchObj) {
+    return switchObj.name;
+  }); // ["switchName"]
+
   return switchNames;
 }
 
-function turnOn (switchObj, actionObj) { // e.g. {name, elem, customName, auto}
-  let isSwitchOn = isOn(switchObj.name, switchObj.elem);
+function turnOn(switchObj, actionObj) {
+  // e.g. {name, elem, customName, auto}
+  var isSwitchOn = isOn(switchObj.name, switchObj.elem);
 
   if (!isSwitchOn) {
-
     // 1. get turned on switch names
-    let switchNames = getTurnedOnSwitchNamesFromElem(switchObj.elem); // ["switchName"]
-
+    var switchNames = getTurnedOnSwitchNamesFromElem(switchObj.elem); // ["switchName"]
     // 2. add the new switch name and the (optional) custom name 
+
     switchNames.push(switchObj.name);
+
     if (switchObj.customName) {
       switchNames.push(switchObj.customName);
-    } 
+    } // 3. replace old attribute values with new ones (including the old ones too)
 
-    // 3. replace old attribute values with new ones (including the old ones too)
+
     switchObj.elem.setAttribute("data-switched-on", switchNames.join(" "));
   }
 
-  actionObj = Object.assign({}, actionObj, {type: "on"});
-  switchObj.on = isSwitchOn; 
+  actionObj = Object.assign({}, actionObj, {
+    type: "on"
+  });
+  switchObj.on = isSwitchOn;
   triggerCallbacks(switchObj, actionObj);
-} 
+}
 
-function turnOff (switchObj, actionObj) { // e.g. {name, elem, customName, auto}
-  let isSwitchOn = isOn(switchObj.name, switchObj.elem);
+function turnOff(switchObj, actionObj) {
+  // e.g. {name, elem, customName, auto}
+  var isSwitchOn = isOn(switchObj.name, switchObj.elem);
 
   if (isSwitchOn) {
-
     // 1. get turned on switch names
-    let switchNames = getTurnedOnSwitchNamesFromElem(switchObj.elem); // ["switchName"]
-
+    var switchNames = getTurnedOnSwitchNamesFromElem(switchObj.elem); // ["switchName"]
     // 2. remove the passed in switch name and the (optional) custom name 
-    let filteredSwitchNames = switchNames.filter((name) => {
-      let nameMatches = name === switchObj.name;
-      let customNameMatches = name === switchObj.customName;
-      
+
+    var filteredSwitchNames = switchNames.filter(function (name) {
+      var nameMatches = name === switchObj.name;
+      var customNameMatches = name === switchObj.customName;
+
       if (nameMatches || customNameMatches) {
         return false;
       } else {
@@ -1348,13 +1370,15 @@ function turnOff (switchObj, actionObj) { // e.g. {name, elem, customName, auto}
     }
   }
 
-  actionObj = Object.assign({}, actionObj, {type: "off"});
-  switchObj.on = isSwitchOn; 
+  actionObj = Object.assign({}, actionObj, {
+    type: "off"
+  });
+  switchObj.on = isSwitchOn;
   triggerCallbacks(switchObj, actionObj);
 }
 
-function toggle (switchObj, actionObj) {
-  let isSwitchOn = isOn(switchObj.name, switchObj.elem);
+function toggle(switchObj, actionObj) {
+  var isSwitchOn = isOn(switchObj.name, switchObj.elem);
 
   if (isSwitchOn) {
     turnOff(switchObj, actionObj);
@@ -1362,66 +1386,61 @@ function toggle (switchObj, actionObj) {
     turnOn(switchObj, actionObj);
   }
 
-  switchObj.on = isSwitchOn; 
+  switchObj.on = isSwitchOn;
   triggerCallbacks(switchObj, actionObj);
 }
 
-
-function automaticallyTurnOffOtherSwitches (triggeredSwitches, stopActions) { // [{name, elem, customName, auto}]
-
+function automaticallyTurnOffOtherSwitches(triggeredSwitches, stopActions) {
+  // [{name, elem, customName, auto}]
   // 1. get all the turned on switch elements
-  let turnedOnSwitchElements = $$1("[data-switched-on]").arr;
+  var turnedOnSwitchElements = $$1("[data-switched-on]").arr; // 2. for each switch element:
 
-  // 2. for each switch element:
-  turnedOnSwitchElements.forEach((switchElem) => {
-
+  turnedOnSwitchElements.forEach(function (switchElem) {
     // a. get the turned on switch names, e.g. ["switchName", "switchName2"]
-    let turnedOnSwitchNames = getTurnedOnSwitchNamesFromElem(switchElem); 
+    var turnedOnSwitchNames = getTurnedOnSwitchNamesFromElem(switchElem); // b. get all the switch data from the element, e.g. [{name, customName, auto}]
 
-    // b. get all the switch data from the element, e.g. [{name, customName, auto}]
-    let allSwitchesFromTurnedOnElement = parseSwitchAttributes(switchElem);
-
-    let switchesToTurnOff = allSwitchesFromTurnedOnElement.filter((switchObj) => { // {name, customName, auto}
-
+    var allSwitchesFromTurnedOnElement = parseSwitchAttributes(switchElem);
+    var switchesToTurnOff = allSwitchesFromTurnedOnElement.filter(function (switchObj) {
+      // {name, customName, auto}
       // c. filter this array so it only includes the turned on switches
       if (!turnedOnSwitchNames.includes(switchObj.name)) {
         return false;
-      }
+      } // d. filter out switches that have the "auto" property set to "no-auto"
 
-      // d. filter out switches that have the "auto" property set to "no-auto"
+
       if (switchObj.auto === "no-auto") {
         return false;
-      }
+      } // e. filter out switches whose actions were stopped
 
-      // e. filter out switches whose actions were stopped
-      let switchHasBeenStopped = stopActions.find((stopAction) => stopAction.name === switchObj.name);
+
+      var switchHasBeenStopped = stopActions.find(function (stopAction) {
+        return stopAction.name === switchObj.name;
+      });
+
       if (switchHasBeenStopped) {
         return false;
-      }
+      } // f. filter out switches that were already activated (by matching their name AND element)
 
-      // f. filter out switches that were already activated (by matching their name AND element)
-      let switchHasBeenProcessed = triggeredSwitches.find((processedSwitch) => processedSwitch.name === switchObj.name && processedSwitch.elem === switchElem);
+
+      var switchHasBeenProcessed = triggeredSwitches.find(function (processedSwitch) {
+        return processedSwitch.name === switchObj.name && processedSwitch.elem === switchElem;
+      });
+
       if (switchHasBeenProcessed) {
         return false;
       }
 
       return true;
+    }); // f. turn off every switch in this final list
 
-    });
-
-    // f. turn off every switch in this final list
-    switchesToTurnOff.forEach((switchObj) => {
+    switchesToTurnOff.forEach(function (switchObj) {
       switchObj.elem = switchElem;
       turnOff(switchObj);
     });
-    
   });
 }
 
-
-
-let callbackList = []; // e.g. [{switchName, switchAction, switchElem, callback}]
-
+var callbackList = []; // e.g. [{switchName, switchAction, switchElem, callback}]
 // parameters to pass in:
 // {switchName, switchAction, switchElem, callback}
 // -------
@@ -1439,21 +1458,22 @@ let callbackList = []; // e.g. [{switchName, switchAction, switchElem, callback}
 // -------
 // Warning: the toggle action triggers two callbacks at the same time: toggle, as well as on/off.
 //          so, if you don't pass in an actionType parameter, your callback might be called twice
-function when (switchObj) { 
+
+function when(switchObj) {
   callbackList.push(switchObj);
 }
 
-function triggerCallbacks (switchObj, actionObj) { // matching on: switchObj.name, actionObj.type, switchObj.elem
+function triggerCallbacks(switchObj, actionObj) {
+  // matching on: switchObj.name, actionObj.type, switchObj.elem
   // switchObj: {name, auto, customName, elem}
   // actionObj: {name, type, context, elem}
-  let objToMatchAgainst = {
+  var objToMatchAgainst = {
     switchName: switchObj.name,
     switchAction: actionObj.type,
     switchElem: switchObj.elem
   };
-
-  callbackList.forEach((callbackData) => {
-    let isMatching = Object.keys(callbackData).every((keyName) => {
+  callbackList.forEach(function (callbackData) {
+    var isMatching = Object.keys(callbackData).every(function (keyName) {
       if (keyName === "callback") {
         return true;
       }
@@ -1467,97 +1487,95 @@ function triggerCallbacks (switchObj, actionObj) { // matching on: switchObj.nam
   });
 }
 
-
 var Switches = {
-  isOn,
-  turnOn, 
-  turnOff,
-  toggle,
-  when
+  isOn: isOn,
+  turnOn: turnOn,
+  turnOff: turnOff,
+  toggle: toggle,
+  when: when
 };
 
-function parseNode (elem, isParentDataAnObject) { 
-  let elemType = elem.getAttribute("data-o-type"); // elemType can be `object` or `list`
+function parseNode(elem, isParentDataAnObject) {
+  var elemType = elem.getAttribute("data-o-type"); // elemType can be `object` or `list`
 
   return {
     elemType: elemType,
     key: isParentDataAnObject ? elem.getAttribute("data-o-key") : null,
     value: elemType === "list" ? [] : getDataFromNode(elem)
   };
-}
-
-// Converts:
+} // Converts:
 // <div data-o-key-example1="1" data-o-key-example2="2"></div>
 // Into:
 // {example1: "1", example2: "2"}
-function getDataFromNode (elem) {
-  let keyPrefix = "data-o-key-";
-  let locationKeyPrefix = "data-l-key-";
-  let keyPrefixLength = keyPrefix.length;
 
-  let returnObj = {};
 
-  forEachAttr(elem, (attrName, attrValue) => {
+function getDataFromNode(elem) {
+  var keyPrefix = "data-o-key-";
+  var locationKeyPrefix = "data-l-key-";
+  var keyPrefixLength = keyPrefix.length;
+  var returnObj = {};
+  forEachAttr(elem, function (attrName, attrValue) {
     if (attrName.indexOf(keyPrefix) === 0) {
-
-      let keyName = attrName.substring(keyPrefixLength);
-      let camelCaseKeyName = dashToCamelCase(keyName);
-
+      var keyName = attrName.substring(keyPrefixLength);
+      var camelCaseKeyName = dashToCamelCase(keyName);
       returnObj[camelCaseKeyName] = attrValue;
-      
     } else if (attrName.indexOf(locationKeyPrefix) === 0) {
+      var _keyName = attrName.substring(keyPrefixLength);
 
-      let keyName = attrName.substring(keyPrefixLength);
-      let camelCaseKeyName = dashToCamelCase(keyName);
-      
-      attrValue = getLocationKeyValue(elem, keyName, attrValue);
-      returnObj[camelCaseKeyName] = attrValue;
+      var _camelCaseKeyName = dashToCamelCase(_keyName);
 
+      attrValue = getLocationKeyValue(elem, _keyName, attrValue);
+      returnObj[_camelCaseKeyName] = attrValue;
     }
   });
-
   return returnObj;
-}
-
-// 1. Find the CLOSEST `[data-o-type="object"]`
+} // 1. Find the CLOSEST `[data-o-type="object"]`
 // 2. Get this element's data keys and their values
 // 3. Add these key/values into an object (lower/earlier keys always overwrite higher ones)
 // 4. Start again at (a) until it returns null and you have a full object
-function getDataAndDataSourceElemFromNodeAndAncestors (elem) {
-  let collectedData = {};
-  let selector = '[data-o-type="object"]';
 
+
+function getDataAndDataSourceElemFromNodeAndAncestors(elem) {
+  var collectedData = {};
+  var selector = '[data-o-type="object"]';
   forEachAncestorMatch({
     elem: elem,
-    selector: selector, 
-    callback: function (matchingElem) {
-      let nodeData = getDataFromNode(matchingElem);
+    selector: selector,
+    callback: function callback(matchingElem) {
+      var nodeData = getDataFromNode(matchingElem); // add source element
 
-      // add source element
-      Object.keys(nodeData).forEach((camelCaseKeyName) => {
-        let value = nodeData[camelCaseKeyName];
-        nodeData[camelCaseKeyName] = {value, dataSourceElem: matchingElem};
-      });
-
-      // earlier data, i.e. collectedData, always overwrites new data
+      Object.keys(nodeData).forEach(function (camelCaseKeyName) {
+        var value = nodeData[camelCaseKeyName];
+        nodeData[camelCaseKeyName] = {
+          value: value,
+          dataSourceElem: matchingElem
+        };
+      }); // earlier data, i.e. collectedData, always overwrites new data
       // this is because keys closer to the search source are more likely to belong to it
+
       collectedData = Object.assign(nodeData, collectedData);
     }
   });
-
   return collectedData; // e.g. {exampleTitle: {value: "Hello There!", dataSourceElem}}
-}
+} // helper function, has repeated code from getLocationKeyValue() and setLocationKeyValue()
 
-// helper function, has repeated code from getLocationKeyValue() and setLocationKeyValue()
-function getDataFromLocationString (elem, dashCaseKeyName, locationString) {
+
+function getDataFromLocationString(elem, dashCaseKeyName, locationString) {
   locationString = formatSpaces(locationString);
-  let [selector, elemAttribute] = locationString.split(" "); // e.g. [".selector", "attr:data-x-text"]
-  let targetElem;
+
+  var _locationString$split = locationString.split(" "),
+      _locationString$split2 = _slicedToArray(_locationString$split, 2),
+      selector = _locationString$split2[0],
+      elemAttribute = _locationString$split2[1]; // e.g. [".selector", "attr:data-x-text"]
+
+
+  var targetElem;
 
   if (!selector || selector === "." || elem.matches(selector)) {
     targetElem = elem;
   } else if (selector === "target") {
-    let defaultTargetSelector = `[data-l-target-${dashCaseKeyName}]`;
+    var defaultTargetSelector = "[data-l-target-".concat(dashCaseKeyName, "]");
+
     if (elem.matches(defaultTargetSelector)) {
       targetElem = elem;
     } else {
@@ -1567,14 +1585,21 @@ function getDataFromLocationString (elem, dashCaseKeyName, locationString) {
     targetElem = elem.querySelector(selector);
   }
 
-  return {elemAttribute, targetElem};
+  return {
+    elemAttribute: elemAttribute,
+    targetElem: targetElem
+  };
 }
 
-function getLocationKeyValue (elem, dashCaseKeyName, locationString) {
-  let {elemAttribute, targetElem} = getDataFromLocationString(elem, dashCaseKeyName, locationString);
+function getLocationKeyValue(elem, dashCaseKeyName, locationString) {
+  var _getDataFromLocationS = getDataFromLocationString(elem, dashCaseKeyName, locationString),
+      elemAttribute = _getDataFromLocationS.elemAttribute,
+      targetElem = _getDataFromLocationS.targetElem;
+
   elemAttribute = elemAttribute || "innerText"; // default to innerText
-  let elemValue;
-  
+
+  var elemValue;
+
   if (elemAttribute.indexOf("attr:") === 0) {
     elemAttribute = elemAttribute.substring(5);
     elemValue = targetElem && targetElem.getAttribute(elemAttribute);
@@ -1583,16 +1608,19 @@ function getLocationKeyValue (elem, dashCaseKeyName, locationString) {
   }
 
   return typeof elemValue === "string" ? elemValue.trim() : "";
-}
+} // use like this: setLocationKeyValue(elem, ".selector", "example text")
+// ^ this will default to setting innerText if there's no 2nd argument
 
-// use like this: setLocationKeyValue(elem, ".selector", "example text")
-                                              // ^ this will default to setting innerText if there's no 2nd argument
-function setLocationKeyValue (elem, dashCaseKeyName, locationString, value) {
-  let {elemAttribute, targetElem} = getDataFromLocationString(elem, dashCaseKeyName, locationString);
+
+function setLocationKeyValue(elem, dashCaseKeyName, locationString, value) {
+  var _getDataFromLocationS2 = getDataFromLocationString(elem, dashCaseKeyName, locationString),
+      elemAttribute = _getDataFromLocationS2.elemAttribute,
+      targetElem = _getDataFromLocationS2.targetElem;
+
   elemAttribute = elemAttribute || "innerText"; // default to innerText
 
   if (targetElem) {
-    let valueTrimmed = value.toString().trim();
+    var valueTrimmed = value.toString().trim();
 
     if (elemAttribute.indexOf("attr:") === 0) {
       elemAttribute = elemAttribute.substring(5);
@@ -1601,34 +1629,35 @@ function setLocationKeyValue (elem, dashCaseKeyName, locationString, value) {
       targetElem[elemAttribute] = valueTrimmed;
     }
   }
-}
-
-// utility function for setting a value on a data attribute
+} // utility function for setting a value on a data attribute
 // using a key name that could be EITHER a location key or an output key
-function setValueForKeyName (elem, keyName, value) {
+
+
+function setValueForKeyName(elem, keyName, value) {
   // convert the key name to output and location format
-  let dashCaseKeyName = camelCaseToDash(keyName);
-  let outputAttr = "data-o-key-" + dashCaseKeyName;
-  let locationAttr = "data-l-key-" + dashCaseKeyName;
-  // if the output format is found, set the value of that attribute
+  var dashCaseKeyName = camelCaseToDash(keyName);
+  var outputAttr = "data-o-key-" + dashCaseKeyName;
+  var locationAttr = "data-l-key-" + dashCaseKeyName; // if the output format is found, set the value of that attribute
+
   if (elem.hasAttribute(outputAttr)) {
     elem.setAttribute(outputAttr, value);
-  }
-  // if the location format is found, set the value using `setLocationKeyValue`
+  } // if the location format is found, set the value using `setLocationKeyValue`
+
+
   if (elem.hasAttribute(locationAttr)) {
-    let locationString = elem.getAttribute(locationAttr);
+    var locationString = elem.getAttribute(locationAttr);
     setLocationKeyValue(elem, dashCaseKeyName, locationString, value);
   }
 }
 
-function createDataObjectFromElement (elem) {
-  let nodeData = parseNode(elem, false);
+function createDataObjectFromElement(elem) {
+  var nodeData = parseNode(elem, false);
   return nodeData.value;
 }
 
-function addDataFromElementToDataObject (elem, parentData) {
-  let isParentDataAnObject = !Array.isArray(parentData);
-  let nodeData = parseNode(elem, isParentDataAnObject);
+function addDataFromElementToDataObject(elem, parentData) {
+  var isParentDataAnObject = !Array.isArray(parentData);
+  var nodeData = parseNode(elem, isParentDataAnObject);
 
   if (isParentDataAnObject) {
     if (nodeData.key) {
@@ -1644,78 +1673,73 @@ function addDataFromElementToDataObject (elem, parentData) {
   }
 }
 
-// special properties:
 // * data-o-type (attribute value can be "object" or "list")
 // * data-o-key (attribute value can be any string, but ideally camel cased with no spaces)
 // * data-o-value (attribute value can be any string)
 
+function getDataFromRootNode(rootNode) {
+  var rootData;
 
-function getDataFromRootNode (rootNode) {
-
-  let rootData;
-
-  function getDataFromDom (currentElement, parentData) {
-
+  function getDataFromDom(currentElement, parentData) {
     // can this element's data be parsed?
-    let canElementDataBeParsed = currentElement.hasAttribute("data-o-type"); 
-
-    // if element's data can be parsed, add its data to the current tree of data
+    var canElementDataBeParsed = currentElement.hasAttribute("data-o-type"); // if element's data can be parsed, add its data to the current tree of data
     // otherwise, skip it
-    if (canElementDataBeParsed) {
 
+    if (canElementDataBeParsed) {
       // if there's parent data, add the element's data to it
       // and re-assign parentData to this new iteration's data
       if (parentData) {
         parentData = addDataFromElementToDataObject(currentElement, parentData);
-      }
+      } // if there's no parent data, create new parent data
 
-      // if there's no parent data, create new parent data
+
       if (!parentData && !rootData) {
-
         // create new parent data
-        parentData = createDataObjectFromElement(currentElement);
+        parentData = createDataObjectFromElement(currentElement); // it will also be the original data, since this is the first time through
 
-        // it will also be the original data, since this is the first time through
         rootData = parentData;
-
       } else if (!parentData && rootData) {
-
         // special orphaned data case:
         //   instead of letting orphan data (i.e. two or more objects that don't share 
         //   a single parent) overwrite the root data, merge it in with the current root data
         parentData = addDataFromElementToDataObject(currentElement, rootData);
-
       }
+    } // pass all the collected data to the next iteration
 
-    }
 
-    // pass all the collected data to the next iteration
-    let children = currentElement.children;
+    var children = currentElement.children;
+
     for (var i = 0; i < children.length; i++) {
       getDataFromDom(children[i], parentData);
-    }
+    } // after all the iterations, the original data should have all the parsed data from the DOM
 
-    // after all the iterations, the original data should have all the parsed data from the DOM
+
     return rootData;
-
   }
 
   return getDataFromDom(rootNode);
-
 }
 
-let elemProps = ["id", "className", "type", "src", "value", "checked", "innerText", "innerHTML", "style", "title", "alt", "for", "placeholder"];
-
+var elemProps = ["id", "className", "type", "src", "value", "checked", "innerText", "innerHTML", "style", "title", "alt", "for", "placeholder"];
 var optionsData = {
   // default watch functions
   watchFunctions: {
-    "*": function ({watchElem, watchAttrName, camelCaseKeyName, value, dataSourceElem, watchFuncName, watchFuncArgs, dataTargetElem}) {
+    "*": function _(_ref) {
+      var watchElem = _ref.watchElem,
+          watchAttrName = _ref.watchAttrName,
+          camelCaseKeyName = _ref.camelCaseKeyName,
+          value = _ref.value,
+          dataSourceElem = _ref.dataSourceElem,
+          watchFuncName = _ref.watchFuncName,
+          watchFuncArgs = _ref.watchFuncArgs,
+          dataTargetElem = _ref.dataTargetElem;
+
       // if func is a valid property, set the first arg as its value
       if (elemProps.includes(watchFuncName)) {
         watchElem[watchFuncName] = value;
-      }
+      } // if func is a data attribute, set the first arg as its value
 
-      // if func is a data attribute, set the first arg as its value
+
       if (watchFuncName.startsWith("data-")) {
         watchElem.setAttribute(watchFuncName, value);
       }
@@ -1723,46 +1747,41 @@ var optionsData = {
   }
 };
 
-// README
 // - watch functions are named inside watch attributes and defined inside app code. they run 
 //   usually when the page loads, but not always. they ALWAYS run when data is synced to a data
 //   key that matches their own key 
 //     (e.g. a sync to `data-o-key-name` will trigger => `data-w-key-name`)
-
 // TIPS
 // - if you want a watch function to run every time data in synced, but not on page load, give
 //   it a watch attribute, but not a `data-w` attribute.
-
 // WARNING
 // - watch attrs must be inside or on their data elements. they can't watch data inside themselves
 
-
-function getValueAndDataSourceElemFromKeyName (elem, dashCaseKeyName) {
+function getValueAndDataSourceElemFromKeyName(elem, dashCaseKeyName) {
   // 1. construct the attribute names
-  let outputDataAttributeName = "data-o-key-" + dashCaseKeyName; // e.g. "data-o-key-book-title"
-  let locationDataAttributeName = "data-l-key-" + dashCaseKeyName; // e.g. "data-l-key-book-title"
+  var outputDataAttributeName = "data-o-key-" + dashCaseKeyName; // e.g. "data-o-key-book-title"
 
+  var locationDataAttributeName = "data-l-key-" + dashCaseKeyName; // e.g. "data-l-key-book-title"
   // 2. get the closest element with a matching data attribute (location or output)
-  let selector = `[${outputDataAttributeName}], [${locationDataAttributeName}]`;
-  let dataSourceElem = elem.closest(selector);
 
-  // 3. get the value from the matching attribute
-  let hasOutputDataAttribute = dataSourceElem.hasAttribute(outputDataAttributeName);
+  var selector = "[".concat(outputDataAttributeName, "], [").concat(locationDataAttributeName, "]");
+  var dataSourceElem = elem.closest(selector); // 3. get the value from the matching attribute
+
+  var hasOutputDataAttribute = dataSourceElem.hasAttribute(outputDataAttributeName);
+
   if (hasOutputDataAttribute) {
     return {
-      dataSourceElem,
+      dataSourceElem: dataSourceElem,
       value: dataSourceElem.getAttribute(outputDataAttributeName)
     };
   } else {
-    let locationString = dataSourceElem.getAttribute(locationDataAttributeName);
+    var locationString = dataSourceElem.getAttribute(locationDataAttributeName);
     return {
-      dataSourceElem,
+      dataSourceElem: dataSourceElem,
       value: getLocationKeyValue(dataSourceElem, dashCaseKeyName, locationString)
     };
   }
-}
-
-// callWatchFunctionsOnElem
+} // callWatchFunctionsOnElem
 // -----------------------
 //
 // # What does it do?
@@ -1775,37 +1794,37 @@ function getValueAndDataSourceElemFromKeyName (elem, dashCaseKeyName) {
 // value: the new value being set / synced
 // dataSourceElem: the element that the value comes from, if there is one
 // dataTargetElem: the element that the value is synced into -- not necessarily the watchElem
-function callWatchFunctionsOnElem ({watchElem, watchAttrName, value, dataSourceElem, dataTargetElem}) {
 
+function callWatchFunctionsOnElem(_ref) {
+  var watchElem = _ref.watchElem,
+      watchAttrName = _ref.watchAttrName,
+      value = _ref.value,
+      dataSourceElem = _ref.dataSourceElem,
+      dataTargetElem = _ref.dataTargetElem;
   // get camel case key name
-  let camelCaseKeyName = dashToCamelCase(watchAttrName.substring("data-w-key-".length));
+  var camelCaseKeyName = dashToCamelCase(watchAttrName.substring("data-w-key-".length)); // get the string to be parsed
 
-  // get the string to be parsed
-  let watchAttributeString = watchElem.getAttribute(watchAttrName);
-
-  // parses the watch attribute into a series of function/argument pairs
+  var watchAttributeString = watchElem.getAttribute(watchAttrName); // parses the watch attribute into a series of function/argument pairs
   //   e.g. [{funcName: "func1", args: ["1", "2"]}, {funcName: "func2", args: []}]
-  let listOfFunctionsWithTheirArguments = parseStringWithIndefiniteNumberOfParams(watchAttributeString);
 
-  // call each watch function
-  listOfFunctionsWithTheirArguments.forEach(function ({funcName, args}) {
-    let watchFunc = optionsData.watchFunctions && (optionsData.watchFunctions[funcName] || optionsData.watchFunctions["*"]);
-    
+  var listOfFunctionsWithTheirArguments = parseStringWithIndefiniteNumberOfParams(watchAttributeString); // call each watch function
+
+  listOfFunctionsWithTheirArguments.forEach(function (_ref2) {
+    var funcName = _ref2.funcName,
+        args = _ref2.args;
+    var watchFunc = optionsData.watchFunctions && (optionsData.watchFunctions[funcName] || optionsData.watchFunctions["*"]);
     watchFunc({
-      watchElem, 
-      watchAttrName, 
-      camelCaseKeyName,
-      value, 
-      dataSourceElem,
+      watchElem: watchElem,
+      watchAttrName: watchAttrName,
+      camelCaseKeyName: camelCaseKeyName,
+      value: value,
+      dataSourceElem: dataSourceElem,
       watchFuncName: funcName,
       watchFuncArgs: args,
-      dataTargetElem
+      dataTargetElem: dataTargetElem
     });
   });
-}
-
-
-// # What does it do?
+} // # What does it do?
 // Takes an array of watch elements, loops through them, then loops through all their attributes,
 // gets all the watch attributes and calls them, using the closest output attribute as a data
 // source.
@@ -1821,166 +1840,178 @@ function callWatchFunctionsOnElem ({watchElem, watchAttrName, value, dataSourceE
 //
 //     watchElems: <div data-w data-w-key-x="func1 a" data-w-key-y="func2 b"></div>
 //
-function callMultipleWatchFunctions (watchElems) { 
 
+function callMultipleWatchFunctions(watchElems) {
   // get the watch key prefix
-  let keyPrefix = "data-w-key-";
-  let keyPrefixLength = keyPrefix.length;
+  var keyPrefix = "data-w-key-";
+  var keyPrefixLength = keyPrefix.length; // loop through each watch elem
 
-  // loop through each watch elem
-  watchElems.forEach((watchElem) => {
-
+  watchElems.forEach(function (watchElem) {
     // loop through each attribute of the watch elem
-    forEachAttr(watchElem, (attrName, attrValue) => {
-
+    forEachAttr(watchElem, function (attrName, attrValue) {
       // test to see if the attribute is a watch attribute
       if (attrName.indexOf(keyPrefix) === 0) {
-
         // get dash case key name from watch attribute
-        let dashCaseKeyName = attrName.substring(keyPrefixLength); // e.g. book-title
-
+        var dashCaseKeyName = attrName.substring(keyPrefixLength); // e.g. book-title
         // get the value to set from closest data source
-        let {value, dataSourceElem} = getValueAndDataSourceElemFromKeyName(watchElem, dashCaseKeyName);
 
-        // call the watch function for this attribute, using the value from the closest data source
+        var _getValueAndDataSourc = getValueAndDataSourceElemFromKeyName(watchElem, dashCaseKeyName),
+            value = _getValueAndDataSourc.value,
+            dataSourceElem = _getValueAndDataSourc.dataSourceElem; // call the watch function for this attribute, using the value from the closest data source
+
+
         callWatchFunctionsOnElem({
-          watchElem, 
-          watchAttrName: attrName, 
-          value, 
-          dataSourceElem,
+          watchElem: watchElem,
+          watchAttrName: attrName,
+          value: value,
+          dataSourceElem: dataSourceElem,
           dataTargetElem: dataSourceElem
         });
       }
     });
-
   });
 }
-
-function getWatchElements ({elementWithData, dashCaseKeyName}) {
-  let watchSelector = `[data-w-key-${dashCaseKeyName}]`;
-  let nestedWatchSelector = `:scope [data-o-key-${dashCaseKeyName}] [data-w-key-${dashCaseKeyName}]`;
-  let watchElements = [];
+function getWatchElements(_ref3) {
+  var elementWithData = _ref3.elementWithData,
+      dashCaseKeyName = _ref3.dashCaseKeyName;
+  var watchSelector = "[data-w-key-".concat(dashCaseKeyName, "]");
+  var nestedWatchSelector = ":scope [data-o-key-".concat(dashCaseKeyName, "] [data-w-key-").concat(dashCaseKeyName, "]");
+  var watchElements = [];
 
   if (elementWithData.matches(watchSelector)) {
     watchElements.push(elementWithData);
   }
 
-  let allWatchElements = Array.from(elementWithData.querySelectorAll(watchSelector));
-  let nestedWatchElements = Array.from(elementWithData.querySelectorAll(nestedWatchSelector));
-
-  return watchElements.concat(allWatchElements.filter(el => !nestedWatchElements.includes(el)));
+  var allWatchElements = Array.from(elementWithData.querySelectorAll(watchSelector));
+  var nestedWatchElements = Array.from(elementWithData.querySelectorAll(nestedWatchSelector));
+  return watchElements.concat(allWatchElements.filter(function (el) {
+    return !nestedWatchElements.includes(el);
+  }));
 }
 
-let afterSyncCallbacks = [];
-function afterSync (cb) {
+var afterSyncCallbacks = [];
+function afterSync(cb) {
   afterSyncCallbacks.push(cb);
 }
+function syncDataBetweenElements(_ref) {
+  var sourceElement = _ref.sourceElement,
+      targetElement = _ref.targetElement,
+      shouldTriggerSave = _ref.shouldTriggerSave;
+  var elementsDataWasSyncedInto = []; // 1. Assemble an object from the source element and its ancestors (L or O)
+  // Why look in ancestors for data? because you want to be able to click an edit button anywhere on the page in order to edit the global/root data
 
-function syncDataBetweenElements ({sourceElement, targetElement, shouldTriggerSave}) {
+  var fullDataObject = getDataAndDataSourceElemFromNodeAndAncestors(sourceElement); // 2. Loop through the keys of the assembled object
 
-  let elementsDataWasSyncedInto = [];
+  Object.keys(fullDataObject).forEach(function (camelCaseKeyName) {
+    // e.g. bundleName
+    var originalValue = fullDataObject[camelCaseKeyName].value;
+    var dataSourceElem = fullDataObject[camelCaseKeyName].dataSourceElem;
+    var dashCaseKeyName = camelCaseToDash(camelCaseKeyName); // a. Sync location & output keys:
 
-  // 1. Assemble an object from the source element and its ancestors (L or O)
-    // Why look in ancestors for data? because you want to be able to click an edit button anywhere on the page in order to edit the global/root data
-  let fullDataObject = getDataAndDataSourceElemFromNodeAndAncestors(sourceElement);
+    var _syncToLocationOrOutp = syncToLocationOrOutputKey({
+      targetElement: targetElement,
+      camelCaseKeyName: camelCaseKeyName,
+      dashCaseKeyName: dashCaseKeyName,
+      originalValue: originalValue,
+      dataSourceElem: dataSourceElem
+    }),
+        actualValue = _syncToLocationOrOutp.actualValue,
+        closestMatchingElem = _syncToLocationOrOutp.closestMatchingElem; // b. Sync input keys:
 
-  // 2. Loop through the keys of the assembled object
-  Object.keys(fullDataObject).forEach((camelCaseKeyName) => { // e.g. bundleName
 
-    let originalValue = fullDataObject[camelCaseKeyName].value;
-    let dataSourceElem = fullDataObject[camelCaseKeyName].dataSourceElem;
-    let dashCaseKeyName = camelCaseToDash(camelCaseKeyName);
+    syncToInputKeys({
+      targetElement: targetElement,
+      camelCaseKeyName: camelCaseKeyName,
+      actualValue: actualValue
+    }); // c. Store the closestMatchingElem for later
 
-    // a. Sync location & output keys:
-    let {actualValue, closestMatchingElem} = syncToLocationOrOutputKey({targetElement, camelCaseKeyName, dashCaseKeyName, originalValue, dataSourceElem});
-
-    // b. Sync input keys:
-    syncToInputKeys({targetElement, camelCaseKeyName, actualValue});
-
-    // c. Store the closestMatchingElem for later
     if (closestMatchingElem && elementsDataWasSyncedInto.indexOf(closestMatchingElem) === -1) {
       elementsDataWasSyncedInto.push(closestMatchingElem);
     }
+  }); // 3. Call after sync callbacks
 
+  callAfterSyncCallbacks({
+    elementsDataWasSyncedInto: elementsDataWasSyncedInto,
+    sourceElement: sourceElement,
+    targetElement: targetElement,
+    shouldTriggerSave: shouldTriggerSave,
+    data: fullDataObject
   });
+} // used by saveEventListener.js
+// IMPORTANT: expects an event, not an element
 
-  // 3. Call after sync callbacks
-  callAfterSyncCallbacks({elementsDataWasSyncedInto, sourceElement, targetElement, shouldTriggerSave, data: fullDataObject});
+function triggerSyncAndSave(event) {
+  event.preventDefault(); // 2. find the nearest ancestor element that has the attribute `data-i-sync`
 
-}
-
-// used by saveEventListener.js
-  // IMPORTANT: expects an event, not an element
-function triggerSyncAndSave (event) {
-  event.preventDefault();
-
-  // 2. find the nearest ancestor element that has the attribute `data-i-sync`
-  let syncElement = event.currentTarget.closest("[data-i-sync]");
-
-  // make sure data sync happens after all date is in place 
+  var syncElement = event.currentTarget.closest("[data-i-sync]"); // make sure data sync happens after all date is in place 
   //   e.g. we might want to have the switch action button also set data 
   //        (we currently do this with the inline edit revisions submit button)
-  setTimeout(() => {
 
+  setTimeout(function () {
     // 3. copy data from the data sync element (and its children) back to the source element
     syncDataBetweenElements({
-      sourceElement: syncElement, 
+      sourceElement: syncElement,
       targetElement: $.data(syncElement, "source"),
       shouldTriggerSave: true
     });
-
   });
-}
+} // dataSourceElement: this is the element where the data is coming from
 
+function syncToLocationOrOutputKey(_ref2) {
+  var targetElement = _ref2.targetElement,
+      camelCaseKeyName = _ref2.camelCaseKeyName,
+      dashCaseKeyName = _ref2.dashCaseKeyName,
+      originalValue = _ref2.originalValue,
+      dataSourceElem = _ref2.dataSourceElem;
+  var actualValue; // 1. Find _ONE_ CLOSEST matching key on the target element (L or O)
 
-// dataSourceElement: this is the element where the data is coming from
-function syncToLocationOrOutputKey ({targetElement, camelCaseKeyName, dashCaseKeyName, originalValue, dataSourceElem}) {
+  var dataAttrSelector = "[data-l-key-".concat(dashCaseKeyName, "],[data-o-key-").concat(dashCaseKeyName, "]");
+  var closestMatchingElem = targetElement.closest(dataAttrSelector); // 2. If it exists, replace its value with the value from the assembled object
 
-  let actualValue;
-
-  // 1. Find _ONE_ CLOSEST matching key on the target element (L or O)
-  let dataAttrSelector = `[data-l-key-${dashCaseKeyName}],[data-o-key-${dashCaseKeyName}]`;
-  let closestMatchingElem = targetElement.closest(dataAttrSelector);
-
-  // 2. If it exists, replace its value with the value from the assembled object
   if (closestMatchingElem) {
     // the default value is intended to overwrite the value immediately before it's synced into instead of when the data is originally parsed
     // -- note: it's nice having the default attr on the main data source element and it makes parsing nodes more performant
     actualValue = getValueOrDefaultValue(closestMatchingElem, originalValue, dashCaseKeyName);
+    setValueForKeyName(closestMatchingElem, camelCaseKeyName, actualValue); // 3. Call watch functions
+    // IMPORTANT: We use the element that each key is synced into as the element to search for matching watch attributes
 
-    setValueForKeyName(closestMatchingElem, camelCaseKeyName, actualValue);
-
-    // 3. Call watch functions
-        // IMPORTANT: We use the element that each key is synced into as the element to search for matching watch attributes
-    callWatchFunctions({dashCaseKeyName, parentOfTargetElements: closestMatchingElem, value: actualValue, dataSourceElem});
+    callWatchFunctions({
+      dashCaseKeyName: dashCaseKeyName,
+      parentOfTargetElements: closestMatchingElem,
+      value: actualValue,
+      dataSourceElem: dataSourceElem
+    });
   }
 
-  return {actualValue, closestMatchingElem};
-
+  return {
+    actualValue: actualValue,
+    closestMatchingElem: closestMatchingElem
+  };
 }
 
-function syncToInputKeys ({targetElement, camelCaseKeyName, actualValue}) {
-
+function syncToInputKeys(_ref3) {
+  var targetElement = _ref3.targetElement,
+      camelCaseKeyName = _ref3.camelCaseKeyName,
+      actualValue = _ref3.actualValue;
   // 1. Find _ONE_ CHILD elements of the target element that match a `data-i`
-    // options: radio, select, checkbox, input, textarea, div
-    // how to find: radio.name, select.name, checkbox.name, input.name, div.customAttr
-  let matchingKeyElem = targetElement.querySelector(`[data-i][name='${camelCaseKeyName}'], [data-i][data-i-key='${camelCaseKeyName}']`);
+  // options: radio, select, checkbox, input, textarea, div
+  // how to find: radio.name, select.name, checkbox.name, input.name, div.customAttr
+  var matchingKeyElem = targetElement.querySelector("[data-i][name='".concat(camelCaseKeyName, "'], [data-i][data-i-key='").concat(camelCaseKeyName, "']")); // do nothing if not found
 
-  // do nothing if not found
   if (!matchingKeyElem) {
     return;
-  }
+  } // 2. What type of element is it?
+  // options: radio, select, checkbox, input, textarea, div
+  // how to tell: elem.nodeName for select, textarea, div (this will be fallback default); attr type for radio, checkbox, input (this will be the fallback default)
 
-  // 2. What type of element is it?
-    // options: radio, select, checkbox, input, textarea, div
-    // how to tell: elem.nodeName for select, textarea, div (this will be fallback default); attr type for radio, checkbox, input (this will be the fallback default)
-  let nodeName = matchingKeyElem.nodeName.toLowerCase();  // select, textarea, div, input, other
+
+  var nodeName = matchingKeyElem.nodeName.toLowerCase(); // select, textarea, div, input, other
 
   if (nodeName === "input") {
-    let inputType = matchingKeyElem.getAttribute("type"); // radio, checkbox, text, other
+    var inputType = matchingKeyElem.getAttribute("type"); // radio, checkbox, text, other
 
     if (inputType === "radio") {
-      let matchingValueElem = targetElement.querySelector(`[type='radio'][name='${camelCaseKeyName}'][value='${actualValue}']`);
+      var matchingValueElem = targetElement.querySelector("[type='radio'][name='".concat(camelCaseKeyName, "'][value='").concat(actualValue, "']"));
 
       if (!matchingValueElem) {
         return;
@@ -1999,258 +2030,289 @@ function syncToInputKeys ({targetElement, camelCaseKeyName, actualValue}) {
   } else if (nodeName === "select" || nodeName === "textarea") {
     matchingKeyElem.value = actualValue;
   }
-
 }
 
-function callWatchFunctions ({dashCaseKeyName, parentOfTargetElements, value, dataSourceElem}) {
-  
+function callWatchFunctions(_ref4) {
+  var dashCaseKeyName = _ref4.dashCaseKeyName,
+      parentOfTargetElements = _ref4.parentOfTargetElements,
+      value = _ref4.value,
+      dataSourceElem = _ref4.dataSourceElem;
   // 1. Find ALL CHILD elements of the target element that match a `data-w-key` UNLESS they're children of another matching data-o-key element
-  let watchElems = getWatchElements({elementWithData: parentOfTargetElements, dashCaseKeyName});
-
-  watchElems.forEach((watchElem) => {
+  var watchElems = getWatchElements({
+    elementWithData: parentOfTargetElements,
+    dashCaseKeyName: dashCaseKeyName
+  });
+  watchElems.forEach(function (watchElem) {
     // 2. Call all the watch functions defined by this attribute
     callWatchFunctionsOnElem({
-      watchElem, 
-      watchAttrName: `data-w-key-${dashCaseKeyName}`, 
-      value: value, 
+      watchElem: watchElem,
+      watchAttrName: "data-w-key-".concat(dashCaseKeyName),
+      value: value,
       dataSourceElem: dataSourceElem,
       dataTargetElem: parentOfTargetElements
-    });      
+    });
   });
-
 }
 
-function callAfterSyncCallbacks ({elementsDataWasSyncedInto, sourceElement, targetElement, shouldTriggerSave, data}) {
+function callAfterSyncCallbacks(_ref5) {
+  var elementsDataWasSyncedInto = _ref5.elementsDataWasSyncedInto,
+      sourceElement = _ref5.sourceElement,
+      targetElement = _ref5.targetElement,
+      shouldTriggerSave = _ref5.shouldTriggerSave,
+      data = _ref5.data;
+
   if (afterSyncCallbacks.length > 0) {
-    afterSyncCallbacks.forEach((afterSyncCallback) => {
-      afterSyncCallback({elementsDataWasSyncedInto, sourceElement, targetElement, shouldTriggerSave, data});
+    afterSyncCallbacks.forEach(function (afterSyncCallback) {
+      afterSyncCallback({
+        elementsDataWasSyncedInto: elementsDataWasSyncedInto,
+        sourceElement: sourceElement,
+        targetElement: targetElement,
+        shouldTriggerSave: shouldTriggerSave,
+        data: data
+      });
     });
   }
-}
+} // helpers 
 
 
-// helpers 
-
-function isValueEmpty (value) {
+function isValueEmpty(value) {
   return !value || /^\s*$/.test(value);
 }
 
-function getDefaultValue (elem, dashCaseKeyName) {
+function getDefaultValue(elem, dashCaseKeyName) {
   return elem.getAttribute("data-o-default-" + dashCaseKeyName) || "";
 }
 
-function getValueOrDefaultValue (elem, value, dashCaseKeyName) {
+function getValueOrDefaultValue(elem, value, dashCaseKeyName) {
   return isValueEmpty(value) ? getDefaultValue(elem, dashCaseKeyName) : value;
 }
 
 function initInboundDataSyncEventListener () {
   // 1. watch for when a switch is switched on
   Switches.when({
-    switchAction: "on", 
-    callback: function (switchObj, actionObj) {
-
+    switchAction: "on",
+    callback: function callback(switchObj, actionObj) {
       // make sure data sync happens after all the data is in place. 
       //   e.g. we might want to have the switch action button also set data
       setTimeout(function () {
-
         // 2. check its data attributes to see if the switched on element is a data sync elem
         if (switchObj.elem.hasAttribute("data-i-sync")) {
-
           // 3. copy the data from the action element and its children to this sync elem and its children
           syncDataBetweenElements({
-            sourceElement: actionObj.elem, 
+            sourceElement: actionObj.elem,
             targetElement: switchObj.elem
-          });
+          }); // 4. attach the action element to the switched on element as the `sourceElement`
 
-          // 4. attach the action element to the switched on element as the `sourceElement`
           $$1.data(switchObj.elem, "source", actionObj.elem);
-
         }
-        
       });
     }
   });
 }
 
-// IMPORTANT: PREFER USING THIS OVER THE "CLICK TO SAVE" IF THE DATA CAN BE PLACED IN AN INLINE EDIT FORM
-function initSaveEventListener () {
-
+function initSaveEventListener() {
   // 1. watch for when a form with `data-i-sync` on it is submitted, either by pressing a `data-i-save` button or maybe by pressing enter in an input
   $$1.on("submit", "[data-i-sync]", triggerSyncAndSave);
-
   $$1.on("click", "[data-i-sync] [data-i-trigger-sync]", triggerSyncAndSave);
-
 }
 
-function ajax ({url, method, data, callback}) {
+function ajax(_ref) {
+  var url = _ref.url,
+      method = _ref.method,
+      data = _ref.data,
+      callback = _ref.callback;
   fetch(url, {
     method: method,
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json; charset=utf-8"
     },
-    body: JSON.stringify(data),
-  })
-  .then(res => res.json())
-  .then(res => {
+    body: JSON.stringify(data)
+  }).then(function (res) {
+    return res.json();
+  }).then(function (res) {
     callback(res);
   });
 }
 
-function ajaxSimple (url, method, data, callback) {
-  ajax({url, method, data, callback});
+function ajaxSimple(url, method, data, callback) {
+  ajax({
+    url: url,
+    method: method,
+    data: data,
+    callback: callback
+  });
 }
-
-function ajaxPost (url, data, callback) {
+function ajaxPost(url, data, callback) {
   ajaxSimple(url, "POST", data, callback);
 }
 
-let saveFunctionsLookup = {
+var saveFunctionsLookup = {
   // default save function posts data to /save endpoint
-  defaultSave: function ({data, path, elem}) {
-    ajaxPost("/save", {data, path}, function (res) {});
+  defaultSave: function defaultSave(_ref) {
+    var data = _ref.data,
+        path = _ref.path,
+        elem = _ref.elem;
+    ajaxPost("/save", {
+      data: data,
+      path: path
+    }, function (res) {});
   }
 };
-
-function initSaveFunctions (saveFunctions) {
+function initSaveFunctions(saveFunctions) {
   Object.assign(saveFunctionsLookup, saveFunctions);
 }
+function enableSaveAttribute(afterSync) {
+  afterSync(function (_ref2) {
+    var elementsDataWasSyncedInto = _ref2.elementsDataWasSyncedInto,
+        targetElement = _ref2.targetElement,
+        shouldTriggerSave = _ref2.shouldTriggerSave;
 
-function enableSaveAttribute (afterSync) {
-  afterSync(function ({elementsDataWasSyncedInto, targetElement, shouldTriggerSave}) {
     if (shouldTriggerSave) {
-      elementsDataWasSyncedInto.forEach((elementDataWasSyncedInto) => {
-        callSaveFunction({elementDataWasSyncedInto});
+      elementsDataWasSyncedInto.forEach(function (elementDataWasSyncedInto) {
+        callSaveFunction({
+          elementDataWasSyncedInto: elementDataWasSyncedInto
+        });
       });
     }
   });
 }
-
-function callSaveFunction ({elementDataWasSyncedInto, targetElement}) {
+function callSaveFunction(_ref3) {
+  var elementDataWasSyncedInto = _ref3.elementDataWasSyncedInto,
+      targetElement = _ref3.targetElement;
   // allow two different params that do the same things to be passed into this function: 
   // use `elementDataWasSyncedInto` when syncing, user `targetElement` when creating new data or removing data
   elementDataWasSyncedInto = elementDataWasSyncedInto || targetElement;
-  let saveElement = elementDataWasSyncedInto.closest("[data-o-save-deep], [data-o-save]");
-    
-  if (saveElement) {
-    let isDataInsideElem = saveElement.matches("[data-o-save-deep]");
-    let [ saveFuncName, savePath ] = getSaveFuncNameAndPath(saveElement, isDataInsideElem);
+  var saveElement = elementDataWasSyncedInto.closest("[data-o-save-deep], [data-o-save]");
 
-    let saveFunc = saveFunctionsLookup[saveFuncName];
+  if (saveElement) {
+    var isDataInsideElem = saveElement.matches("[data-o-save-deep]");
+
+    var _getSaveFuncNameAndPa = getSaveFuncNameAndPath(saveElement, isDataInsideElem),
+        _getSaveFuncNameAndPa2 = _slicedToArray(_getSaveFuncNameAndPa, 2),
+        saveFuncName = _getSaveFuncNameAndPa2[0],
+        savePath = _getSaveFuncNameAndPa2[1];
+
+    var saveFunc = saveFunctionsLookup[saveFuncName];
 
     if (saveFunc) {
-      let dataFromSaveElement = isDataInsideElem ? getDataFromRootNode(saveElement) : getDataFromNode(saveElement);
-      saveFunc({data: dataFromSaveElement, elem: elementDataWasSyncedInto, path: savePath});
+      var dataFromSaveElement = isDataInsideElem ? getDataFromRootNode(saveElement) : getDataFromNode(saveElement);
+      saveFunc({
+        data: dataFromSaveElement,
+        elem: elementDataWasSyncedInto,
+        path: savePath
+      });
     }
   }
 }
+function getSaveFuncNameAndPath(saveElement, isDataInsideElem) {
+  var dashCaseAttrName = isDataInsideElem ? "data-o-save-deep" : "data-o-save";
 
-function getSaveFuncNameAndPath (saveElement, isDataInsideElem) {
-  let dashCaseAttrName = isDataInsideElem ? "data-o-save-deep" : "data-o-save";
-  let [ funcName, savePath ] = getAttributeValueAsArray(saveElement, dashCaseAttrName);
-  let formattedSavePath = savePath && savePath.startsWith("path:") && savePath.substring(5); // remove "path:" from the savePath
-  return [ funcName, formattedSavePath ]; 
+  var _getAttributeValueAsA = getAttributeValueAsArray(saveElement, dashCaseAttrName),
+      _getAttributeValueAsA2 = _slicedToArray(_getAttributeValueAsA, 2),
+      funcName = _getAttributeValueAsA2[0],
+      savePath = _getAttributeValueAsA2[1];
+
+  var formattedSavePath = savePath && savePath.startsWith("path:") && savePath.substring(5); // remove "path:" from the savePath
+
+  return [funcName, formattedSavePath];
 }
 
-function initRemoveAndHideEventListeners () {
-
+function initRemoveAndHideEventListeners() {
   // useful for permanently removing items, especially from a list of similar items
   $$1.on("click", "[data-i-remove]", function (event) {
-
     // 1. find the nearest ancestor element that has the attribute `data-i-sync`
-    let syncElement = event.currentTarget.closest("[data-i-sync]");
+    var syncElement = event.currentTarget.closest("[data-i-sync]"); // 2. get the closest element with data on it
 
-    // 2. get the closest element with data on it
-    let sourceElement = $$1.data(syncElement, "source");
-    let elemWithData = sourceElement.closest('[data-o-type="object"]');
+    var sourceElement = $$1.data(syncElement, "source");
+    var elemWithData = sourceElement.closest('[data-o-type="object"]'); // 3. get parent element (because we can't call the save function on an elem that doesn't exist)
 
-    // 3. get parent element (because we can't call the save function on an elem that doesn't exist)
-    let parentElem = elemWithData.parentNode;
+    var parentElem = elemWithData.parentNode; // 4. remove the data element
 
-    // 4. remove the data element
-    elemWithData.remove();
+    elemWithData.remove(); // 5. save data
 
-    // 5. save data
-    callSaveFunction({targetElement: parentElem});
+    callSaveFunction({
+      targetElement: parentElem
+    });
+  }); // useful for hiding items the user doesn't want visible, but allowing them to add them back later
 
-  });
-
-  // useful for hiding items the user doesn't want visible, but allowing them to add them back later
   $$1.on("click", "[data-i-hide]", function (event) {
-
     // 1. find the nearest ancestor element that has the attribute `data-i-sync`
-    let syncElement = event.currentTarget.closest("[data-i-sync]");
+    var syncElement = event.currentTarget.closest("[data-i-sync]"); // 2. look through the data keys and set ALL their values to empty strings
 
-    // 2. look through the data keys and set ALL their values to empty strings
     forEachAttr(syncElement, function (attrName, attrValue) {
       if (attrName.startsWith("data-o-key-")) {
         syncElement.setAttribute(attrName, "");
       }
-    });
+    }); // 3. save all the data as empty strings
 
-    // 3. save all the data as empty strings
     triggerSyncAndSave(event);
-
   });
-
 }
 
 function initChoiceAndToggleEventListeners () {
-
   // plain choice, using a <div> or <button> or <a>
   $$1.on("click", "[data-i][data-i-key][data-i-value]", function (event) {
     // get key name and value we want to change
-    let keyName = event.currentTarget.getAttribute("data-i-key");
-    let attributeValue = event.currentTarget.getAttribute("data-i-value");
+    var keyName = event.currentTarget.getAttribute("data-i-key");
+    var attributeValue = event.currentTarget.getAttribute("data-i-value"); // set value
 
-    // set value
-    setValue({elem: event.currentTarget, keyName, attributeValue});
-  });
+    setValue({
+      elem: event.currentTarget,
+      keyName: keyName,
+      attributeValue: attributeValue
+    });
+  }); // plain toggle, using a <div> or <button> or <a>
+  // data-i-toggle data-i-key="done" data-i-value="true"
+  // finds matching data-o-key-* and alternates between setting "true" and ""
 
-  // plain toggle, using a <div> or <button> or <a>
-    // data-i-toggle data-i-key="done" data-i-value="true"
-    // finds matching data-o-key-* and alternates between setting "true" and ""
   $$1.on("click", "[data-i-toggle]", function (event) {
-    let keyName = event.currentTarget.getAttribute("data-i-toggle");
+    var keyName = event.currentTarget.getAttribute("data-i-toggle"); // set value
 
-    // set value
-    setValue({elem: event.currentTarget, keyName, attributeValue: "true", toggleValue: true});
-  });
+    setValue({
+      elem: event.currentTarget,
+      keyName: keyName,
+      attributeValue: "true",
+      toggleValue: true
+    });
+  }); // <radio> AND <select>
 
-  // <radio> AND <select>
   $$1.on("change", "[data-i][type='radio'], select[data-i]", function (event) {
     // get key name and value we want to change
-    let keyName = event.currentTarget.getAttribute("name");
-    let attributeValue = event.currentTarget.value;
+    var keyName = event.currentTarget.getAttribute("name");
+    var attributeValue = event.currentTarget.value; // set value
 
-    // set value
-    setValue({elem: event.currentTarget, keyName, attributeValue});
-  });
+    setValue({
+      elem: event.currentTarget,
+      keyName: keyName,
+      attributeValue: attributeValue
+    });
+  }); // <checkbox>
 
-
-  // <checkbox>
   $$1.on("change", "[data-i][type='checkbox']", function (event) {
     // get key name and value we want to change
-    let keyName = event.currentTarget.getAttribute("name");
-    let attributeValue = event.currentTarget.checked ? event.currentTarget.value : "";
+    var keyName = event.currentTarget.getAttribute("name");
+    var attributeValue = event.currentTarget.checked ? event.currentTarget.value : ""; // set value
 
-    // set value
-    setValue({elem: event.currentTarget, keyName, attributeValue});
+    setValue({
+      elem: event.currentTarget,
+      keyName: keyName,
+      attributeValue: attributeValue
+    });
   });
-
 }
 
-
-function setValue ({elem, keyName, attributeValue, toggleValue}) {
-
+function setValue(_ref) {
+  var elem = _ref.elem,
+      keyName = _ref.keyName,
+      attributeValue = _ref.attributeValue,
+      toggleValue = _ref.toggleValue;
   // 1. form the output attribute key name
-  let dashCaseKeyName = camelCaseToDash(keyName);
-  let attributeName = "data-o-key-" + dashCaseKeyName;
+  var dashCaseKeyName = camelCaseToDash(keyName);
+  var attributeName = "data-o-key-" + dashCaseKeyName; // 2. look for the closest element with that output attribute
 
-  // 2. look for the closest element with that output attribute
-  let dataSourceElem = elem.closest("[" + attributeName + "]");
+  var dataSourceElem = elem.closest("[" + attributeName + "]"); // 3. set the `data-o-key-*` attribute representing the selected choice on the choice element
 
-  // 3. set the `data-o-key-*` attribute representing the selected choice on the choice element
   if (!toggleValue) {
     dataSourceElem.setAttribute(attributeName, attributeValue);
   } else {
@@ -2259,394 +2321,412 @@ function setValue ({elem, keyName, attributeValue, toggleValue}) {
     } else {
       dataSourceElem.setAttribute(attributeName, "");
     }
-  }
+  } // 4. call watch functions since the data is changing
 
-  // 4. call watch functions since the data is changing
+
   callWatchFunctions({
-    dashCaseKeyName: dashCaseKeyName, 
-    parentOfTargetElements: dataSourceElem, 
-    value: attributeValue, 
+    dashCaseKeyName: dashCaseKeyName,
+    parentOfTargetElements: dataSourceElem,
+    value: attributeValue,
     dataSourceElem: dataSourceElem
   });
-
 }
 
 function initInputElementEventListener () {
-
   // <input> and <textarea>
   $$1.on("input", "input[data-i], textarea[data-i]", function (event) {
     // 2. get the key name inside the name attribute
-    let camelCaseKeyName = event.currentTarget.getAttribute("name");
-    // 3. convert camel case to dash case
-    let dashCaseKeyName = camelCaseToDash(camelCaseKeyName);
-    // 4. form the attribute name from the dash case key name
-    let attrName = "data-o-key-" + dashCaseKeyName;
-    // 5. get the closest matching [data-o-key-*] element
-    let outputElem = event.currentTarget.closest("[" + attrName + "]");
-    // 6. get the value of the input
-    let newValue = event.currentTarget.value;
-    // 7. set the value of its key to the input's value
-    outputElem.setAttribute(attrName, newValue);
-    // 8. call watch functions
-      // we want this so form validation is easier inside inline edit popovers
-      // todo: figure out how to NOT call this on every keypress, whether that's debouncing it or simply not calling it
+    var camelCaseKeyName = event.currentTarget.getAttribute("name"); // 3. convert camel case to dash case
+
+    var dashCaseKeyName = camelCaseToDash(camelCaseKeyName); // 4. form the attribute name from the dash case key name
+
+    var attrName = "data-o-key-" + dashCaseKeyName; // 5. get the closest matching [data-o-key-*] element
+
+    var outputElem = event.currentTarget.closest("[" + attrName + "]"); // 6. get the value of the input
+
+    var newValue = event.currentTarget.value; // 7. set the value of its key to the input's value
+
+    outputElem.setAttribute(attrName, newValue); // 8. call watch functions
+    // we want this so form validation is easier inside inline edit popovers
+    // todo: figure out how to NOT call this on every keypress, whether that's debouncing it or simply not calling it
+
     callWatchFunctions({
-      dashCaseKeyName, 
-      parentOfTargetElements: outputElem, 
-      value: newValue, 
+      dashCaseKeyName: dashCaseKeyName,
+      parentOfTargetElements: outputElem,
+      value: newValue,
       dataSourceElem: outputElem
     });
   });
-
 }
 
 function initClickToSaveEventListener () {
   $$1.on("click", "[data-i-click-to-save]", function (event) {
-
-    let clickedElem = event.currentTarget;
-    let attributeValue = clickedElem.getAttribute("data-i-click-to-save");
+    var clickedElem = event.currentTarget;
+    var attributeValue = clickedElem.getAttribute("data-i-click-to-save");
 
     if (attributeValue === "closest") {
       // setTimeout gives other click events on this element time to fire before the data is saved
       setTimeout(function () {
-        callSaveFunction({targetElement: clickedElem});
+        callSaveFunction({
+          targetElement: clickedElem
+        });
       });
     }
-
   });
 }
 
-const map = (typeof Map === "function") ? new Map() : (function () {
-	const keys = [];
-	const values = [];
+var map = typeof Map === "function" ? new Map() : function () {
+  var keys = [];
+  var values = [];
+  return {
+    has: function has(key) {
+      return keys.indexOf(key) > -1;
+    },
+    get: function get(key) {
+      return values[keys.indexOf(key)];
+    },
+    set: function set(key, value) {
+      if (keys.indexOf(key) === -1) {
+        keys.push(key);
+        values.push(value);
+      }
+    },
+    "delete": function _delete(key) {
+      var index = keys.indexOf(key);
 
-	return {
-		has(key) {
-			return keys.indexOf(key) > -1;
-		},
-		get(key) {
-			return values[keys.indexOf(key)];
-		},
-		set(key, value) {
-			if (keys.indexOf(key) === -1) {
-				keys.push(key);
-				values.push(value);
-			}
-		},
-		delete(key) {
-			const index = keys.indexOf(key);
-			if (index > -1) {
-				keys.splice(index, 1);
-				values.splice(index, 1);
-			}
-		},
-	}
-})();
+      if (index > -1) {
+        keys.splice(index, 1);
+        values.splice(index, 1);
+      }
+    }
+  };
+}();
 
-let createEvent = (name)=> new Event(name, {bubbles: true});
+var createEvent = function createEvent(name) {
+  return new Event(name, {
+    bubbles: true
+  });
+};
+
 try {
-	new Event('test');
-} catch(e) {
-	// IE does not support `new Event()`
-	createEvent = (name)=> {
-		const evt = document.createEvent('Event');
-		evt.initEvent(name, true, false);
-		return evt;
-	};
+  new Event('test');
+} catch (e) {
+  // IE does not support `new Event()`
+  createEvent = function createEvent(name) {
+    var evt = document.createEvent('Event');
+    evt.initEvent(name, true, false);
+    return evt;
+  };
 }
 
 function assign(ta) {
-	if (!ta || !ta.nodeName || ta.nodeName !== 'TEXTAREA' || map.has(ta)) return;
+  if (!ta || !ta.nodeName || ta.nodeName !== 'TEXTAREA' || map.has(ta)) return;
+  var heightOffset = null;
+  var clientWidth = null;
+  var cachedHeight = null;
 
-	let heightOffset = null;
-	let clientWidth = null;
-	let cachedHeight = null;
+  function init() {
+    var style = window.getComputedStyle(ta, null);
 
-	function init() {
-		const style = window.getComputedStyle(ta, null);
+    if (style.resize === 'vertical') {
+      ta.style.resize = 'none';
+    } else if (style.resize === 'both') {
+      ta.style.resize = 'horizontal';
+    }
 
-		if (style.resize === 'vertical') {
-			ta.style.resize = 'none';
-		} else if (style.resize === 'both') {
-			ta.style.resize = 'horizontal';
-		}
+    if (style.boxSizing === 'content-box') {
+      heightOffset = -(parseFloat(style.paddingTop) + parseFloat(style.paddingBottom));
+    } else {
+      heightOffset = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+    } // Fix when a textarea is not on document body and heightOffset is Not a Number
 
-		if (style.boxSizing === 'content-box') {
-			heightOffset = -(parseFloat(style.paddingTop)+parseFloat(style.paddingBottom));
-		} else {
-			heightOffset = parseFloat(style.borderTopWidth)+parseFloat(style.borderBottomWidth);
-		}
-		// Fix when a textarea is not on document body and heightOffset is Not a Number
-		if (isNaN(heightOffset)) {
-			heightOffset = 0;
-		}
 
-		update();
-	}
+    if (isNaN(heightOffset)) {
+      heightOffset = 0;
+    }
 
-	function changeOverflow(value) {
-		{
-			// Chrome/Safari-specific fix:
-			// When the textarea y-overflow is hidden, Chrome/Safari do not reflow the text to account for the space
-			// made available by removing the scrollbar. The following forces the necessary text reflow.
-			const width = ta.style.width;
-			ta.style.width = '0px';
-			// Force reflow:
-			/* jshint ignore:start */
-			ta.offsetWidth;
-			/* jshint ignore:end */
-			ta.style.width = width;
-		}
+    update();
+  }
 
-		ta.style.overflowY = value;
-	}
+  function changeOverflow(value) {
+    {
+      // Chrome/Safari-specific fix:
+      // When the textarea y-overflow is hidden, Chrome/Safari do not reflow the text to account for the space
+      // made available by removing the scrollbar. The following forces the necessary text reflow.
+      var width = ta.style.width;
+      ta.style.width = '0px'; // Force reflow:
 
-	function getParentOverflows(el) {
-		const arr = [];
+      /* jshint ignore:start */
 
-		while (el && el.parentNode && el.parentNode instanceof Element) {
-			if (el.parentNode.scrollTop) {
-				arr.push({
-					node: el.parentNode,
-					scrollTop: el.parentNode.scrollTop,
-				});
-			}
-			el = el.parentNode;
-		}
+      ta.offsetWidth;
+      /* jshint ignore:end */
 
-		return arr;
-	}
+      ta.style.width = width;
+    }
+    ta.style.overflowY = value;
+  }
 
-	function resize() {
-		if (ta.scrollHeight === 0) {
-			// If the scrollHeight is 0, then the element probably has display:none or is detached from the DOM.
-			return;
-		}
+  function getParentOverflows(el) {
+    var arr = [];
 
-		const overflows = getParentOverflows(ta);
-		const docTop = document.documentElement && document.documentElement.scrollTop; // Needed for Mobile IE (ticket #240)
+    while (el && el.parentNode && el.parentNode instanceof Element) {
+      if (el.parentNode.scrollTop) {
+        arr.push({
+          node: el.parentNode,
+          scrollTop: el.parentNode.scrollTop
+        });
+      }
 
-		ta.style.height = '';
-		ta.style.height = (ta.scrollHeight+heightOffset)+'px';
+      el = el.parentNode;
+    }
 
-		// used to check if an update is actually necessary on window.resize
-		clientWidth = ta.clientWidth;
+    return arr;
+  }
 
-		// prevents scroll-position jumping
-		overflows.forEach(el => {
-			el.node.scrollTop = el.scrollTop;
-		});
+  function resize() {
+    if (ta.scrollHeight === 0) {
+      // If the scrollHeight is 0, then the element probably has display:none or is detached from the DOM.
+      return;
+    }
 
-		if (docTop) {
-			document.documentElement.scrollTop = docTop;
-		}
-	}
+    var overflows = getParentOverflows(ta);
+    var docTop = document.documentElement && document.documentElement.scrollTop; // Needed for Mobile IE (ticket #240)
 
-	function update() {
-		resize();
+    ta.style.height = '';
+    ta.style.height = ta.scrollHeight + heightOffset + 'px'; // used to check if an update is actually necessary on window.resize
 
-		const styleHeight = Math.round(parseFloat(ta.style.height));
-		const computed = window.getComputedStyle(ta, null);
+    clientWidth = ta.clientWidth; // prevents scroll-position jumping
 
-		// Using offsetHeight as a replacement for computed.height in IE, because IE does not account use of border-box
-		var actualHeight = computed.boxSizing === 'content-box' ? Math.round(parseFloat(computed.height)) : ta.offsetHeight;
+    overflows.forEach(function (el) {
+      el.node.scrollTop = el.scrollTop;
+    });
 
-		// The actual height not matching the style height (set via the resize method) indicates that 
-		// the max-height has been exceeded, in which case the overflow should be allowed.
-		if (actualHeight < styleHeight) {
-			if (computed.overflowY === 'hidden') {
-				changeOverflow('scroll');
-				resize();
-				actualHeight = computed.boxSizing === 'content-box' ? Math.round(parseFloat(window.getComputedStyle(ta, null).height)) : ta.offsetHeight;
-			}
-		} else {
-			// Normally keep overflow set to hidden, to avoid flash of scrollbar as the textarea expands.
-			if (computed.overflowY !== 'hidden') {
-				changeOverflow('hidden');
-				resize();
-				actualHeight = computed.boxSizing === 'content-box' ? Math.round(parseFloat(window.getComputedStyle(ta, null).height)) : ta.offsetHeight;
-			}
-		}
+    if (docTop) {
+      document.documentElement.scrollTop = docTop;
+    }
+  }
 
-		if (cachedHeight !== actualHeight) {
-			cachedHeight = actualHeight;
-			const evt = createEvent('autosize:resized');
-			try {
-				ta.dispatchEvent(evt);
-			} catch (err) {
-				// Firefox will throw an error on dispatchEvent for a detached element
-				// https://bugzilla.mozilla.org/show_bug.cgi?id=889376
-			}
-		}
-	}
+  function update() {
+    resize();
+    var styleHeight = Math.round(parseFloat(ta.style.height));
+    var computed = window.getComputedStyle(ta, null); // Using offsetHeight as a replacement for computed.height in IE, because IE does not account use of border-box
 
-	const pageResize = () => {
-		if (ta.clientWidth !== clientWidth) {
-			update();
-		}
-	};
+    var actualHeight = computed.boxSizing === 'content-box' ? Math.round(parseFloat(computed.height)) : ta.offsetHeight; // The actual height not matching the style height (set via the resize method) indicates that 
+    // the max-height has been exceeded, in which case the overflow should be allowed.
 
-	const destroy = (style => {
-		window.removeEventListener('resize', pageResize, false);
-		ta.removeEventListener('input', update, false);
-		ta.removeEventListener('keyup', update, false);
-		ta.removeEventListener('autosize:destroy', destroy, false);
-		ta.removeEventListener('autosize:update', update, false);
+    if (actualHeight < styleHeight) {
+      if (computed.overflowY === 'hidden') {
+        changeOverflow('scroll');
+        resize();
+        actualHeight = computed.boxSizing === 'content-box' ? Math.round(parseFloat(window.getComputedStyle(ta, null).height)) : ta.offsetHeight;
+      }
+    } else {
+      // Normally keep overflow set to hidden, to avoid flash of scrollbar as the textarea expands.
+      if (computed.overflowY !== 'hidden') {
+        changeOverflow('hidden');
+        resize();
+        actualHeight = computed.boxSizing === 'content-box' ? Math.round(parseFloat(window.getComputedStyle(ta, null).height)) : ta.offsetHeight;
+      }
+    }
 
-		Object.keys(style).forEach(key => {
-			ta.style[key] = style[key];
-		});
+    if (cachedHeight !== actualHeight) {
+      cachedHeight = actualHeight;
+      var evt = createEvent('autosize:resized');
 
-		map.delete(ta);
-	}).bind(ta, {
-		height: ta.style.height,
-		resize: ta.style.resize,
-		overflowY: ta.style.overflowY,
-		overflowX: ta.style.overflowX,
-		wordWrap: ta.style.wordWrap,
-	});
+      try {
+        ta.dispatchEvent(evt);
+      } catch (err) {// Firefox will throw an error on dispatchEvent for a detached element
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=889376
+      }
+    }
+  }
 
-	ta.addEventListener('autosize:destroy', destroy, false);
+  var pageResize = function pageResize() {
+    if (ta.clientWidth !== clientWidth) {
+      update();
+    }
+  };
 
-	// IE9 does not fire onpropertychange or oninput for deletions,
-	// so binding to onkeyup to catch most of those events.
-	// There is no way that I know of to detect something like 'cut' in IE9.
-	if ('onpropertychange' in ta && 'oninput' in ta) {
-		ta.addEventListener('keyup', update, false);
-	}
+  var destroy = function (style) {
+    window.removeEventListener('resize', pageResize, false);
+    ta.removeEventListener('input', update, false);
+    ta.removeEventListener('keyup', update, false);
+    ta.removeEventListener('autosize:destroy', destroy, false);
+    ta.removeEventListener('autosize:update', update, false);
+    Object.keys(style).forEach(function (key) {
+      ta.style[key] = style[key];
+    });
+    map["delete"](ta);
+  }.bind(ta, {
+    height: ta.style.height,
+    resize: ta.style.resize,
+    overflowY: ta.style.overflowY,
+    overflowX: ta.style.overflowX,
+    wordWrap: ta.style.wordWrap
+  });
 
-	window.addEventListener('resize', pageResize, false);
-	ta.addEventListener('input', update, false);
-	ta.addEventListener('autosize:update', update, false);
-	ta.style.overflowX = 'hidden';
-	ta.style.wordWrap = 'break-word';
+  ta.addEventListener('autosize:destroy', destroy, false); // IE9 does not fire onpropertychange or oninput for deletions,
+  // so binding to onkeyup to catch most of those events.
+  // There is no way that I know of to detect something like 'cut' in IE9.
 
-	map.set(ta, {
-		destroy,
-		update,
-	});
+  if ('onpropertychange' in ta && 'oninput' in ta) {
+    ta.addEventListener('keyup', update, false);
+  }
 
-	init();
+  window.addEventListener('resize', pageResize, false);
+  ta.addEventListener('input', update, false);
+  ta.addEventListener('autosize:update', update, false);
+  ta.style.overflowX = 'hidden';
+  ta.style.wordWrap = 'break-word';
+  map.set(ta, {
+    destroy: destroy,
+    update: update
+  });
+  init();
 }
 
 function destroy(ta) {
-	const methods = map.get(ta);
-	if (methods) {
-		methods.destroy();
-	}
+  var methods = map.get(ta);
+
+  if (methods) {
+    methods.destroy();
+  }
 }
 
 function update(ta) {
-	const methods = map.get(ta);
-	if (methods) {
-		methods.update();
-	}
+  var methods = map.get(ta);
+
+  if (methods) {
+    methods.update();
+  }
 }
 
-let autosize = null;
+var autosize = null; // Do nothing in Node.js environment and IE8 (or lower)
 
-// Do nothing in Node.js environment and IE8 (or lower)
 if (typeof window === 'undefined' || typeof window.getComputedStyle !== 'function') {
-	autosize = el => el;
-	autosize.destroy = el => el;
-	autosize.update = el => el;
+  autosize = function autosize(el) {
+    return el;
+  };
+
+  autosize.destroy = function (el) {
+    return el;
+  };
+
+  autosize.update = function (el) {
+    return el;
+  };
 } else {
-	autosize = (el, options) => {
-		if (el) {
-			Array.prototype.forEach.call(el.length ? el : [el], x => assign(x));
-		}
-		return el;
-	};
-	autosize.destroy = el => {
-		if (el) {
-			Array.prototype.forEach.call(el.length ? el : [el], destroy);
-		}
-		return el;
-	};
-	autosize.update = el => {
-		if (el) {
-			Array.prototype.forEach.call(el.length ? el : [el], update);
-		}
-		return el;
-	};
+  autosize = function autosize(el, options) {
+    if (el) {
+      Array.prototype.forEach.call(el.length ? el : [el], function (x) {
+        return assign(x);
+      });
+    }
+
+    return el;
+  };
+
+  autosize.destroy = function (el) {
+    if (el) {
+      Array.prototype.forEach.call(el.length ? el : [el], destroy);
+    }
+
+    return el;
+  };
+
+  autosize.update = function (el) {
+    if (el) {
+      Array.prototype.forEach.call(el.length ? el : [el], update);
+    }
+
+    return el;
+  };
 }
 
 var autosize$1 = autosize;
 
 function initEditableAttribute () {
   insertRemakeEditPopoverHtml();
-
   $$1.on("click", "[data-i-editable], [data-i-editable-with-remove], [data-i-editable-with-hide]", function (event) {
-    let editableTriggerElem = event.currentTarget;
-    let [ switchName, editableConfigString ] = getEditableInfo(editableTriggerElem);
-    let editablePopoverElem = document.querySelector(".remake-edit");
-    let editableConfig = processAttributeString(editableConfigString); // [{name, modifier, args: []}]
+    var editableTriggerElem = event.currentTarget;
 
+    var _getEditableInfo = getEditableInfo(editableTriggerElem),
+        _getEditableInfo2 = _slicedToArray(_getEditableInfo, 2),
+        switchName = _getEditableInfo2[0],
+        editableConfigString = _getEditableInfo2[1];
+
+    var editablePopoverElem = document.querySelector(".remake-edit");
+    var editableConfig = processAttributeString(editableConfigString); // [{name, modifier, args: []}]
     // remove old output key attributes
+
     removeOutputDataAttributes({
       elem: editablePopoverElem,
       keep: []
-    });
+    }); // add output key attributes defined in the editable config
 
-    // add output key attributes defined in the editable config
     addDataOutputKeys({
-      elem: editablePopoverElem, 
+      elem: editablePopoverElem,
       config: editableConfig
-    });
+    }); // add form field types to single attribute from editable config
 
-    // add form field types to single attribute from editable config
     addFormFieldsBeingEdited({
-      elem: editablePopoverElem, 
+      elem: editablePopoverElem,
       config: editableConfig
-    });
-    
-    // render html inside the edit popover
-    let remakeEditAreasElem = editablePopoverElem.querySelector(".remake-edit__edit-areas");
-    remakeEditAreasElem.innerHTML = generateRemakeEditAreas({config: editableConfig});
+    }); // render html inside the edit popover
 
-    // copy the layout
+    var remakeEditAreasElem = editablePopoverElem.querySelector(".remake-edit__edit-areas");
+    remakeEditAreasElem.innerHTML = generateRemakeEditAreas({
+      config: editableConfig
+    }); // copy the layout
+
     copyLayout({
-      sourceElem: editableTriggerElem, 
-      targetElem: editablePopoverElem, 
-      dimensionsName: "width", 
-      xOffset: 0, 
+      sourceElem: editableTriggerElem,
+      targetElem: editablePopoverElem,
+      dimensionsName: "width",
+      xOffset: 0,
       yOffset: 0
-    });
+    }); // trigger the switch on
 
-    // trigger the switch on
-    let switchObj = {name: switchName, elem: editablePopoverElem};
-    let actionObj = {name: switchName, elem: editableTriggerElem, type: "on"};
-    Switches.turnOn(switchObj, actionObj);
+    var switchObj = {
+      name: switchName,
+      elem: editablePopoverElem
+    };
+    var actionObj = {
+      name: switchName,
+      elem: editableTriggerElem,
+      type: "on"
+    };
+    Switches.turnOn(switchObj, actionObj); // autosize textarea
 
-    // autosize textarea
-    let textareaElems = Array.from(remakeEditAreasElem.querySelectorAll("textarea"));
+    var textareaElems = Array.from(remakeEditAreasElem.querySelectorAll("textarea"));
     setTimeout(function () {
-      textareaElems.forEach(el => autosize$1(el));
-    });
+      textareaElems.forEach(function (el) {
+        return autosize$1(el);
+      });
+    }); // focus input
 
-    // focus input
-    let firstFormInput = editablePopoverElem.querySelector("textarea, input");
+    var firstFormInput = editablePopoverElem.querySelector("textarea, input");
     firstFormInput.focus();
   });
-
   $$1.on("click", ".remake-edit__button:not([type='submit'])", function (event) {
     event.preventDefault();
   });
 }
 
-function getEditableInfo (elem) {
+function getEditableInfo(elem) {
   if (elem.hasAttribute("data-i-editable")) {
-    return [ "remakeEdit", elem.getAttribute("data-i-editable") ];
+    return ["remakeEdit", elem.getAttribute("data-i-editable")];
   } else if (elem.hasAttribute("data-i-editable-with-remove")) {
-    return [ "remakeEditWithRemove", elem.getAttribute("data-i-editable-with-remove") ];
+    return ["remakeEditWithRemove", elem.getAttribute("data-i-editable-with-remove")];
   } else if (elem.hasAttribute("data-i-editable-with-hide")) {
-    return [ "remakeEditWithHide", elem.getAttribute("data-i-editable-with-hide") ];
+    return ["remakeEditWithHide", elem.getAttribute("data-i-editable-with-hide")];
   }
 }
 
-function removeOutputDataAttributes({elem, keep}) {
-  let attributesToRemove = [];
-
+function removeOutputDataAttributes(_ref) {
+  var elem = _ref.elem,
+      keep = _ref.keep;
+  var attributesToRemove = [];
   forEachAttr(elem, function (attrName, attrValue) {
     if (attrName.startsWith("data-o-key-")) {
       if (!keep.includes(attrName)) {
@@ -2654,264 +2734,130 @@ function removeOutputDataAttributes({elem, keep}) {
       }
     }
   });
-
-  attributesToRemove.forEach(attrName => elem.removeAttribute(attrName));
+  attributesToRemove.forEach(function (attrName) {
+    return elem.removeAttribute(attrName);
+  });
 }
 
-function addDataOutputKeys ({elem, config}) {
-  config.forEach(obj => {
+function addDataOutputKeys(_ref2) {
+  var elem = _ref2.elem,
+      config = _ref2.config;
+  config.forEach(function (obj) {
     elem.setAttribute("data-o-key-" + camelCaseToDash(obj.name), "");
   });
 }
 
-function addFormFieldsBeingEdited ({elem, config}) {
-  let attrValue = config.map(obj => obj.modifier).join(" ");
+function addFormFieldsBeingEdited(_ref3) {
+  var elem = _ref3.elem,
+      config = _ref3.config;
+  var attrValue = config.map(function (obj) {
+    return obj.modifier;
+  }).join(" ");
   elem.setAttribute("data-remake-edit-fields", attrValue);
 }
 
-function generateRemakeEditAreas ({config}) { // e.g. {name: "blogTitle", modifier: "text-single-line", args: []}
-  let outputHtml = "";
-
-  config.forEach(({modifier, name}) => {
-    let formFieldHtml;
+function generateRemakeEditAreas(_ref4) {
+  var config = _ref4.config;
+  // e.g. {name: "blogTitle", modifier: "text-single-line", args: []}
+  var outputHtml = "";
+  config.forEach(function (_ref5) {
+    var modifier = _ref5.modifier,
+        name = _ref5.name;
+    var formFieldHtml;
 
     if (modifier === "text-single-line") {
-      formFieldHtml = `<input class="remake-edit__input" data-i="" name="${name}" type="text">`;
+      formFieldHtml = "<input class=\"remake-edit__input\" data-i=\"\" name=\"".concat(name, "\" type=\"text\">");
     }
 
     if (modifier === "text-multi-line") {
-      formFieldHtml = `<textarea class="remake-edit__textarea" data-i="" name="${name}"></textarea>`;
+      formFieldHtml = "<textarea class=\"remake-edit__textarea\" data-i=\"\" name=\"".concat(name, "\"></textarea>");
     }
 
-    outputHtml += `<div class="remake-edit__edit-area">${formFieldHtml}</div>`;
+    outputHtml += "<div class=\"remake-edit__edit-area\">".concat(formFieldHtml, "</div>");
   });
-
   return outputHtml;
 }
 
-function insertRemakeEditPopoverHtml () {
-  let htmlString = `
-  <style>
-    .remake-edit {
-      box-sizing: border-box;
-      display: none;
-      position: absolute;
-      font-family: inherit;
-    }
-
-    .remake-edit * {
-      box-sizing: border-box;
-    }
-
-    [data-switched-on~="remakeEdit"], [data-switched-on~="remakeEditWithRemove"], [data-switched-on~="remakeEditWithHide"] {
-      display: block;
-    }
-
-    .remake-edit__backdrop {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      z-index: 9;
-    }
-
-    .remake-edit__edit-container {
-      position: absolute;
-      z-index: 10;
-      min-width: 280px;
-    }
-
-    .remake-edit__edit-areas {
-      margin-bottom: 8px;
-    }
-
-    .remake-edit__textarea, .remake-edit__input {
-      display: block;
-      width: 100%;
-      padding: 7px 14px 9px;
-      font-size: 18px;
-      border: none;
-      outline: none;
-      line-height: 1.4em;
-      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
-      border-radius: 5px;
-    }
-
-    .remake-edit__textarea {
-      min-height: 48px;
-      resize: none;
-    }
-
-    .remake-edit__buttons {
-      display: flex;
-    }
-
-    .remake-edit__button {
-      display: inline-block;
-      margin: 0 8px 0 0;
-      padding: 7px 14px 9px;
-      border: 0;
-      outline: none;
-      font-size: 18px;
-      color: #fff;
-      background-color: #228be6;
-      line-height: 1em;
-      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
-      border-radius: 5px;
-      cursor: pointer;
-      user-select: none;
-      text-decoration: none;
-    }
-
-    .remake-edit__button:last-child {
-      margin: 0;
-    }
-
-    .remake-edit__button:hover {
-      background-color: #0b6cbf;
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .remake-edit__button--remove, .remake-edit__button--hide {
-      display: none;
-      background-color: #e03131;
-    }
-
-    .remake-edit__button--remove:hover, .remake-edit__button--hide:hover {
-      background-color: #b42626;
-      color: #fff;
-    }
-
-    [data-switched-on~="remakeEditWithRemove"] .remake-edit__button--remove, [data-switched-on~="remakeEditWithHide"] .remake-edit__button--hide {
-      display: inline-block;
-    }
-
-    .remake-edit__button--cancel {
-      margin-left: auto;
-      background-color: #868E96;
-    }
-
-    .remake-edit__button--cancel:hover {
-      background-color: #64707d;
-      color: #fff;
-    }
-  </style>
-  <div id="remake__auto-generated">
-    <form 
-      class="remake-edit" 
-
-      data-i-sync
-      data-switches="remakeEdit(no-auto) remakeEditWithRemove(no-auto) remakeEditWithHide(no-auto)"
-
-      data-o-type="object"
-    >
-      <div 
-        class="remake-edit__backdrop"
-        data-switch-actions="remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)"
-      ></div>
-      <div class="remake-edit__edit-container">
-        <div class="remake-edit__edit-areas">
-        </div>
-        <div class="remake-edit__buttons">
-          <a 
-            class="remake-edit__button remake-edit__button--remove" 
-            href="#"
-            data-i-remove
-            data-switch-actions="remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)"
-          >remove</a>
-          <a 
-            class="remake-edit__button remake-edit__button--hide" 
-            href="#"
-            data-i-hide
-            data-switch-actions="remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)"
-          >remove</a>
-          <a 
-            class="remake-edit__button remake-edit__button--cancel" 
-            href="#"
-            data-switch-actions="remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)"
-          >cancel</a>
-          <button 
-            class="remake-edit__button remake-edit__button--save" 
-            type="submit"
-            data-switch-actions="remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)"
-          >save</button>
-        </div>
-      </div>
-    </form>
-  </div>`;
-
+function insertRemakeEditPopoverHtml() {
+  var htmlString = "\n  <style>\n    .remake-edit {\n      box-sizing: border-box;\n      display: none;\n      position: absolute;\n      font-family: inherit;\n    }\n\n    .remake-edit * {\n      box-sizing: border-box;\n    }\n\n    [data-switched-on~=\"remakeEdit\"], [data-switched-on~=\"remakeEditWithRemove\"], [data-switched-on~=\"remakeEditWithHide\"] {\n      display: block;\n    }\n\n    .remake-edit__backdrop {\n      position: fixed;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n      background-color: rgba(0, 0, 0, 0.7);\n      z-index: 9;\n    }\n\n    .remake-edit__edit-container {\n      position: absolute;\n      z-index: 10;\n      min-width: 280px;\n    }\n\n    .remake-edit__edit-areas {\n      margin-bottom: 8px;\n    }\n\n    .remake-edit__textarea, .remake-edit__input {\n      display: block;\n      width: 100%;\n      padding: 7px 14px 9px;\n      font-size: 18px;\n      border: none;\n      outline: none;\n      line-height: 1.4em;\n      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);\n      border-radius: 5px;\n    }\n\n    .remake-edit__textarea {\n      min-height: 48px;\n      resize: none;\n    }\n\n    .remake-edit__buttons {\n      display: flex;\n    }\n\n    .remake-edit__button {\n      display: inline-block;\n      margin: 0 8px 0 0;\n      padding: 7px 14px 9px;\n      border: 0;\n      outline: none;\n      font-size: 18px;\n      color: #fff;\n      background-color: #228be6;\n      line-height: 1em;\n      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);\n      border-radius: 5px;\n      cursor: pointer;\n      user-select: none;\n      text-decoration: none;\n    }\n\n    .remake-edit__button:last-child {\n      margin: 0;\n    }\n\n    .remake-edit__button:hover {\n      background-color: #0b6cbf;\n      color: #fff;\n      text-decoration: none;\n    }\n\n    .remake-edit__button--remove, .remake-edit__button--hide {\n      display: none;\n      background-color: #e03131;\n    }\n\n    .remake-edit__button--remove:hover, .remake-edit__button--hide:hover {\n      background-color: #b42626;\n      color: #fff;\n    }\n\n    [data-switched-on~=\"remakeEditWithRemove\"] .remake-edit__button--remove, [data-switched-on~=\"remakeEditWithHide\"] .remake-edit__button--hide {\n      display: inline-block;\n    }\n\n    .remake-edit__button--cancel {\n      margin-left: auto;\n      background-color: #868E96;\n    }\n\n    .remake-edit__button--cancel:hover {\n      background-color: #64707d;\n      color: #fff;\n    }\n  </style>\n  <div id=\"remake__auto-generated\">\n    <form \n      class=\"remake-edit\" \n\n      data-i-sync\n      data-switches=\"remakeEdit(no-auto) remakeEditWithRemove(no-auto) remakeEditWithHide(no-auto)\"\n\n      data-o-type=\"object\"\n    >\n      <div \n        class=\"remake-edit__backdrop\"\n        data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n      ></div>\n      <div class=\"remake-edit__edit-container\">\n        <div class=\"remake-edit__edit-areas\">\n        </div>\n        <div class=\"remake-edit__buttons\">\n          <a \n            class=\"remake-edit__button remake-edit__button--remove\" \n            href=\"#\"\n            data-i-remove\n            data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n          >remove</a>\n          <a \n            class=\"remake-edit__button remake-edit__button--hide\" \n            href=\"#\"\n            data-i-hide\n            data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n          >remove</a>\n          <a \n            class=\"remake-edit__button remake-edit__button--cancel\" \n            href=\"#\"\n            data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n          >cancel</a>\n          <button \n            class=\"remake-edit__button remake-edit__button--save\" \n            type=\"submit\"\n            data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n          >save</button>\n        </div>\n      </div>\n    </form>\n  </div>";
   document.body.insertAdjacentHTML("beforeend", htmlString);
 }
 
 function initAddingItemEventListener () {
   $$1.on("click", "[data-i-new]", function (event) {
-    let triggerElem = event.currentTarget;
-    
-    // parse the data attribute to get the selector and the template name
-    let [templateName, selector, position] = getAttributeValueAsArray(triggerElem, "data-i-new");
+    var triggerElem = event.currentTarget; // parse the data attribute to get the selector and the template name
 
-    // pass the template name into an endpoint and get the resulting html back
-    ajaxPost("/new", {templateName}, function (res) {
-      let {htmlString} = res;
+    var _getAttributeValueAsA = getAttributeValueAsArray(triggerElem, "data-i-new"),
+        _getAttributeValueAsA2 = _slicedToArray(_getAttributeValueAsA, 3),
+        templateName = _getAttributeValueAsA2[0],
+        selector = _getAttributeValueAsA2[1],
+        position = _getAttributeValueAsA2[2]; // pass the template name into an endpoint and get the resulting html back
 
-      // find the closest element matching the selector
-      let listElem = findInParents(triggerElem, selector);
 
-      // insert the rendered template into that element
-      let whereToInsert = position === "top" ? "afterbegin" : "beforeend";
+    ajaxPost("/new", {
+      templateName: templateName
+    }, function (res) {
+      var htmlString = res.htmlString; // find the closest element matching the selector
+
+      var listElem = findInParents(triggerElem, selector); // insert the rendered template into that element
+
+      var whereToInsert = position === "top" ? "afterbegin" : "beforeend";
       listElem.insertAdjacentHTML(whereToInsert, htmlString);
-
       recomputeSavePathOnListElems(listElem, whereToInsert);
-
-      callSaveFunction({targetElement: listElem});
+      callSaveFunction({
+        targetElement: listElem
+      });
 
       if (optionsData.addItemCallback) {
-        let itemElem = position === "top" ? listElem.firstElementChild : listElem.lastElementChild;
-        optionsData.addItemCallback({listElem, itemElem, templateName});
+        var itemElem = position === "top" ? listElem.firstElementChild : listElem.lastElementChild;
+        optionsData.addItemCallback({
+          listElem: listElem,
+          itemElem: itemElem,
+          templateName: templateName
+        });
       }
     });
-
   });
-}
-
-// This feels a little dangerous, like it might make too many small assumptions (assumption 1: listElem contains list items and no other types of elements, assumption 2: the elems in listElem start with the index 0 item)
+} // This feels a little dangerous, like it might make too many small assumptions (assumption 1: listElem contains list items and no other types of elements, assumption 2: the elems in listElem start with the index 0 item)
 // -> This function recomputes any `path:` string arguments inside `data-o-save` or `data-o-save-deep` attributes
 //    these need to be recomputed because a new elem was just added to the beginning or the end of the list so the list items may have shifted (and the new item might not know its own index)
-function recomputeSavePathOnListElems(listElem, whereToInsert) {
-  let newElem = whereToInsert === "afterbegin" ? listElem.firstElementChild : listElem.lastElementChild;
-  let isNormalSave = newElem.matches("[data-o-save]");
-  let isDeepSave = newElem.matches("[data-o-save-deep]");
 
-  // check to see if there's any kind of save attribute on this element and skip it if not
+function recomputeSavePathOnListElems(listElem, whereToInsert) {
+  var newElem = whereToInsert === "afterbegin" ? listElem.firstElementChild : listElem.lastElementChild;
+  var isNormalSave = newElem.matches("[data-o-save]");
+  var isDeepSave = newElem.matches("[data-o-save-deep]"); // check to see if there's any kind of save attribute on this element and skip it if not
+
   if (!isNormalSave && !isDeepSave) {
     return;
-  }
+  } // get the save attribute value
 
-  // get the save attribute value
-  let [ saveFuncName, savePath ] = getSaveFuncNameAndPath(newElem, isDeepSave);
 
-  // if there's no `savePath`, skip processing this list
+  var _getSaveFuncNameAndPa = getSaveFuncNameAndPath(newElem, isDeepSave),
+      _getSaveFuncNameAndPa2 = _slicedToArray(_getSaveFuncNameAndPa, 2),
+      saveFuncName = _getSaveFuncNameAndPa2[0],
+      savePath = _getSaveFuncNameAndPa2[1]; // if there's no `savePath`, skip processing this list
+
+
   if (!savePath) {
     return;
-  }
-
-  // if the path string doesn't end with a period or a number, skip processing this list (because it means the current element isn't an item in an array)
+  } // if the path string doesn't end with a period or a number, skip processing this list (because it means the current element isn't an item in an array)
   // we're checking for a period because the elem's index might be missing at the end of the string and not be rendered -- and we're okay with that
-  let endsWithPeriodOrNumberRegex = /\.\d*$/;
+
+
+  var endsWithPeriodOrNumberRegex = /\.\d*$/;
+
   if (!endsWithPeriodOrNumberRegex.test(savePath)) {
     return;
-  }
+  } // for all the elements inside the listElem, replace the number at the end of the path string with incrementing numbers starting with 0
 
-  // for all the elements inside the listElem, replace the number at the end of the path string with incrementing numbers starting with 0
-  let childElems = listElem.children;
-  let saveAttributeToSet = isNormalSave ? "data-o-save" : "data-o-save-deep";
-  let saveAttributeValueTemplate = saveFuncName + " path:" + savePath;
+
+  var childElems = listElem.children;
+  var saveAttributeToSet = isNormalSave ? "data-o-save" : "data-o-save-deep";
+  var saveAttributeValueTemplate = saveFuncName + " path:" + savePath;
+
   for (var i = 0; i < childElems.length; i++) {
-    let listItemElem = childElems[i];
-    let saveAttributeValue = saveAttributeValueTemplate.replace(endsWithPeriodOrNumberRegex, "." + i);
+    var listItemElem = childElems[i];
+    var saveAttributeValue = saveAttributeValueTemplate.replace(endsWithPeriodOrNumberRegex, "." + i);
     listItemElem.setAttribute(saveAttributeToSet, saveAttributeValue);
   }
 }
@@ -2926,7 +2872,7 @@ var freeSelf = typeof self == 'object' && self && self.Object === Object && self
 var root = freeGlobal || freeSelf || Function('return this')();
 
 /** Built-in value references. */
-var Symbol = root.Symbol;
+var Symbol$1 = root.Symbol;
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -2942,7 +2888,7 @@ var hasOwnProperty = objectProto.hasOwnProperty;
 var nativeObjectToString = objectProto.toString;
 
 /** Built-in value references. */
-var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+var symToStringTag = Symbol$1 ? Symbol$1.toStringTag : undefined;
 
 /**
  * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
@@ -2997,7 +2943,7 @@ var nullTag = '[object Null]',
     undefinedTag = '[object Undefined]';
 
 /** Built-in value references. */
-var symToStringTag$1 = Symbol ? Symbol.toStringTag : undefined;
+var symToStringTag$1 = Symbol$1 ? Symbol$1.toStringTag : undefined;
 
 /**
  * The base implementation of `getTag` without fallbacks for buggy environments.
@@ -5013,9 +4959,8 @@ var merge = createAssigner(function(object, source, srcIndex) {
   baseMerge(object, source, srcIndex);
 });
 
-function initInputEventListeners (options) {
+function initInputEventListeners(options) {
   merge(optionsData, options);
-  
   enableSaveAttribute(afterSync);
   initInboundDataSyncEventListener();
   initSaveEventListener();
@@ -5027,6 +4972,6 @@ function initInputEventListeners (options) {
   initAddingItemEventListener();
 }
 
-let init = initInputEventListeners;
+var init = initInputEventListeners;
 
 export { $$1 as $, Switches, callMultipleWatchFunctions, callSaveFunction, copyLayout, getDataAndDataSourceElemFromNodeAndAncestors, getDataFromNode, getDataFromRootNode, getLocationKeyValue, getValueAndDataSourceElemFromKeyName, init, initInputEventListeners, initSaveFunctions, setLocationKeyValue, setValueForKeyName };

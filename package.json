@@ -9,17 +9,22 @@
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.es6.js",
   "scripts": {
-    "watch": "rollup -c --watch"
+    "watch": "rollup -c rollup.config.js --watch",
+    "build": "rollup -c rollup.config.js"
   },
   "author": "David Miranda",
   "license": "MIT",
   "dependencies": {
-    "autosize": "^4.0.2",
     "delegated-events": "^1.0.10",
     "lodash-es": "^4.17.11"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
     "rollup": "^1.16.2",
-    "rollup-plugin-node-resolve": "^5.0.4"
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-node-resolve": "^5.0.4",
+    "rollup-plugin-uglify": "^6.0.2"
   }
 }
