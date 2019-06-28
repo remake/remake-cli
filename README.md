@@ -20,20 +20,20 @@
 5. Provide feedback by [messaging me](https://twitter.com/panphora) on Twitter
 6. Sign up for [the newsletter](https://newsletter.remakejs.com/) to get updates as this framework develops
 
+
 ## Try one of these example web apps: (Built with Remake!)
 
-### [Todos Project](https://github.com/panphora/remake-todos)
+### 📖 [Kanban Board Project (TaskFellow)](https://github.com/panphora/task-fellow)
 
-![Todos screenshot](./docs/remake-todos.png)
+=> ![Taskfellow screenshot](./docs/taskfellow.png)
 
-### [Progress Update Tracker Project (Blipcat)](https://github.com/panphora/blipcat)
+### 🚴 [Progress Update Tracker Project (Blipcat)](https://github.com/panphora/blipcat)
 
-![Blipcat screenshot](./docs/blipcat.png)
+=> ![Blipcat screenshot](./docs/blipcat.png)
 
-### [Kanban board (TaskFellow)](https://github.com/panphora/task-fellow)
+### ✅ [Todos Project](https://github.com/panphora/remake-todos)
 
-![Taskfellow screenshot](./docs/taskfellow.png)
-
+=> ![Todos screenshot](./docs/remake-todos.png)
 
 
 ---
