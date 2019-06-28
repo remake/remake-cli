@@ -2695,6 +2695,114 @@ function generateRemakeEditAreas ({config}) { // e.g. {name: "blogTitle", modifi
 
 function insertRemakeEditPopoverHtml () {
   let htmlString = `
+  <style>
+    .remake-edit {
+      box-sizing: border-box;
+      display: none;
+      position: absolute;
+      font-family: inherit;
+    }
+
+    .remake-edit * {
+      box-sizing: border-box;
+    }
+
+    [data-switched-on~="remakeEdit"], [data-switched-on~="remakeEditWithRemove"], [data-switched-on~="remakeEditWithHide"] {
+      display: block;
+    }
+
+    .remake-edit__backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 9;
+    }
+
+    .remake-edit__edit-container {
+      position: absolute;
+      z-index: 10;
+      min-width: 280px;
+    }
+
+    .remake-edit__edit-areas {
+      margin-bottom: 8px;
+    }
+
+    .remake-edit__textarea, .remake-edit__input {
+      display: block;
+      width: 100%;
+      padding: 7px 14px 9px;
+      font-size: 18px;
+      border: none;
+      outline: none;
+      line-height: 1.4em;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+      border-radius: 5px;
+    }
+
+    .remake-edit__textarea {
+      min-height: 48px;
+      resize: none;
+    }
+
+    .remake-edit__buttons {
+      display: flex;
+    }
+
+    .remake-edit__button {
+      display: inline-block;
+      margin: 0 8px 0 0;
+      padding: 7px 14px 9px;
+      border: 0;
+      outline: none;
+      font-size: 18px;
+      color: #fff;
+      background-color: #228be6;
+      line-height: 1em;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+      border-radius: 5px;
+      cursor: pointer;
+      user-select: none;
+      text-decoration: none;
+    }
+
+    .remake-edit__button:last-child {
+      margin: 0;
+    }
+
+    .remake-edit__button:hover {
+      background-color: #0b6cbf;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .remake-edit__button--remove, .remake-edit__button--hide {
+      display: none;
+      background-color: #e03131;
+    }
+
+    .remake-edit__button--remove:hover, .remake-edit__button--hide:hover {
+      background-color: #b42626;
+      color: #fff;
+    }
+
+    [data-switched-on~="remakeEditWithRemove"] .remake-edit__button--remove, [data-switched-on~="remakeEditWithHide"] .remake-edit__button--hide {
+      display: inline-block;
+    }
+
+    .remake-edit__button--cancel {
+      margin-left: auto;
+      background-color: #868E96;
+    }
+
+    .remake-edit__button--cancel:hover {
+      background-color: #64707d;
+      color: #fff;
+    }
+  </style>
   <div id="remake__auto-generated">
     <form 
       class="remake-edit" 
