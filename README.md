@@ -25,15 +25,15 @@
 
 ### 📖 [Kanban Board Project (TaskFellow)](https://github.com/panphora/task-fellow)
 
-=> ![Taskfellow screenshot](./docs/taskfellow.png)
+![Taskfellow screenshot](./docs/taskfellow.png)
 
 ### 🚴 [Progress Update Tracker Project (Blipcat)](https://github.com/panphora/blipcat)
 
-=> ![Blipcat screenshot](./docs/blipcat.png)
+![Blipcat screenshot](./docs/blipcat.png)
 
 ### ✅ [Todos Project](https://github.com/panphora/remake-todos)
 
-=> ![Todos screenshot](./docs/remake-todos.png)
+![Todos screenshot](./docs/remake-todos.png)
 
 
 ---
