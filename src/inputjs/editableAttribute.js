@@ -155,6 +155,7 @@ function insertRemakeEditPopoverHtml () {
       position: absolute;
       z-index: 10;
       min-width: 280px;
+      width: 100%;
     }
 
     .remake-edit__edit-areas {
