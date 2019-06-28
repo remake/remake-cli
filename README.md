@@ -23,11 +23,11 @@
 
 ## Try one of these example web apps: (Built with Remake!)
 
-### 📖 [Kanban Board Project (TaskFellow)](https://github.com/panphora/task-fellow)
+### 📖 [Kanban Board Project (i.e. "TaskFellow")](https://github.com/panphora/task-fellow)
 
 ![Taskfellow screenshot](./docs/taskfellow.png)
 
-### 🚴 [Progress Update Tracker Project (Blipcat)](https://github.com/panphora/blipcat)
+### 🚴 [Progress Update Tracker Project (i.e. "Blipcat")](https://github.com/panphora/blipcat)
 
 ![Blipcat screenshot](./docs/blipcat.png)
 
