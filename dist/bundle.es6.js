@@ -2152,10 +2152,12 @@ var saveFunctionsLookup = {
   defaultSave: function defaultSave(_ref) {
     var data = _ref.data,
         path = _ref.path,
+        saveToId = _ref.saveToId,
         elem = _ref.elem;
     ajaxPost("/save", {
       data: data,
-      path: path
+      path: path,
+      saveToId: saveToId
     }, function (res) {});
   }
 };
@@ -2188,10 +2190,11 @@ function callSaveFunction(_ref3) {
   if (saveElement) {
     var isDataInsideElem = saveElement.matches("[data-o-save-deep]");
 
-    var _getSaveFuncNameAndPa = getSaveFuncNameAndPath(saveElement, isDataInsideElem),
-        _getSaveFuncNameAndPa2 = _slicedToArray(_getSaveFuncNameAndPa, 2),
-        saveFuncName = _getSaveFuncNameAndPa2[0],
-        savePath = _getSaveFuncNameAndPa2[1];
+    var _getSaveFuncInfo = getSaveFuncInfo(saveElement, isDataInsideElem),
+        _getSaveFuncInfo2 = _slicedToArray(_getSaveFuncInfo, 3),
+        saveFuncName = _getSaveFuncInfo2[0],
+        savePath = _getSaveFuncInfo2[1],
+        saveToId = _getSaveFuncInfo2[2];
 
     var saveFunc = saveFunctionsLookup[saveFuncName];
 
@@ -2200,22 +2203,27 @@ function callSaveFunction(_ref3) {
       saveFunc({
         data: dataFromSaveElement,
         elem: elementDataWasSyncedInto,
-        path: savePath
+        path: savePath,
+        saveToId: saveToId
       });
     }
   }
 }
-function getSaveFuncNameAndPath(saveElement, isDataInsideElem) {
+function getSaveFuncInfo(saveElement, isDataInsideElem) {
   var dashCaseAttrName = isDataInsideElem ? "data-o-save-deep" : "data-o-save";
-
-  var _getAttributeValueAsA = getAttributeValueAsArray(saveElement, dashCaseAttrName),
-      _getAttributeValueAsA2 = _slicedToArray(_getAttributeValueAsA, 2),
-      funcName = _getAttributeValueAsA2[0],
-      savePath = _getAttributeValueAsA2[1];
-
-  var formattedSavePath = savePath && savePath.startsWith("path:") && savePath.substring(5); // remove "path:" from the savePath
-
-  return [funcName, formattedSavePath];
+  var args = getAttributeValueAsArray(saveElement, dashCaseAttrName);
+  var funcName, savePath, saveToId;
+  args.forEach(function (arg) {
+    if (arg.startsWith("path:")) {
+      savePath = arg.substring(5);
+    } else if (arg.startsWith("id:")) {
+      saveToId = arg.substring(3);
+    } else {
+      funcName = arg;
+    }
+  });
+  funcName = funcName || "defaultSave";
+  return [funcName, savePath, saveToId];
 }
 
 function initRemoveAndHideEventListeners() {
@@ -2803,7 +2811,6 @@ function initAddingItemEventListener () {
 
       var whereToInsert = position === "top" ? "afterbegin" : "beforeend";
       listElem.insertAdjacentHTML(whereToInsert, htmlString);
-      recomputeSavePathOnListElems(listElem, whereToInsert);
       callSaveFunction({
         targetElement: listElem
       });
@@ -2818,48 +2825,6 @@ function initAddingItemEventListener () {
       }
     });
   });
-} // This feels a little dangerous, like it might make too many small assumptions (assumption 1: listElem contains list items and no other types of elements, assumption 2: the elems in listElem start with the index 0 item)
-// -> This function recomputes any `path:` string arguments inside `data-o-save` or `data-o-save-deep` attributes
-//    these need to be recomputed because a new elem was just added to the beginning or the end of the list so the list items may have shifted (and the new item might not know its own index)
-
-function recomputeSavePathOnListElems(listElem, whereToInsert) {
-  var newElem = whereToInsert === "afterbegin" ? listElem.firstElementChild : listElem.lastElementChild;
-  var isNormalSave = newElem.matches("[data-o-save]");
-  var isDeepSave = newElem.matches("[data-o-save-deep]"); // check to see if there's any kind of save attribute on this element and skip it if not
-
-  if (!isNormalSave && !isDeepSave) {
-    return;
-  } // get the save attribute value
-
-
-  var _getSaveFuncNameAndPa = getSaveFuncNameAndPath(newElem, isDeepSave),
-      _getSaveFuncNameAndPa2 = _slicedToArray(_getSaveFuncNameAndPa, 2),
-      saveFuncName = _getSaveFuncNameAndPa2[0],
-      savePath = _getSaveFuncNameAndPa2[1]; // if there's no `savePath`, skip processing this list
-
-
-  if (!savePath) {
-    return;
-  } // if the path string doesn't end with a period or a number, skip processing this list (because it means the current element isn't an item in an array)
-  // we're checking for a period because the elem's index might be missing at the end of the string and not be rendered -- and we're okay with that
-
-
-  var endsWithPeriodOrNumberRegex = /\.\d*$/;
-
-  if (!endsWithPeriodOrNumberRegex.test(savePath)) {
-    return;
-  } // for all the elements inside the listElem, replace the number at the end of the path string with incrementing numbers starting with 0
-
-
-  var childElems = listElem.children;
-  var saveAttributeToSet = isNormalSave ? "data-o-save" : "data-o-save-deep";
-  var saveAttributeValueTemplate = saveFuncName + " path:" + savePath;
-
-  for (var i = 0; i < childElems.length; i++) {
-    var listItemElem = childElems[i];
-    var saveAttributeValue = saveAttributeValueTemplate.replace(endsWithPeriodOrNumberRegex, "." + i);
-    listItemElem.setAttribute(saveAttributeToSet, saveAttributeValue);
-  }
 }
 
 /** Detect free variable `global` from Node.js. */

@@ -4,8 +4,8 @@ import { getAttributeValueAsArray } from '../parse-data-attributes';
 
 let saveFunctionsLookup = {
   // default save function posts data to /save endpoint
-  defaultSave: function ({data, path, elem}) {
-    ajaxPost("/save", {data, path}, function (res) {});
+  defaultSave: function ({data, path, saveToId, elem}) {
+    ajaxPost("/save", {data, path, saveToId}, function (res) {});
   }
 };
 
@@ -31,23 +31,42 @@ export function callSaveFunction ({elementDataWasSyncedInto, targetElement}) {
     
   if (saveElement) {
     let isDataInsideElem = saveElement.matches("[data-o-save-deep]");
-    let [ saveFuncName, savePath ] = getSaveFuncNameAndPath(saveElement, isDataInsideElem);
+    let [ saveFuncName, savePath, saveToId ] = getSaveFuncInfo(saveElement, isDataInsideElem);
 
     let saveFunc = saveFunctionsLookup[saveFuncName];
 
     if (saveFunc) {
       let dataFromSaveElement = isDataInsideElem ? getDataFromRootNode(saveElement) : getDataFromNode(saveElement);
-      saveFunc({data: dataFromSaveElement, elem: elementDataWasSyncedInto, path: savePath});
+      saveFunc({data: dataFromSaveElement, elem: elementDataWasSyncedInto, path: savePath, saveToId});
     }
   }
 }
 
-export function getSaveFuncNameAndPath (saveElement, isDataInsideElem) {
+export function getSaveFuncInfo (saveElement, isDataInsideElem) {
   let dashCaseAttrName = isDataInsideElem ? "data-o-save-deep" : "data-o-save";
-  let [ funcName, savePath ] = getAttributeValueAsArray(saveElement, dashCaseAttrName);
-  let formattedSavePath = savePath && savePath.startsWith("path:") && savePath.substring(5); // remove "path:" from the savePath
-  return [ funcName, formattedSavePath ]; 
+  let args = getAttributeValueAsArray(saveElement, dashCaseAttrName);
+
+  let funcName, savePath, saveToId;
+  args.forEach((arg) => {
+    if (arg.startsWith("path:")) {
+      savePath = arg.substring(5);
+    } else if (arg.startsWith("id:")) {
+      saveToId = arg.substring(3);
+    } else {
+      funcName = arg;
+    }
+  });
+
+  funcName = funcName || "defaultSave";
+
+  return [ funcName, savePath, saveToId ]; 
 }
+
+
+
+
+
+
 
 
 
