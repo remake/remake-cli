@@ -1720,7 +1720,6 @@ function getDataFromRootNode(rootNode) {
   return getDataFromDom(rootNode);
 }
 
-var elemProps = ["id", "className", "type", "src", "value", "checked", "innerText", "innerHTML", "style", "title", "alt", "for", "placeholder"];
 var optionsData = {
   // default watch functions
   watchFunctions: {
@@ -1733,12 +1732,19 @@ var optionsData = {
           watchFuncName = _ref.watchFuncName,
           watchFuncArgs = _ref.watchFuncArgs,
           dataTargetElem = _ref.dataTargetElem;
-
-      // if func is a valid property, set the first arg as its value
-      if (elemProps.includes(watchFuncName)) {
-        watchElem[watchFuncName] = value;
-      } // if func is a data attribute, set the first arg as its value
-
+      // if func is a valid elem property, set that prop to the new value (allow nested props)
+      var listOfProps = watchFuncName.split(".");
+      var currentObj = watchElem;
+      listOfProps.forEach(function (propName, index) {
+        if (index + 1 < listOfProps.length) {
+          currentObj = currentObj[propName];
+        } else {
+          currentObj[propName] = value;
+        }
+      }); // if (elemProps.includes(watchFuncName)) {
+      //   watchElem[watchFuncName] = value;
+      // }
+      // if func is a data attribute, set the first arg as its value
 
       if (watchFuncName.startsWith("data-")) {
         watchElem.setAttribute(watchFuncName, value);
