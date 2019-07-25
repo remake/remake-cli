@@ -12,9 +12,10 @@ export default function () {
     
     // parse the data attribute to get the selector and the template name
     let [templateName, selector, position] = getAttributeValueAsArray(triggerElem, "data-i-new");
+    let appName = $("body").get(0).getAttribute("data-app");
 
     // pass the template name into an endpoint and get the resulting html back
-    ajaxPost("/new", {templateName}, function (res) {
+    ajaxPost("/new", {templateName, appName}, function (res) {
       let {htmlString} = res;
 
       // find the closest element matching the selector

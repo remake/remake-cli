@@ -190,7 +190,7 @@ function insertRemakeEditPopoverHtml () {
       border: 0;
       outline: none;
       font-size: 18px;
-      color: #fff;
+      color: #fff !important;
       background-color: #228be6;
       line-height: 1em;
       box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);

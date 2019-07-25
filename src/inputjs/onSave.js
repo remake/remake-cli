@@ -1,3 +1,4 @@
+import { $ } from '../queryjs';
 import { getDataFromRootNode, getDataFromNode } from "../outputjs";
 import { ajaxPost } from '../hummingbird/lib/ajax';
 import { getAttributeValueAsArray } from '../parse-data-attributes';
@@ -5,7 +6,8 @@ import { getAttributeValueAsArray } from '../parse-data-attributes';
 let saveFunctionsLookup = {
   // default save function posts data to /save endpoint
   defaultSave: function ({data, path, saveToId, elem}) {
-    ajaxPost("/save", {data, path, saveToId}, function (res) {});
+    let appName = $("body").get(0).getAttribute("data-app");
+    ajaxPost("/save", {data, path, saveToId, appName}, function (res) {});
   }
 };
 

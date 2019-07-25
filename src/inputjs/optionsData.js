@@ -8,18 +8,18 @@ export default {
       
       // if func is a valid elem property, set that prop to the new value (allow nested props)
       let listOfProps = watchFuncName.split(".");
-      let currentObj = watchElem;
-      listOfProps.forEach((propName, index) => {
-        if (index + 1 < listOfProps.length) {
-          currentObj = currentObj[propName];
-        } else {
-          currentObj[propName] = value;
-        }
-      });
 
-      // if (elemProps.includes(watchFuncName)) {
-      //   watchElem[watchFuncName] = value;
-      // }
+      // check to make sure it's a valid elem property
+      if (elemProps.includes(listOfProps[0])) {
+        let currentObj = watchElem;
+        listOfProps.forEach((propName, index) => {
+          if (index + 1 < listOfProps.length) {
+            currentObj = currentObj[propName];
+          } else {
+            currentObj[propName] = value;
+          }
+        }); 
+      }
 
       // if func is a data attribute, set the first arg as its value
       if (watchFuncName.startsWith("data-")) {
