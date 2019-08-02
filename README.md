@@ -18,7 +18,7 @@
 3. Read through the [annotated source code](https://gist.github.com/panphora/5f5657e8bb3b418d55eb68d7e17f1ed8) for a simple todo app
 4. Read through the Remake.js [quick reference sheet](https://gist.github.com/panphora/0a71e6394d96ee9efd9d5711702bfc1c)
 5. Provide feedback by [messaging me](https://twitter.com/panphora) on Twitter
-6. Sign up for [the newsletter](https://mailchi.mp/25164c396cf4/remakejs) to get updates as this framework develops
+6. Sign up for [the newsletter](https://mailchi.mp/59def7603a0f/remake) to get updates as this framework develops
 
 
 ## Try one of these example web apps: (Built with Remake!)
