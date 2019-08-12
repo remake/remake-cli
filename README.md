@@ -1,4 +1,4 @@
-# RemakeJS
+# Remake
 
 ## Build web apps quickly
 
@@ -15,10 +15,10 @@
 
 1. [Try the example todos app](https://github.com/panphora/remake-todos), with Remake.js included 
 2. Get it running locally by using the instructions in the [README](https://github.com/panphora/remake-todos/blob/master/README.md)
-3. Read through the [annotated source code](https://quickstart.remakejs.com/) for a simple todo app
-4. Read through the Remake.js [quick reference sheet](https://quickref.remakejs.com)
+3. Read through the [annotated source code](https://gist.github.com/panphora/5f5657e8bb3b418d55eb68d7e17f1ed8) for a simple todo app
+4. Read through the Remake.js [quick reference sheet](https://gist.github.com/panphora/0a71e6394d96ee9efd9d5711702bfc1c)
 5. Provide feedback by [messaging me](https://twitter.com/panphora) on Twitter
-6. Sign up for [the newsletter](https://newsletter.remakejs.com/) to get updates as this framework develops
+6. Sign up for [the newsletter](https://mailchi.mp/59def7603a0f/remake) to get updates as this framework develops
 
 
 ## Try one of these example web apps: (Built with Remake!)
@@ -38,7 +38,7 @@
 
 ---
 
-**Note:** The documentation in the rest of this README is a thorough explanation of all the parts of Remake.js. However, if you're just getting started, it's recommended to start with the [Annotated Todos App](https://quickstart.remakejs.com/) or the [Quick Reference](https://quickref.remakejs.com).
+**Note:** The documentation in the rest of this README is a thorough explanation of all the parts of Remake.js. However, if you're just getting started, it's recommended to start with the [Annotated Todos App](https://gist.github.com/panphora/5f5657e8bb3b418d55eb68d7e17f1ed8) or the [Quick Reference](https://gist.github.com/panphora/0a71e6394d96ee9efd9d5711702bfc1c).
 
 ## A High Level Overview
 
