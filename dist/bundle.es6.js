@@ -2162,12 +2162,10 @@ var saveFunctionsLookup = {
         path = _ref.path,
         saveToId = _ref.saveToId,
         elem = _ref.elem;
-    var appName = $$1("body").get(0).getAttribute("data-app");
     ajaxPost("/save", {
       data: data,
       path: path,
-      saveToId: saveToId,
-      appName: appName
+      saveToId: saveToId
     }, function (res) {});
   }
 };
@@ -2809,13 +2807,11 @@ function initAddingItemEventListener () {
         _getAttributeValueAsA2 = _slicedToArray(_getAttributeValueAsA, 3),
         templateName = _getAttributeValueAsA2[0],
         selector = _getAttributeValueAsA2[1],
-        position = _getAttributeValueAsA2[2];
+        position = _getAttributeValueAsA2[2]; // pass the template name into an endpoint and get the resulting html back
 
-    var appName = $$1("body").get(0).getAttribute("data-app"); // pass the template name into an endpoint and get the resulting html back
 
     ajaxPost("/new", {
-      templateName: templateName,
-      appName: appName
+      templateName: templateName
     }, function (res) {
       var htmlString = res.htmlString; // find the closest element matching the selector
 

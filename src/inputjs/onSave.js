@@ -6,8 +6,7 @@ import { getAttributeValueAsArray } from '../parse-data-attributes';
 let saveFunctionsLookup = {
   // default save function posts data to /save endpoint
   defaultSave: function ({data, path, saveToId, elem}) {
-    let appName = $("body").get(0).getAttribute("data-app");
-    ajaxPost("/save", {data, path, saveToId, appName}, function (res) {});
+    ajaxPost("/save", {data, path, saveToId}, function (res) {});
   }
 };
 
