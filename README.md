@@ -9,7 +9,7 @@
 * **A great experience for your users** Remake is for server-rendered web apps, which means your pages will load and render quickly, use native browser features (like routing and form handling), be accessible out of the gate, and you don't need to include Remake on non-editable pages
 * **An enjoyable development process:** Because of how easy it is to learn and build with, Remake.js excels at helping you create new products _quickly_
 
-**This is an early alpha release.**
+**This is an early alpha release.** [Public Roadmap](https://trello.com/b/BXvugSjT/remake)
 
 ## How to get started
 
