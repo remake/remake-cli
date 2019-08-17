@@ -11,7 +11,7 @@
 
 **This is an early alpha release.** 
 * [Public Roadmap](https://trello.com/b/BXvugSjT/remake)
-* Example Production App: [RequestCreative.com](http://requestcreative.com)
+* Example Production App: [RequestCreative.com](https://requestcreative.com)
 
 ## How to get started
 
