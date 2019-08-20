@@ -234,7 +234,7 @@ function insertRemakeEditPopoverHtml () {
       color: #fff;
     }
   </style>
-  <div id="remake__auto-generated">
+  <div id="remake__auto-generated" data-o-ignore>
     <form 
       class="remake-edit" 
 

@@ -25,6 +25,13 @@ function getDataFromRootNode (rootNode) {
     // can this element's data be parsed?
     let canElementDataBeParsed = currentElement.hasAttribute("data-o-type"); 
 
+    // should we skip this element?
+    let skipElemAndChildren = currentElement.hasAttribute("data-o-ignore");
+
+    if (skipElemAndChildren) {
+      return;
+    }
+
     // if element's data can be parsed, add its data to the current tree of data
     // otherwise, skip it
     if (canElementDataBeParsed) {

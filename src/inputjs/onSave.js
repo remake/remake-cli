@@ -2,11 +2,16 @@ import { $ } from '../queryjs';
 import { getDataFromRootNode, getDataFromNode } from "../outputjs";
 import { ajaxPost } from '../hummingbird/lib/ajax';
 import { getAttributeValueAsArray } from '../parse-data-attributes';
+import optionsData from './optionsData';
 
 let saveFunctionsLookup = {
   // default save function posts data to /save endpoint
   defaultSave: function ({data, path, saveToId, elem}) {
-    ajaxPost("/save", {data, path, saveToId}, function (res) {});
+    ajaxPost("/save", {data, path, saveToId}, function (res) {
+      if (optionsData.defaultSaveCallback) {
+        optionsData.defaultSaveCallback(res);
+      }
+    });
   }
 };
 

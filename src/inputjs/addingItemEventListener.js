@@ -14,8 +14,15 @@ export default function () {
     let [templateName, selector, position] = getAttributeValueAsArray(triggerElem, "data-i-new");
 
     // pass the template name into an endpoint and get the resulting html back
-    ajaxPost("/new", {templateName}, function (res) {
-      let {htmlString} = res;
+    ajaxPost("/new", {templateName}, function (ajaxResponse) {
+      let {htmlString, success} = ajaxResponse;
+
+      if (!success) {
+        if (optionsData.addItemCallback) {
+          optionsData.addItemCallback({templateName, ajaxResponse});
+        }
+        return;
+      }
 
       // find the closest element matching the selector
       let listElem = findInParents(triggerElem, selector);
@@ -28,7 +35,7 @@ export default function () {
 
       if (optionsData.addItemCallback) {
         let itemElem = position === "top" ? listElem.firstElementChild : listElem.lastElementChild;
-        optionsData.addItemCallback({listElem, itemElem, templateName});
+        optionsData.addItemCallback({listElem, itemElem, templateName, ajaxResponse});
       }
     });
 

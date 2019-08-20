@@ -1682,8 +1682,15 @@ function getDataFromRootNode(rootNode) {
 
   function getDataFromDom(currentElement, parentData) {
     // can this element's data be parsed?
-    var canElementDataBeParsed = currentElement.hasAttribute("data-o-type"); // if element's data can be parsed, add its data to the current tree of data
+    var canElementDataBeParsed = currentElement.hasAttribute("data-o-type"); // should we skip this element?
+
+    var skipElemAndChildren = currentElement.hasAttribute("data-o-ignore");
+
+    if (skipElemAndChildren) {
+      return;
+    } // if element's data can be parsed, add its data to the current tree of data
     // otherwise, skip it
+
 
     if (canElementDataBeParsed) {
       // if there's parent data, add the element's data to it
@@ -2166,7 +2173,11 @@ var saveFunctionsLookup = {
       data: data,
       path: path,
       saveToId: saveToId
-    }, function (res) {});
+    }, function (res) {
+      if (optionsData.defaultSaveCallback) {
+        optionsData.defaultSaveCallback(res);
+      }
+    });
   }
 };
 function initSaveFunctions(saveFunctions) {
@@ -2795,7 +2806,7 @@ function generateRemakeEditAreas(_ref4) {
 }
 
 function insertRemakeEditPopoverHtml() {
-  var htmlString = "\n  <style>\n    .remake-edit {\n      box-sizing: border-box;\n      display: none;\n      position: absolute;\n      font-family: inherit;\n    }\n\n    .remake-edit * {\n      box-sizing: border-box;\n    }\n\n    [data-switched-on~=\"remakeEdit\"], [data-switched-on~=\"remakeEditWithRemove\"], [data-switched-on~=\"remakeEditWithHide\"] {\n      display: block;\n    }\n\n    .remake-edit__backdrop {\n      position: fixed;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n      background-color: rgba(0, 0, 0, 0.7);\n      z-index: 9;\n    }\n\n    .remake-edit__edit-container {\n      position: absolute;\n      z-index: 10;\n      min-width: 280px;\n      width: 100%;\n    }\n\n    .remake-edit__edit-areas {\n      margin-bottom: 8px;\n    }\n\n    .remake-edit__textarea, .remake-edit__input {\n      display: block;\n      width: 100%;\n      padding: 7px 14px 9px;\n      font-size: 18px;\n      border: none;\n      outline: none;\n      line-height: 1.4em;\n      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);\n      border-radius: 5px;\n    }\n\n    .remake-edit__textarea {\n      min-height: 48px;\n      resize: none;\n    }\n\n    .remake-edit__buttons {\n      display: flex;\n    }\n\n    .remake-edit__button {\n      display: inline-block;\n      margin: 0 8px 0 0;\n      padding: 7px 14px 9px;\n      border: 0;\n      outline: none;\n      font-size: 18px;\n      color: #fff !important;\n      background-color: #228be6;\n      line-height: 1em;\n      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);\n      border-radius: 5px;\n      cursor: pointer;\n      user-select: none;\n      text-decoration: none;\n    }\n\n    .remake-edit__button:last-child {\n      margin: 0;\n    }\n\n    .remake-edit__button:hover {\n      background-color: #0b6cbf;\n      color: #fff;\n      text-decoration: none;\n    }\n\n    .remake-edit__button--remove, .remake-edit__button--hide {\n      display: none;\n      background-color: #e03131;\n    }\n\n    .remake-edit__button--remove:hover, .remake-edit__button--hide:hover {\n      background-color: #b42626;\n      color: #fff;\n    }\n\n    [data-switched-on~=\"remakeEditWithRemove\"] .remake-edit__button--remove, [data-switched-on~=\"remakeEditWithHide\"] .remake-edit__button--hide {\n      display: inline-block;\n    }\n\n    .remake-edit__button--cancel {\n      margin-left: auto;\n      background-color: #868E96;\n    }\n\n    .remake-edit__button--cancel:hover {\n      background-color: #64707d;\n      color: #fff;\n    }\n  </style>\n  <div id=\"remake__auto-generated\">\n    <form \n      class=\"remake-edit\" \n\n      data-i-sync\n      data-switches=\"remakeEdit(no-auto) remakeEditWithRemove(no-auto) remakeEditWithHide(no-auto)\"\n\n      data-o-type=\"object\"\n    >\n      <div \n        class=\"remake-edit__backdrop\"\n        data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n      ></div>\n      <div class=\"remake-edit__edit-container\">\n        <div class=\"remake-edit__edit-areas\">\n        </div>\n        <div class=\"remake-edit__buttons\">\n          <a \n            class=\"remake-edit__button remake-edit__button--remove\" \n            href=\"#\"\n            data-i-remove\n            data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n          >remove</a>\n          <a \n            class=\"remake-edit__button remake-edit__button--hide\" \n            href=\"#\"\n            data-i-hide\n            data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n          >remove</a>\n          <a \n            class=\"remake-edit__button remake-edit__button--cancel\" \n            href=\"#\"\n            data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n          >cancel</a>\n          <button \n            class=\"remake-edit__button remake-edit__button--save\" \n            type=\"submit\"\n            data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n          >save</button>\n        </div>\n      </div>\n    </form>\n  </div>";
+  var htmlString = "\n  <style>\n    .remake-edit {\n      box-sizing: border-box;\n      display: none;\n      position: absolute;\n      font-family: inherit;\n    }\n\n    .remake-edit * {\n      box-sizing: border-box;\n    }\n\n    [data-switched-on~=\"remakeEdit\"], [data-switched-on~=\"remakeEditWithRemove\"], [data-switched-on~=\"remakeEditWithHide\"] {\n      display: block;\n    }\n\n    .remake-edit__backdrop {\n      position: fixed;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n      background-color: rgba(0, 0, 0, 0.7);\n      z-index: 9;\n    }\n\n    .remake-edit__edit-container {\n      position: absolute;\n      z-index: 10;\n      min-width: 280px;\n      width: 100%;\n    }\n\n    .remake-edit__edit-areas {\n      margin-bottom: 8px;\n    }\n\n    .remake-edit__textarea, .remake-edit__input {\n      display: block;\n      width: 100%;\n      padding: 7px 14px 9px;\n      font-size: 18px;\n      border: none;\n      outline: none;\n      line-height: 1.4em;\n      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);\n      border-radius: 5px;\n    }\n\n    .remake-edit__textarea {\n      min-height: 48px;\n      resize: none;\n    }\n\n    .remake-edit__buttons {\n      display: flex;\n    }\n\n    .remake-edit__button {\n      display: inline-block;\n      margin: 0 8px 0 0;\n      padding: 7px 14px 9px;\n      border: 0;\n      outline: none;\n      font-size: 18px;\n      color: #fff !important;\n      background-color: #228be6;\n      line-height: 1em;\n      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);\n      border-radius: 5px;\n      cursor: pointer;\n      user-select: none;\n      text-decoration: none;\n    }\n\n    .remake-edit__button:last-child {\n      margin: 0;\n    }\n\n    .remake-edit__button:hover {\n      background-color: #0b6cbf;\n      color: #fff;\n      text-decoration: none;\n    }\n\n    .remake-edit__button--remove, .remake-edit__button--hide {\n      display: none;\n      background-color: #e03131;\n    }\n\n    .remake-edit__button--remove:hover, .remake-edit__button--hide:hover {\n      background-color: #b42626;\n      color: #fff;\n    }\n\n    [data-switched-on~=\"remakeEditWithRemove\"] .remake-edit__button--remove, [data-switched-on~=\"remakeEditWithHide\"] .remake-edit__button--hide {\n      display: inline-block;\n    }\n\n    .remake-edit__button--cancel {\n      margin-left: auto;\n      background-color: #868E96;\n    }\n\n    .remake-edit__button--cancel:hover {\n      background-color: #64707d;\n      color: #fff;\n    }\n  </style>\n  <div id=\"remake__auto-generated\" data-o-ignore>\n    <form \n      class=\"remake-edit\" \n\n      data-i-sync\n      data-switches=\"remakeEdit(no-auto) remakeEditWithRemove(no-auto) remakeEditWithHide(no-auto)\"\n\n      data-o-type=\"object\"\n    >\n      <div \n        class=\"remake-edit__backdrop\"\n        data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n      ></div>\n      <div class=\"remake-edit__edit-container\">\n        <div class=\"remake-edit__edit-areas\">\n        </div>\n        <div class=\"remake-edit__buttons\">\n          <a \n            class=\"remake-edit__button remake-edit__button--remove\" \n            href=\"#\"\n            data-i-remove\n            data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n          >remove</a>\n          <a \n            class=\"remake-edit__button remake-edit__button--hide\" \n            href=\"#\"\n            data-i-hide\n            data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n          >remove</a>\n          <a \n            class=\"remake-edit__button remake-edit__button--cancel\" \n            href=\"#\"\n            data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n          >cancel</a>\n          <button \n            class=\"remake-edit__button remake-edit__button--save\" \n            type=\"submit\"\n            data-switch-actions=\"remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)\"\n          >save</button>\n        </div>\n      </div>\n    </form>\n  </div>";
   document.body.insertAdjacentHTML("beforeend", htmlString);
 }
 
@@ -2812,8 +2823,21 @@ function initAddingItemEventListener () {
 
     ajaxPost("/new", {
       templateName: templateName
-    }, function (res) {
-      var htmlString = res.htmlString; // find the closest element matching the selector
+    }, function (ajaxResponse) {
+      var htmlString = ajaxResponse.htmlString,
+          success = ajaxResponse.success;
+
+      if (!success) {
+        if (optionsData.addItemCallback) {
+          optionsData.addItemCallback({
+            templateName: templateName,
+            ajaxResponse: ajaxResponse
+          });
+        }
+
+        return;
+      } // find the closest element matching the selector
+
 
       var listElem = findInParents(triggerElem, selector); // insert the rendered template into that element
 
@@ -2828,7 +2852,8 @@ function initAddingItemEventListener () {
         optionsData.addItemCallback({
           listElem: listElem,
           itemElem: itemElem,
-          templateName: templateName
+          templateName: templateName,
+          ajaxResponse: ajaxResponse
         });
       }
     });
