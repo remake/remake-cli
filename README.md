@@ -9,7 +9,9 @@
 * **A great experience for your users** Remake is for server-rendered web apps, which means your pages will load and render quickly, use native browser features (like routing and form handling), be accessible out of the gate, and you don't need to include Remake on non-editable pages
 * **An enjoyable development process:** Because of how easy it is to learn and build with, Remake.js excels at helping you create new products _quickly_
 
-**This is an early alpha release.**
+**This is an early alpha release.** 
+* [Public Roadmap](https://trello.com/b/BXvugSjT/remake)
+* Example Production App: [RequestCreative.com](https://requestcreative.com)
 
 ## How to get started
 
@@ -17,8 +19,9 @@
 2. Get it running locally by using the instructions in the [README](https://github.com/panphora/remake-todos/blob/master/README.md)
 3. Read through the [annotated source code](https://gist.github.com/panphora/5f5657e8bb3b418d55eb68d7e17f1ed8) for a simple todo app
 4. Read through the Remake.js [quick reference sheet](https://gist.github.com/panphora/0a71e6394d96ee9efd9d5711702bfc1c)
-5. Provide feedback by [messaging me](https://twitter.com/panphora) on Twitter
-6. Sign up for [the newsletter](https://mailchi.mp/59def7603a0f/remake) to get updates as this framework develops
+5. [Watch a tutorial on how to build a Trello clone in about 30 minutes](https://www.youtube.com/watch?v=H_FvfswKufo)
+6. Provide feedback by [messaging me](https://twitter.com/panphora) on Twitter
+7. Sign up for [the newsletter](https://mailchi.mp/59def7603a0f/remake) to get updates as this framework develops
 
 
 ## Try one of these example web apps: (Built with Remake!)
