@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Todos App</title>
+  <link rel="stylesheet" href="/main.dist.css">
+</head>
+<body>
+  <nav class="site-nav" role="navigation" aria-label="main navigation">
+    {{#if currentUser}}
+      <a class="site-nav__home" href="/{{currentUser.details.username}}">Todos</a>
+    {{else}}
+      <a class="site-nav__home" href="/">Todos</a>
+    {{/if}}
+    <div class="site-nav__right">
+      {{#if currentUser}}
+        <span class="text--white m-r-16">Hi {{currentUser.details.username}}!</span>
+        <a class="site-nav__login-button button button--elevated button--white-with-violet-text" href="/logout">Logout</a>
+      {{else}}
+        <a class="site-nav__signup-button button button--elevated button--pink" href="/signup">Sign up</a>
+        <a class="site-nav__login-button button button--elevated button--white-with-violet-text" href="/login">Log in</a>
+      {{/if}}
+    </div>
+  </nav>
+  {{#if flashErrors }}
+    {{#each flashErrors }}
+      <div class="flash flash--error">{{ this }}</div>
+    {{/each}}
+  {{/if}}
+  {{> yield }}
+  <script src="/main.dist.js"></script>
+</body>
+</html>

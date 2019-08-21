@@ -1,30 +1,33 @@
 {
-  "name": "remakejs",
-  "version": "0.9.0",
-  "description": "A framework for building web apps quickly",
+  "name": "remake",
+  "version": "0.5.0",
+  "description": "Generate a full-stack Remake web app",
+  "license": "MIT",
+  "homepage": "https://www.remaketheweb.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/panphora/remakejs"
+    "url": ""
   },
-  "main": "dist/bundle.cjs.js",
-  "module": "dist/bundle.es6.js",
-  "scripts": {
-    "watch": "rollup -c rollup.config.js --watch",
-    "build": "rollup -c rollup.config.js"
+  "engines": {
+    "node": ">=8"
   },
-  "author": "David Miranda",
-  "license": "MIT",
+  "keywords": [
+    "web app",
+    "generator",
+    "framework"
+  ],
+  "preferGlobal": true,
+  "bin": {
+    "remake": "bin/remake"
+  },
+  "scripts": {},
+  "devDependencies": {},
   "dependencies": {
-    "delegated-events": "^1.0.10",
-    "lodash-es": "^4.17.11"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "rollup": "^1.16.2",
-    "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-commonjs": "^10.0.1",
-    "rollup-plugin-node-resolve": "^5.0.4",
-    "rollup-plugin-uglify": "^6.0.2"
+    "boxen": "^4.1.0",
+    "chalk": "^2.4.2",
+    "commander": "^3.0.0",
+    "nanoid": "^2.0.3",
+    "ncp": "^2.0.0",
+    "shelljs": "^0.8.3"
   }
 }
