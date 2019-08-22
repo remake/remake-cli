@@ -1,6 +1,7 @@
 import { $ } from '../queryjs';
 import { camelCaseToDash } from '../hummingbird/lib/string';
 import { callWatchFunctions } from './syncData';
+import { callSaveFunction } from './onSave';
 
 export default function () {
 
@@ -12,6 +13,10 @@ export default function () {
 
     // set value
     setValue({elem: event.currentTarget, keyName, attributeValue});
+
+    if (event.currentTarget.getAttribute("data-i") === "triggerSaveOnChange") {
+      callSaveFunction({targetElement: event.currentTarget});
+    }
   });
 
   // plain toggle, using a <div> or <button> or <a>
@@ -22,6 +27,10 @@ export default function () {
 
     // set value
     setValue({elem: event.currentTarget, keyName, attributeValue: "true", toggleValue: true});
+
+    if (event.currentTarget.getAttribute("data-i") === "triggerSaveOnChange") {
+      callSaveFunction({targetElement: event.currentTarget});
+    }
   })
 
   // <radio> AND <select>
@@ -32,6 +41,10 @@ export default function () {
 
     // set value
     setValue({elem: event.currentTarget, keyName, attributeValue});
+
+    if (event.currentTarget.getAttribute("data-i") === "triggerSaveOnChange") {
+      callSaveFunction({targetElement: event.currentTarget});
+    }
   });
 
 
@@ -43,6 +56,10 @@ export default function () {
 
     // set value
     setValue({elem: event.currentTarget, keyName, attributeValue});
+
+    if (event.currentTarget.getAttribute("data-i") === "triggerSaveOnChange") {
+      callSaveFunction({targetElement: event.currentTarget});
+    }
   });
 
 }

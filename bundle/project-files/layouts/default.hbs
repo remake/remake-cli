@@ -7,11 +7,7 @@
 </head>
 <body>
   <nav class="site-nav" role="navigation" aria-label="main navigation">
-    {{#if currentUser}}
-      <a class="site-nav__home" href="/{{currentUser.details.username}}">Todos</a>
-    {{else}}
-      <a class="site-nav__home" href="/">Todos</a>
-    {{/if}}
+    <a class="site-nav__home" href="/">Todos</a>
     <div class="site-nav__right">
       {{#if currentUser}}
         <span class="text--white m-r-16">Hi {{currentUser.details.username}}!</span>

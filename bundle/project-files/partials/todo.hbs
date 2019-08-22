@@ -1,1 +1,16 @@
-<div>todo text</div>
+<div
+  class="todos__todo"
+  data-o-type="object"
+  data-o-key-id="{{todo.id}}"
+  data-o-key-is-complete="{{todo.isComplete}}"
+  data-o-key-text="{{todo.text}}"
+>
+  <div class="todos__todo-checkbox-area">
+    <input data-i="triggerSaveOnChange" type="checkbox" name="isComplete" value="true" {{#if todo.isComplete}}checked{{/if}}>
+  </div>
+  <div 
+    class="todos__todo-text"
+    data-i-editable-with-remove="text(text-single-line)"
+    data-w-key-text="innerText"
+  >{{todo.text}}</div>
+</div>

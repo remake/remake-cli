@@ -2,11 +2,21 @@ import { getDataAndDataSourceElemFromNodeAndAncestors, setValueForKeyName } from
 import { camelCaseToDash } from '../hummingbird/lib/string';
 import { callWatchFunctionsOnElem, getWatchElements } from './watchHelpers';
 
+
+// this is fed a save callback function when inputjs in initialized
 let afterSyncCallbacks = [];
 export function afterSync (cb) {
   afterSyncCallbacks.push(cb);
 }
 
+// syncDataBetweenElements
+// 1. get the data
+// 2. loop through the keys
+// 3. sync data from keys into targetElement (looking through ancestors)
+// 4. call all watch functions inside where the data was synced into
+// 5. syncs data into input elements if they're inside the element that was synced into
+// 6. the afterSyncCallbacks are called
+//    *** THIS INCLUDES A SAVE FUNCTION DEFINED WHEN REMAKE IS INITIALIZED ***
 export function syncDataBetweenElements ({sourceElement, targetElement, shouldTriggerSave}) {
 
   let elementsDataWasSyncedInto = [];
@@ -48,7 +58,7 @@ export function triggerSyncAndSave (event) {
   // 2. find the nearest ancestor element that has the attribute `data-i-sync`
   let syncElement = event.currentTarget.closest("[data-i-sync]");
 
-  // make sure data sync happens after all date is in place 
+  // make sure data sync happens after all data is in place 
   //   e.g. we might want to have the switch action button also set data 
   //        (we currently do this with the inline edit revisions submit button)
   setTimeout(() => {

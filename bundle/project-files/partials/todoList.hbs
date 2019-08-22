@@ -1,7 +1,16 @@
-<div
-  data-i-editable-with-remove="name(text-single-line)"
+<a
+  class="todo-lists__item"
   data-o-type="object"
   data-o-key-id="{{todoList.id}}"
   data-o-key-name="{{todoList.name}}"
-  data-w-key-name="innerText"
->{{todoList.name}}</div>
+  href="{{pageAuthor.details.username}}/todo-list/{{todoList.id}}"
+>
+  <span
+    data-w-key-name="innerText"
+  >{{todoList.name}}</span>
+  <span 
+    class="todo-lists__edit js-pd" 
+    href="#"
+    data-i-editable-with-remove="name(text-single-line)"
+  >Edit</span>
+</a>

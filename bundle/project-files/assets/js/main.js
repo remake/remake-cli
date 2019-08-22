@@ -1,4 +1,5 @@
 import Remake from '../../../_remake/client-side';
+import './helpers/event-helpers';
 import crostini from 'crostini';
 
 Remake.init({
