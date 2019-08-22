@@ -1,7 +1,7 @@
-import { init, getDataFromRootNode } from 'remakejs/dist/bundle.es6';
+import Remake from '../../../_remake/client-side';
 import crostini from 'crostini';
 
-init({
+Remake.init({
   logDataOnSave: true, // to implement. should console.log data on page whenever it changes.
   defaultSaveCallback: function (res) {
     if (!res.success) {
@@ -16,4 +16,4 @@ init({
 });
 
 // for debugging
-window.getDataFromRootNode = getDataFromRootNode;
+window.getDataFromRootNode = Remake.getDataFromRootNode;
