@@ -1,5 +1,3 @@
-## NOT READY YET: DO NOT USE!
-
 # Remake
 
 #### Build full-stack web apps quickly
