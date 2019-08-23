@@ -1,4 +1,4 @@
-<h1>Remake <small>This is an early beta release</small></h1>
+<h1>Remake</h1>
 
 ### An easy-to-use web app framework
 
