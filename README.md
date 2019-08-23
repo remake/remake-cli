@@ -31,9 +31,12 @@ npm run dev
 4. Start building a web app with Remake!
 
 
+## An example web app
+
 ![Todos example app](https://remake-website.s3.amazonaws.com/todos-example.gif)
 
 *An example of editing, adding, and removing items with the starter todos project.*
+
 
 ## What is Remake?
 
