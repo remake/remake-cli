@@ -33,7 +33,7 @@ npm run dev
 
 ![Todos example app](https://remake-website.s3.amazonaws.com/todos-example.gif)
 
-The starter todos project that's generated after running `remake create`.
+*An example of editing, adding, and removing items with the starter todos project.*
 
 ## What is Remake?
 
