@@ -1,6 +1,6 @@
 # Remake
 
-*This is an beta release*
+*This is an early beta release*
 
 ### An easy-to-use web app framework
 
