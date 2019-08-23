@@ -40,7 +40,7 @@ npm run dev
 
 ## What is Remake?
 
-Remake is everything you need to create a web app in record time, with very little overhead.
+**Remake is everything you need to create a web app in record time, with very little overhead.**
 
 
 Remake provides all the tools you need to:
