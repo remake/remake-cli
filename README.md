@@ -1,14 +1,15 @@
 # Remake
 
+*This is an beta release*
+
 ### An easy-to-use web app framework
 
 * **Create editable pages using only HTML templates**
 * **Easy to learn, powerful data attribute syntax**
 * **Perfect for rapidly prototyping ideas**
 
-*This is an beta release*
 
-![Todos example app](https://remake-website.s3.amazonaws.com/todos-example.gif)
+<img src="https://remake-website.s3.amazonaws.com/todos-example.gif" alt="Todos example app" width="247">
 
 The starter todos project that's generated after running `remake create`.
 
