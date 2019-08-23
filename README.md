@@ -9,11 +9,6 @@
 * **Perfect for rapidly prototyping ideas**
 
 
-<img style="float: right;" src="https://remake-website.s3.amazonaws.com/todos-example.gif" alt="Todos example app" width="247">
-
-The starter todos project that's generated after running `remake create`.
-
-
 ## Get started 
 
 1. Install the command line tool
@@ -36,6 +31,11 @@ npm run dev
 ```
 
 4. Start building a web app with Remake!
+
+
+![Todos example app](https://remake-website.s3.amazonaws.com/todos-example.gif)
+
+The starter todos project that's generated after running `remake create`.
 
 ## What is Remake?
 
