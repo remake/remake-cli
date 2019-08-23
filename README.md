@@ -31,7 +31,7 @@ npm run dev
 4. Start building a web app with Remake!
 
 
-## An example web app
+## Example
 
 ![Todos example app](https://remake-website.s3.amazonaws.com/todos-example.gif)
 
