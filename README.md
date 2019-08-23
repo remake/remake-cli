@@ -9,7 +9,7 @@
 * **Perfect for rapidly prototyping ideas**
 
 
-<img src="https://remake-website.s3.amazonaws.com/todos-example.gif" alt="Todos example app" width="247">
+<img style="float: right;" src="https://remake-website.s3.amazonaws.com/todos-example.gif" alt="Todos example app" width="247">
 
 The starter todos project that's generated after running `remake create`.
 
