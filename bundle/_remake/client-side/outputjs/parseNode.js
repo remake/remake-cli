@@ -2,6 +2,8 @@ import { forEachAttr, forEachAncestorMatch } from '../hummingbird/lib/dom';
 import { dashToCamelCase, camelCaseToDash } from '../hummingbird/lib/string';
 import { formatSpaces } from "../parse-data-attributes";
 
+// example return value:
+// {elemType: "object", key: "profileInfo", value: {name: "Kate"}}
 function parseNode (elem, isParentDataAnObject) { 
   let elemType = elem.getAttribute("data-o-type"); // elemType can be `object` or `list`
 
@@ -13,9 +15,9 @@ function parseNode (elem, isParentDataAnObject) {
 }
 
 // Converts:
-// <div data-o-key-example1="1" data-o-key-example2="2"></div>
+// <div data-o-key-example-one="1" data-o-key-example-two="2"></div>
 // Into:
-// {example1: "1", example2: "2"}
+// {exampleOne: "1", exampleTwo: "2"}
 function getDataFromNode (elem) {
   let keyPrefix = "data-o-key-";
   let locationKeyPrefix = "data-l-key-";
@@ -45,6 +47,8 @@ function getDataFromNode (elem) {
   return returnObj;
 }
 
+// Used by syncData.js to get all data on or above an element, so it can be synced into 
+// another element.
 // 1. Find the CLOSEST `[data-o-type="object"]`
 // 2. Get this element's data keys and their values
 // 3. Add these key/values into an object (lower/earlier keys always overwrite higher ones)
@@ -74,6 +78,7 @@ function getDataAndDataSourceElemFromNodeAndAncestors (elem) {
   return collectedData; // e.g. {exampleTitle: {value: "Hello There!", dataSourceElem}}
 }
 
+// Used for attributes like: <div data-l-key-widget-code=".widget-code innerHTML"></div>
 // helper function, has repeated code from getLocationKeyValue() and setLocationKeyValue()
 function getDataFromLocationString (elem, dashCaseKeyName, locationString) {
   locationString = formatSpaces(locationString);
@@ -147,13 +152,25 @@ function setValueForKeyName (elem, keyName, value) {
   }
 }
 
+function setAllDataToEmptyStringsExceptIds (elem) {
+  forEachAttr(elem, function (attrName, attrValue) {
+    if (attrName !== "data-o-key-id" && (attrName.startsWith("data-o-key-") || attrName.startsWith("data-l-key-"))) {
+      let dashCaseKeyName = attrName.substring("data-?-key-".length);
+      let camelCaseKeyName = dashToCamelCase(dashCaseKeyName);
+
+      setValueForKeyName(elem, camelCaseKeyName, "");
+    }
+  });
+}
+
 export {
   parseNode,
   getDataFromNode,
   getDataAndDataSourceElemFromNodeAndAncestors,
   getLocationKeyValue,
   setLocationKeyValue,
-  setValueForKeyName
+  setValueForKeyName,
+  setAllDataToEmptyStringsExceptIds
 };
 
 

@@ -1,7 +1,7 @@
 import { parseStringWithIndefiniteNumberOfParams } from "../parse-data-attributes";
 import { dashToCamelCase } from '../hummingbird/lib/string';
 import { forEachAttr } from '../hummingbird/lib/dom';
-import { getLocationKeyValue } from "../outputjs";
+import { getLocationKeyValue, getDataFromNode } from "../outputjs";
 import optionsData from './optionsData';
 
 // README
@@ -137,6 +137,13 @@ export function callMultipleWatchFunctions (watchElems) {
   });
 }
 
+// Find all elements with watch functions attached to them on an element or on any of
+// its child elements.
+//
+// IMPORTANT: this filters out any elements that are nested inside of a matching
+//            data-o-key- attribute. we do this to allow multiple matching data-o-key- 
+//            attributes to be on the same page without interfering with each other.
+// TODO: this should also work with data-l-key- attributes, not just data-o-key- attributes
 export function getWatchElements ({elementWithData, dashCaseKeyName}) {
   let watchSelector = `[data-w-key-${dashCaseKeyName}]`;
   let nestedWatchSelector = `:scope [data-o-key-${dashCaseKeyName}] [data-w-key-${dashCaseKeyName}]`;
@@ -151,9 +158,6 @@ export function getWatchElements ({elementWithData, dashCaseKeyName}) {
 
   return watchElements.concat(allWatchElements.filter(el => !nestedWatchElements.includes(el)));
 }
-
-
-
 
 
 

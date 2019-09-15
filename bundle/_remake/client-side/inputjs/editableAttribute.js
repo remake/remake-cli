@@ -4,17 +4,37 @@ import { forEachAttr } from '../hummingbird/lib/dom';
 import { processAttributeString } from '../parse-data-attributes';
 import { copyLayout } from '../copy-layout';
 import Switches from '../switchjs';
+import { getDataFromNode } from '../outputjs';
 import autosize from '../vendor/autosize';
 
-
+// data-i-editable: trigger popover with three buttons (remove, cancel, and save)
+// data-i-editable-without-remove: trigger popover with two buttons (cancel and save)
+// data-i-editable-with-hide: trigger popover with three buttons (remove, cancel, and save), 
+//                            but the remove button is special: it doesn't remove an element, 
+//                            it just sets all its data keys to empty strings
 export default function () {
   insertRemakeEditPopoverHtml();
 
-  $.on("click", "[data-i-editable], [data-i-editable-with-remove], [data-i-editable-with-hide]", function (event) {
+  $.on("click", "[data-i-editable], [data-i-editable-without-remove], [data-i-editable-with-hide]", function (event) {
     let editableTriggerElem = event.currentTarget;
     let [ switchName, editableConfigString ] = getEditableInfo(editableTriggerElem);
     let editablePopoverElem = document.querySelector(".remake-edit");
-    let editableConfig = processAttributeString(editableConfigString); // [{name, modifier, args: []}]
+    let editableConfigArr;
+
+    if (editableConfigString) {
+      // "profileName(text-single-line: someOption)" => [{name: "profileName", modifier: "text-single-line", args: ["someOption"]}]
+      editableConfigArr = processAttributeString(editableConfigString); 
+      
+      editableConfigArr.forEach(editableConfig => {
+        if (!editableConfig.modifier) {
+          editableConfig.modifier = "text-single-line"
+        }
+      });
+    } else {
+      // auto-generate the editable config if none is present
+      //   note: we strip out the id key because it's not editable
+      editableConfigArr = generateEditableConfigFromClosestElemWithData(editableTriggerElem);
+    }
 
     // remove old output key attributes
     removeOutputDataAttributes({
@@ -25,18 +45,18 @@ export default function () {
     // add output key attributes defined in the editable config
     addDataOutputKeys({
       elem: editablePopoverElem, 
-      config: editableConfig
+      config: editableConfigArr
     });
 
     // add form field types to single attribute from editable config
     addFormFieldsBeingEdited({
       elem: editablePopoverElem, 
-      config: editableConfig
+      config: editableConfigArr
     });
     
     // render html inside the edit popover
     let remakeEditAreasElem = editablePopoverElem.querySelector(".remake-edit__edit-areas");
-    remakeEditAreasElem.innerHTML = generateRemakeEditAreas({config: editableConfig});
+    remakeEditAreasElem.innerHTML = generateRemakeEditAreas({config: editableConfigArr});
 
     // copy the layout
     copyLayout({
@@ -60,19 +80,35 @@ export default function () {
 
     // focus input
     let firstFormInput = editablePopoverElem.querySelector("textarea, input")
-    firstFormInput.focus();
+    if (firstFormInput) {
+      firstFormInput.focus();
+    }
   });
 
   $.on("click", ".remake-edit__button:not([type='submit'])", function (event) {
     event.preventDefault();
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.keyCode === 27) {
+      let turnedOnEditablePopovers = Array.from(document.querySelectorAll("[data-switched-on='remakeEdit'], [data-switched-on='remakeEditWithoutRemove'], [data-switched-on='remakeEditWithHide']"));
+      
+      if (turnedOnEditablePopovers.length > 0) {
+        turnedOnEditablePopovers.forEach(el => {
+          Switches.turnOff({name: "remakeEdit", elem: el});
+          Switches.turnOff({name: "remakeEditWithoutRemove", elem: el});
+          Switches.turnOff({name: "remakeEditWithHide", elem: el});
+        });
+      }
+    }
   });
 }
 
 function getEditableInfo (elem) {
   if (elem.hasAttribute("data-i-editable")) {
     return [ "remakeEdit", elem.getAttribute("data-i-editable") ];
-  } else if (elem.hasAttribute("data-i-editable-with-remove")) {
-    return [ "remakeEditWithRemove", elem.getAttribute("data-i-editable-with-remove") ];
+  } else if (elem.hasAttribute("data-i-editable-without-remove")) {
+    return [ "remakeEditWithoutRemove", elem.getAttribute("data-i-editable-without-remove") ];
   } else if (elem.hasAttribute("data-i-editable-with-hide")) {
     return [ "remakeEditWithHide", elem.getAttribute("data-i-editable-with-hide") ];
   }
@@ -123,6 +159,24 @@ function generateRemakeEditAreas ({config}) { // e.g. {name: "blogTitle", modifi
   return outputHtml;
 }
 
+// example output: [{name: "text", modifier: "text-single-line", args: []}]
+function generateEditableConfigFromClosestElemWithData (elem) {
+  let elemWithData = elem.closest("[data-o-type]");
+
+  if (!elemWithData) {
+    return;
+  }
+
+  let dataFromElem = getDataFromNode(elemWithData);
+  let objectKeys = Object.keys(dataFromElem);
+  // strip out the id key because it's not editable
+  let objectKeysWithoutIdKey = objectKeys.filter(keyName => keyName !== "id");
+
+  return objectKeysWithoutIdKey.map(keyName => {
+    return {name: keyName, modifier: "text-single-line"}
+  });
+}
+
 function insertRemakeEditPopoverHtml () {
   let htmlString = `
   <style>
@@ -137,7 +191,7 @@ function insertRemakeEditPopoverHtml () {
       box-sizing: border-box;
     }
 
-    [data-switched-on~="remakeEdit"], [data-switched-on~="remakeEditWithRemove"], [data-switched-on~="remakeEditWithHide"] {
+    [data-switched-on~="remakeEdit"], [data-switched-on~="remakeEditWithoutRemove"], [data-switched-on~="remakeEditWithHide"] {
       display: block;
     }
 
@@ -158,7 +212,7 @@ function insertRemakeEditPopoverHtml () {
       width: 100%;
     }
 
-    .remake-edit__edit-areas {
+    .remake-edit__edit-area {
       margin-bottom: 8px;
     }
 
@@ -211,8 +265,11 @@ function insertRemakeEditPopoverHtml () {
     }
 
     .remake-edit__button--remove, .remake-edit__button--hide {
-      display: none;
       background-color: #e03131;
+    }
+
+    .remake-edit__button--hide {
+      display: none;
     }
 
     .remake-edit__button--remove:hover, .remake-edit__button--hide:hover {
@@ -220,7 +277,11 @@ function insertRemakeEditPopoverHtml () {
       color: #fff;
     }
 
-    [data-switched-on~="remakeEditWithRemove"] .remake-edit__button--remove, [data-switched-on~="remakeEditWithHide"] .remake-edit__button--hide {
+    [data-switched-on~="remakeEditWithoutRemove"] .remake-edit__button--remove, [data-switched-on~="remakeEditWithHide"] .remake-edit__button--remove {
+      display: none;
+    }
+
+    [data-switched-on~="remakeEditWithHide"] .remake-edit__button--hide {
       display: inline-block;
     }
 
@@ -239,13 +300,13 @@ function insertRemakeEditPopoverHtml () {
       class="remake-edit" 
 
       data-i-sync
-      data-switches="remakeEdit(no-auto) remakeEditWithRemove(no-auto) remakeEditWithHide(no-auto)"
+      data-switches="remakeEdit(no-auto) remakeEditWithoutRemove(no-auto) remakeEditWithHide(no-auto)"
 
       data-o-type="object"
     >
       <div 
         class="remake-edit__backdrop"
-        data-switch-actions="remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)"
+        data-switch-actions="remakeEdit(off) remakeEditWithoutRemove(off) remakeEditWithHide(off)"
       ></div>
       <div class="remake-edit__edit-container">
         <div class="remake-edit__edit-areas">
@@ -255,23 +316,23 @@ function insertRemakeEditPopoverHtml () {
             class="remake-edit__button remake-edit__button--remove" 
             href="#"
             data-i-remove
-            data-switch-actions="remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)"
+            data-switch-actions="remakeEdit(off) remakeEditWithoutRemove(off) remakeEditWithHide(off)"
           >remove</a>
           <a 
             class="remake-edit__button remake-edit__button--hide" 
             href="#"
             data-i-hide
-            data-switch-actions="remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)"
+            data-switch-actions="remakeEdit(off) remakeEditWithoutRemove(off) remakeEditWithHide(off)"
           >remove</a>
           <a 
             class="remake-edit__button remake-edit__button--cancel" 
             href="#"
-            data-switch-actions="remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)"
+            data-switch-actions="remakeEdit(off) remakeEditWithoutRemove(off) remakeEditWithHide(off)"
           >cancel</a>
           <button 
             class="remake-edit__button remake-edit__button--save" 
             type="submit"
-            data-switch-actions="remakeEdit(off) remakeEditWithRemove(off) remakeEditWithHide(off)"
+            data-switch-actions="remakeEdit(off) remakeEditWithoutRemove(off) remakeEditWithHide(off)"
           >save</button>
         </div>
       </div>

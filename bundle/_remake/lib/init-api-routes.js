@@ -6,13 +6,14 @@ import { getItemWithId } from "./get-item-with-id";
 import { specialDeepExtend } from "./special-deep-extend";
 import getUniqueId from "./get-unique-id";
 import { getUserData, setUserData } from "./user-data";
-import { getPartials } from "./get-project-info";
+import { getPartials, getBootstrapData } from "./get-project-info";
 import { getParamsFromPathname } from "../utils/get-params-from-pathname";
+import { capture } from "../utils/async-utils";
 import { preProcessData } from "./pre-process-data";
+import RemakeStore from "./remake-store";
 
 
 export function initApiRoutes ({app}) {
-  let partials = getPartials();
 
   app.post('/save', async (req, res) => {
 
@@ -64,6 +65,12 @@ export function initApiRoutes ({app}) {
       // option 2: save to id
       } else if (saveToId) {
         let itemData = getItemWithId(existingData, saveToId);
+
+        if (!itemData) {
+          res.json({success: false, reason: "noItemFound"});
+          return;
+        }
+
         specialDeepExtend(itemData, incomingData);
         Object.assign(itemData, incomingData);
       // option 3: extend existing data at root level
@@ -72,7 +79,11 @@ export function initApiRoutes ({app}) {
         existingData = incomingData;
       }
 
-      await setUserData({username: currentUser.details.username, data: existingData, type: "appData"});
+      let [setUserDataResponse, setUserDataError] = await capture(setUserData({username: currentUser.details.username, data: existingData, type: "appData"}));
+      if (setUserDataError) {
+        res.json({success: false, reason: "userData"});
+        return;
+      }
 
       res.json({success: true});
 
@@ -91,16 +102,28 @@ export function initApiRoutes ({app}) {
     }
 
     let templateName = req.body.templateName;
+    
+    // get the partials data every time so it returns a new (copied!) object and you don't mistakenly use a modified object from the previous call
+    let partials = getPartials();
     let matchingPartial = partials.find(partial => partial.name === templateName);
 
+    // default to using inline named partials as opposed to partial files
+    let templateRenderFunc = RemakeStore.getNewItemRenderFunction({name: templateName});
+    let bootstrapData = getBootstrapData().partials[templateName] || {};
+
+    // use the user-defined partial files only if no render functions are found
+    if (!templateRenderFunc) {
+      templateRenderFunc = Handlebars.compile(matchingPartial.templateString);
+    }
+
     // add a unique key to every plain object in the bootstrap data
-    forEachDeep(matchingPartial.bootstrapData, function (value, key, parentValue, context) {
-      if (isPlainObject(value) && !value.id) {
+    forEachDeep(bootstrapData, function (value, key, parentValue, context) {
+      if (isPlainObject(value)) {
         value.id = getUniqueId();
       }
     });
 
-    // referrer url
+    // construct referrer url, pathname, params, and query object from referrer url
     let referrerUrl = req.get('Referrer'); // e.g. "http://exampleapp.org/jane/todo-list/123"
     let referrerUrlParsed = new URL(referrerUrl);
     let referrerUrlPath = referrerUrlParsed.pathname; // e.g. "/jane/todo-list/123"
@@ -110,7 +133,13 @@ export function initApiRoutes ({app}) {
     let usernameFromParams = params.username;
     let pathname = referrerUrlPath;
     let currentUser = req.user;
-    let pageAuthor = await getUserData({username: usernameFromParams});
+    let [pageAuthor, pageAuthorError] = await capture(getUserData({username: usernameFromParams}));
+
+    if (pageAuthorError) {
+      res.json({success: false, reason: "userData"});
+      return;
+    }
+
     let data = pageAuthor && pageAuthor.appData || {};
     let isPageAuthor = currentUser && pageAuthor && currentUser.details.username === pageAuthor.details.username;
 
@@ -122,7 +151,12 @@ export function initApiRoutes ({app}) {
     let currentItem;
     let parentItem; 
     if (pageAuthor) {
-      let processResponse = await preProcessData({data, user: pageAuthor, params, addUniqueIdsToData: true});
+      let [processResponse, processResponseError] = await capture(preProcessData({data, user: pageAuthor, params, addUniqueIdsToData: true}));
+      if (processResponseError) {
+        res.json({success: false, reason: "preProcessData"});
+        return;
+      }
+
       currentItem = processResponse.currentItem;
       parentItem = processResponse.parentItem;
     }
@@ -132,8 +166,7 @@ export function initApiRoutes ({app}) {
       return;
     }
 
-    let template = Handlebars.compile(matchingPartial.templateString);
-    let htmlString = template({
+    let htmlString = templateRenderFunc({
       data,
       params,
       query,
@@ -144,7 +177,7 @@ export function initApiRoutes ({app}) {
       pageAuthor,
       isPageAuthor,
       pageHasAppData: !!pageAuthor,
-      ...matchingPartial.bootstrapData
+      ...bootstrapData
     });
 
     res.json({success: true, htmlString: htmlString});

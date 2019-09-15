@@ -16,13 +16,14 @@ export function afterSync (cb) {
 // 4. call all watch functions inside where the data was synced into
 // 5. syncs data into input elements if they're inside the element that was synced into
 // 6. the afterSyncCallbacks are called
-//    *** THIS INCLUDES A SAVE FUNCTION DEFINED WHEN REMAKE IS INITIALIZED ***
+//    *** afterSyncCallbacks INCLUDES A SAVE FUNCTION DEFINED WHEN REMAKE IS INITIALIZED ***
 export function syncDataBetweenElements ({sourceElement, targetElement, shouldTriggerSave}) {
 
   let elementsDataWasSyncedInto = [];
 
   // 1. Assemble an object from the source element and its ancestors (L or O)
-    // Why look in ancestors for data? because you want to be able to click an edit button anywhere on the page in order to edit the global/root data
+      // Why look in ancestors for data? because you want to be able to click an edit 
+      // button anywhere on the page in order to edit global/root/higher-level data
   let fullDataObject = getDataAndDataSourceElemFromNodeAndAncestors(sourceElement);
 
   // 2. Loop through the keys of the assembled object
@@ -74,12 +75,19 @@ export function triggerSyncAndSave (event) {
 }
 
 
-// dataSourceElement: this is the element where the data is coming from
+// This accepts a data source elem, a target elem, and the name of a key as parameters. 
+// It then finds the elem it needs to sync data into (the one with the key), gets the 
+// default value from it if it doesn't have a value itself. Then, it sets the value from 
+// the source element on the elem it needs to sync data into. Finally, it calls the matching
+// watch functions on the element the data was synced into, as well as its child elements.
+//
+// args:
+// - dataSourceElement: this is the element where the data is coming from
 function syncToLocationOrOutputKey ({targetElement, camelCaseKeyName, dashCaseKeyName, originalValue, dataSourceElem}) {
 
   let actualValue;
 
-  // 1. Find _ONE_ CLOSEST matching key on the target element (L or O)
+  // 1. Find _ONE_ CLOSEST matching key on the target element (i.e. a Location or Output key)
   let dataAttrSelector = `[data-l-key-${dashCaseKeyName}],[data-o-key-${dashCaseKeyName}]`;
   let closestMatchingElem = targetElement.closest(dataAttrSelector);
 
@@ -143,9 +151,19 @@ function syncToInputKeys ({targetElement, camelCaseKeyName, actualValue}) {
 
 }
 
+// This is used by the main func: `syncDataBetweenElements()` to call all the nested 
+// watch functions. 
+//
+// Notes:
+// - `parentOfTargetElements` is the element data keys on it that's going to be synced into.
+//    It's expected to have all of the watch functions that will be called inside of it.
+// - `dataSourceElem` is the element where that data comes from. It's probably a parent object
+//    that contains other elements with data on them.
 export function callWatchFunctions ({dashCaseKeyName, parentOfTargetElements, value, dataSourceElem}) {
   
-  // 1. Find ALL CHILD elements of the target element that match a `data-w-key` UNLESS they're children of another matching data-o-key element
+  // 1. Find ALL CHILD elements of the target element that match a `data-w-key` 
+  //    UNLESS they're children of another matching data-o-key element.
+  //    Watch functions don't activate to data changes that are outside their scope
   let watchElems = getWatchElements({elementWithData: parentOfTargetElements, dashCaseKeyName});
 
   watchElems.forEach((watchElem) => {

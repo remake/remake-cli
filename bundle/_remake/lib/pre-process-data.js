@@ -43,6 +43,7 @@ export async function preProcessData ({data, user, params, addUniqueIdsToData}) 
   // save the data if some new ids have been added to it
   if (addUniqueIdsToData) {
     if (someUniqueIdsAdded) {
+      // let higher-level functions capture this if it errors
       await setUserData({username: user.details.username, data, type: "appData"});
     }
   }

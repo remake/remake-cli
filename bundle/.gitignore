@@ -3,6 +3,6 @@ node_modules/
 .cache/
 variables.env
 npm-debug.log
-_remake/.sessions
+_remake/.sessions/**/*.json
 _remake/dist
 _remake-data/**/*.json

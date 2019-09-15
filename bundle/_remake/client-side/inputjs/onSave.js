@@ -29,21 +29,73 @@ export function enableSaveAttribute (afterSync) {
   });
 }
 
+// all saves go through here
 export function callSaveFunction ({elementDataWasSyncedInto, targetElement}) {
-  // allow two different params that do the same things to be passed into this function: 
-  // use `elementDataWasSyncedInto` when syncing, user `targetElement` when creating new data or removing data
+  // allow two different params that do the same thing to be passed into this function: 
+  // use `elementDataWasSyncedInto` when syncing, user `targetElement` when creating or removing data
   elementDataWasSyncedInto = elementDataWasSyncedInto || targetElement;
-  let saveElement = elementDataWasSyncedInto.closest("[data-o-save-deep], [data-o-save]");
-    
+  
+  // get the save element, which is the closest element with a save attribute
+  let saveElement = elementDataWasSyncedInto.closest("[data-o-save-deep], [data-o-save], [data-o-key-id]");
+  
+  // if there's no save element, use the body element
+  let isDefaultingToDataKeyIdSave = false;
+  let isDefaultingToGlobalSave = false;
+  if (!saveElement) {
+    saveElement = document.body;
+    isDefaultingToGlobalSave = true;
+  } else if (saveElement.matches("[data-o-key-id]") && !saveElement.matches("[data-o-save-deep], [data-o-save]")) {
+    isDefaultingToDataKeyIdSave = true;
+  }
+
   if (saveElement) {
-    let isDataInsideElem = saveElement.matches("[data-o-save-deep]");
-    let [ saveFuncName, savePath, saveToId ] = getSaveFuncInfo(saveElement, isDataInsideElem);
+
+    // detect if this is a shallow or a deep save?
+    let isDataInsideElem = isDefaultingToGlobalSave || isDefaultingToDataKeyIdSave || saveElement.matches("[data-o-save-deep]");
+
+    // get all the info we need to save this data
+    let saveFuncName, savePath, saveToId;
+    if (isDefaultingToGlobalSave) {
+      saveFuncName = "defaultSave";
+    } else if (isDefaultingToDataKeyIdSave) {
+      saveFuncName = "defaultSave";
+      saveToId = saveElement.getAttribute("data-o-key-id");
+    } else {
+      [ saveFuncName, savePath, saveToId ] = getSaveFuncInfo(saveElement, isDataInsideElem);
+    }
 
     let saveFunc = saveFunctionsLookup[saveFuncName];
 
+    // if there's a save function, continue
     if (saveFunc) {
+      // get the data differently depending on if it's a shallow or deep save
       let dataFromSaveElement = isDataInsideElem ? getDataFromRootNode(saveElement) : getDataFromNode(saveElement);
+
+      // save the data
       saveFunc({data: dataFromSaveElement, elem: elementDataWasSyncedInto, path: savePath, saveToId});
+
+      // log the data if this debug option is turned on
+      if (optionsData.logDataOnSave) {
+        console.log("# logDataOnSave");
+        console.log("Data:", dataFromSaveElement);
+
+        let saveMethod = (isDefaultingToGlobalSave) 
+                          ? "Saved entire page" 
+                          : (isDefaultingToDataKeyIdSave) 
+                          ? `Saved to nearest id: ${saveToId}`
+                          : `Saved to nearest save function: ${saveFuncName}`;
+
+        console.log("Save method:", saveMethod);
+
+        if (savePath) {
+          console.log("Save to path:", savePath);
+        }
+
+        // explicit save to id
+        if (!isDefaultingToDataKeyIdSave && saveToId) {
+          console.log("Save to id:", saveToId);
+        }
+      }
     }
   }
 }

@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import expressSession from "express-session";
 const flash = require('connect-flash');
-const path = require('path');
+const path = require('upath');
 const FileStore = require('session-file-store')(expressSession);
 import { initApiRoutes } from "./lib/init-api-routes";
 import { initRenderedRoutes } from "./lib/init-rendered-routes";
@@ -12,9 +12,7 @@ import { initUserAccounts } from "./lib/init-user-accounts";
 // set up vars
 dotenv.config({ path: "variables.env" });
 
-
 const app = express();
-
 
 // express session
 app.use(expressSession({ 
@@ -27,7 +25,6 @@ app.use(expressSession({
   }
 }));
 
-
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './dist')));
 app.use(express.urlencoded({ extended: false }));
@@ -35,6 +32,7 @@ app.use(express.json());
 app.use(flash());
 
 
+// REMAKE FRAMEWORK CORE
 initUserAccounts({ app });
 initApiRoutes({ app });
 initRenderedRoutes({ app });
@@ -48,8 +46,6 @@ app.listen(PORT, () => {
     process.send('online');
   }
 })
-
-
 
 
 

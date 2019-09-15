@@ -1,13 +1,21 @@
 const Handlebars = require('handlebars');
 const parseUrl = require('parseurl');
 import { getRoutes, getPartials } from "./get-project-info";
-const path = require('path');
+const path = require('upath');
 const jsonfile = require("jsonfile");
 import { preProcessData } from "./pre-process-data";
 import { getUserData } from "./user-data";
+import { initCustomHandlebarsHelpers } from "./init-custom-handlebars-helpers";
+import { capture } from "../utils/async-utils";
 
+
+// USER-DEFINED PARTIALS
 let partials = getPartials();
 partials.forEach(partial => Handlebars.registerPartial(partial.name, partial.templateString));
+
+// CUSTOM HELPERS
+initCustomHandlebarsHelpers({Handlebars, });
+
 
 export async function initRenderedRoutes ({ app }) {
 
@@ -22,7 +30,13 @@ export async function initRenderedRoutes ({ app }) {
       let query = req.query;
       let pathname = parseUrl(req).pathname;
       let currentUser = req.user;
-      let pageAuthor = await getUserData({username: usernameFromParams});
+
+      let [pageAuthor, pageAuthorError] = await capture(getUserData({username: usernameFromParams}));
+      if (pageAuthorError) {
+        res.status(500).send("500 Server Error");
+        return;
+      }
+
       let data = pageAuthor && pageAuthor.appData;
       let isPageAuthor = currentUser && pageAuthor && currentUser.details.username === pageAuthor.details.username;
       let flashErrors = req.flash("error");
@@ -30,7 +44,13 @@ export async function initRenderedRoutes ({ app }) {
       let currentItem;
       let parentItem; 
       if (pageAuthor) {
-        let processResponse = await preProcessData({data, user: pageAuthor, params, addUniqueIdsToData: true});
+        // add unique ids to data
+        let [processResponse, processResponseError] = await capture(preProcessData({data, user: pageAuthor, params, addUniqueIdsToData: true}));
+        if (processResponseError) {
+          res.status(500).send("500 Server Error");
+          return;
+        }
+
         currentItem = processResponse.currentItem;
         parentItem = processResponse.parentItem;
       }

@@ -135,8 +135,9 @@ function getAttributeValueAsArray (elem, attributeName) {
 //    advanced attribute parsing (supports args that have spaces in them!)
 // -------------------------------------------------------------------------
 
-let regexForPhrase = /^[^\(\):,]+$/;
-let regexForPhraseOrSpecialCharacter = /([^\(\):,]+|[\(\):,]|)/g;
+// matches everything but the special characters that mean something (i.e. "(", ")", ":", ",", "]")
+let regexForPhrase = /^[^\(\):,\s]+$/;
+let regexForPhraseOrSpecialCharacter = /([^\(\):,\s]+|[\(\):,]+)/g;
 
 function getParts (attributeString) {
   return attributeString.match(regexForPhraseOrSpecialCharacter);
@@ -161,17 +162,19 @@ function assembleResult (parts) {
       isWithinParens = true;
     }
 
+    // covers two cases: either we've just passed the modifier OR we're processing args
     if (previousPart === ":" || (previousPart === "(" && nextPart !== ":" && nextPart !== ")")) {
       hasModifierBeenProcessed = true;
     }
 
+    // reset if we're leaving a section
     if (currentPart === ")") {
       currentObject = undefined;
       isWithinParens = false;
       hasModifierBeenProcessed = false;
     }
 
-    if (regexForPhrase.test(currentPart) && nextPart === "(") {
+    if (regexForPhrase.test(currentPart) && (nextPart === "(" || (!isWithinParens && currentPart !== "(" && currentPart !== ")"))) {
       // create new object and add it to final array
       currentObject = {};
       extractedObjects.push(currentObject);
@@ -181,7 +184,7 @@ function assembleResult (parts) {
     }
 
     if (previousPart === "(" && (nextPart === ":" || nextPart === ")")) {
-      // this part is the "modifier" if it comes right after "(" and right before ":"
+      // this part is the "modifier" if it comes right after "(" and right before ":" OR a ")"
       if (regexForPhrase.test(currentPart)) {
         currentObject.modifier = currentPart.trim();
       }
@@ -197,8 +200,21 @@ function assembleResult (parts) {
   return extractedObjects;
 }
 
+// turns strings like:
+// "favoriteColor(colorPicker: red blue orange green) profileName(text-single-line)"
+// into:
+// [{name: "favoriteColor", modifier: "colorPicker", args: ["red, blue, orange, green"]}, {name: "profileName", modifier: "text-single-line"}]
+// 
+// rules
+// - each section is defined by a this structure: `string(string: string string string)`
+// - `name` is the first string in each section 
+// - `modifier` is always the first string inside the parentheses
+// - `args` are always after the modifier
+// - modifier, args, and parentheses are all optional, but in order to have args you 
+//   need a modifier and in order to have a modifier, you need parentheses
 function processAttributeString (attributeString) {
   let parts = getParts(attributeString);
+  console.log(parts)
   let extractedObjects = assembleResult(parts);
 
   return extractedObjects;

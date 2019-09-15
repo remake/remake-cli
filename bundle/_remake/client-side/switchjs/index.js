@@ -202,6 +202,8 @@ function turnOn (switchObj, actionObj) { // e.g. {name, elem, customName, auto}
   triggerCallbacks(switchObj, actionObj)
 } 
 
+// This function really just needs a switch name and a switch elem, which can be 
+//   passed in on the switchObj: {name, elem}
 function turnOff (switchObj, actionObj) { // e.g. {name, elem, customName, auto}
   let isSwitchOn = isOn(switchObj.name, switchObj.elem);
 
