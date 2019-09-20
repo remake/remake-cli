@@ -1,15 +1,15 @@
 {
   "name": "remake-framework",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "concurrently --kill-others 'npm:nodemon' 'npm:parcel' 'npm:sass' 'npm:copy-assets'",
     "nodemon": "nodemon server.js --watch ./ -e html,hbs,sass,css,js,png,gif,jpg,json --ignore node_modules/ --ignore .cache/ --ignore _remake/.sessions --ignore _remake-data",
-    "parcel": "parcel ./project-files/assets/js/main.js --out-dir ./_remake/dist/ --out-file main.dist.js --no-hmr",
+    "parcel": "parcel ./project-files/assets/js/main.js --out-dir ./_remake/dist/ --out-file main.dist.js --no-hmr --log-level 2",
     "sass": "sass --watch project-files/assets/sass/main.sass _remake/dist/main.dist.css",
     "copy-assets": "copy-and-watch --watch project-files/assets/**/*.{ico,png,jpg,gif} _remake/dist",
-    "build": "parcel build ./project-files/assets/js/main.js --out-dir ./_remake/dist/ --out-file main.dist.js && sass --style=compressed project-files/assets/sass/main.sass _remake/dist/main.dist.css",
+    "build": "parcel build ./project-files/assets/js/main.js --out-dir ./_remake/dist/ --out-file main.dist.js --log-level 2 && sass --style=compressed project-files/assets/sass/main.sass _remake/dist/main.dist.css",
     "start": "node server.js"
   },
   "keywords": [],
