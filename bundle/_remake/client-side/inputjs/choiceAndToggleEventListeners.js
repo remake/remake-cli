@@ -20,7 +20,7 @@ export default function () {
   });
 
   // plain toggle, using a <div> or <button> or <a>
-    // data-i-toggle data-i-key="done" data-i-value="true"
+    // <div data-i-toggle data-i-key="done" data-i-value="true"></div>
     // finds matching data-o-key-* and alternates between setting "true" and ""
   $.on("click", "[data-i-toggle]", function (event) {
     let keyName = event.currentTarget.getAttribute("data-i-toggle");
@@ -34,7 +34,7 @@ export default function () {
   })
 
   // <radio> AND <select>
-  $.on("change", "[data-i][type='radio'], select[data-i]", function (event) {
+  $.on("change", "[type='radio'][data-i], select[data-i]", function (event) {
     // get key name and value we want to change
     let keyName = event.currentTarget.getAttribute("name");
     let attributeValue = event.currentTarget.value;

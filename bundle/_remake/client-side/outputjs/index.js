@@ -14,8 +14,6 @@ import {
 // special properties:
 // * data-o-type (attribute value can be "object" or "list")
 // * data-o-key (attribute value can be any string, but ideally camel cased with no spaces)
-// * data-o-value (attribute value can be any string)
-
 
 function getDataFromRootNode (rootNode) {
 

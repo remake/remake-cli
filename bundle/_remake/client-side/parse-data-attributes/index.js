@@ -214,7 +214,6 @@ function assembleResult (parts) {
 //   need a modifier and in order to have a modifier, you need parentheses
 function processAttributeString (attributeString) {
   let parts = getParts(attributeString);
-  console.log(parts)
   let extractedObjects = assembleResult(parts);
 
   return extractedObjects;
