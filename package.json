@@ -21,7 +21,9 @@
     "remake": "bin/remake"
   },
   "scripts": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "@11ty/eleventy": "^0.9.0"
+  },
   "dependencies": {
     "boxen": "^4.1.0",
     "chalk": "^2.4.2",
