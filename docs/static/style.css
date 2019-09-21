@@ -288,7 +288,19 @@ pre code, pre[class*="language-"] code {
   height: 32px;
 }
 
+@media (max-width: 1100px) {
+  .page {
+    margin-left: 0;
+  }
 
+  .sidebar {
+    display: none;
+  }
+
+  .main {
+    width: 100%;
+  }
+}
 
 
 
