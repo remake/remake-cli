@@ -27,16 +27,27 @@
           <div class="sidebar__list"><a class="sidebar__list-item sidebar__list-item--selected" href="#">Intro &amp; Quick Start</a></div>
         </div>
         <div class="sidebar__list-container">
-          <div class="sidebar__list-heading">GETTING STARTED</div>
-          <div class="sidebar__list"><a class="sidebar__list-item" href="#">Turning things on &amp; off</a><a class="sidebar__list-item" href="#">Attaching Data to HTML</a><a class="sidebar__list-item" href="#">Modifying Data</a><a class="sidebar__list-item" href="#">Saving Data</a><a class="sidebar__list-item" href="#">Positioning Elements</a><a class="sidebar__list-item" href="#">Reacting to Changes</a><a class="sidebar__list-item" href="#">What Can We Build?</a><a class="sidebar__list-item" href="#">Best Practices</a></div>
+          <div class="sidebar__list-heading">STEP-BY-STEP TUTORIAL</div>
+          <div class="sidebar__list">
+            <a class="sidebar__list-item" href="#">Creating a Project</a>
+            <a class="sidebar__list-item" href="#">Adding Data</a>
+            <a class="sidebar__list-item" href="#">Modifying Data</a>
+            <a class="sidebar__list-item" href="#">Saving Data</a>
+            <a class="sidebar__list-item" href="#">Nesting Data</a>
+          </div>
         </div>
         <div class="sidebar__list-container">
-          <div class="sidebar__list-heading">API</div>
-          <div class="sidebar__list"><a class="sidebar__list-item" href="#">API Reference</a></div>
+          <div class="sidebar__list-heading">REFERENCE</div>
+          <div class="sidebar__list">
+            <a class="sidebar__list-item" href="#">Remake API</a>
+          </div>
         </div>
         <div class="sidebar__list-container">
           <div class="sidebar__list-heading">ABOUT</div>
-          <div class="sidebar__list"><a class="sidebar__list-item" href="#">About this Project</a><a class="sidebar__list-item" href="#">About the Author</a></div>
+          <div class="sidebar__list">
+            <a class="sidebar__list-item" href="#">Why Remake</a>
+            <a class="sidebar__list-item" href="#">Contributors</a>
+          </div>
         </div>
       </div>
       <div class="main">
@@ -98,13 +109,13 @@
 <p>Let's skip a few steps ahead...</p>
 <h4>3. This is what a working Remake web app looks like:</h4>
 <pre><code class="language-html">&lt;ul data-o-type=&quot;list&quot;&gt;
-  
+  {{#forEachItem data.todos itemName=&quot;todo&quot;}}
     &lt;li 
       data-o-type=&quot;object&quot; 
       data-l-key-text
       data-i-editable
-    &gt;&lt;/li&gt;
-  
+    &gt;{{ todo.text }}&lt;/li&gt;
+  {{/forEachItem}}
 &lt;/ul&gt;
 &lt;button data-i-new=&quot;todo&quot;&gt;Add Todo&lt;/button&gt;
 </code></pre>
@@ -148,13 +159,15 @@
 <p><a class="slanted-link" href="https://google.com" target="_blank"><span>→ Start the Tutorial</span></a></p>
 <h3>Full Documentation</h3>
 <ul>
-<li><a href="https://google.com">Best Practices</a></li>
-<li><a href="https://google.com">Remake API</a></li>
+<li><strong><a href="https://google.com">Best Practices</a></strong></li>
+<li><strong><a href="https://google.com">Remake API</a></strong></li>
 </ul>
-<h3>Why Remake?</h3>
-<p>Remake allows you to turn a static website into a dynamic web application in a matter of minutes.</p>
-<p>Remake's authors believe there should be more startups in the world — it should be easier to create them! The web is a relatively new technology, with a lot of room for growth. What if your neighbor could create a web app in an afternoon? That would mean you could too. Then, the web would suddenly become a less dangerous, much more interesting, and much more exciting place.</p>
-<p>Remake's goal is to foster a more approachable and friendly internet, so more companies and individuals can contributes to the whole ecosystem, connect, and learn from each other. ❤️</p>
+<h3>Why We Made Remake</h3>
+<p>Remake allows anyone to turn a static website into a dynamic web application in a matter of minutes.</p>
+<p>Remake's authors believe <strong>there should be more startups in the world</strong> — it should be easier to create them!</p>
+<p>The web is a relatively new technology, with a lot of room for growth. What if your neighbor could create a web app in an afternoon? That would mean you could too. Then, the web would suddenly become a less dangerous, much more interesting, and much more exciting place.</p>
+<p><strong>Our goal is to foster a more approachable and friendly internet</strong>, so more companies and individuals can contributes to the whole ecosystem, connect, and learn from each other.</p>
+<p>❤️</p>
 
       </div>
     </div>

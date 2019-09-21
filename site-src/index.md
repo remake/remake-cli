@@ -87,6 +87,7 @@ Let's skip a few steps ahead...
 
 #### 3. This is what a working Remake web app looks like:
 
+{% raw %}
 ```html
 <ul data-o-type="list">
   {{#forEachItem data.todos itemName="todo"}}
@@ -99,6 +100,7 @@ Let's skip a few steps ahead...
 </ul>
 <button data-i-new="todo">Add Todo</button>
 ```
+{% endraw %}
 
 **Line by line:**
 
@@ -134,16 +136,20 @@ Along the way, we'll explain what Remake is all about, how it gets its powers, a
 
 ### Full Documentation
 
-* [Best Practices](https://google.com)
-* [Remake API](https://google.com)
+* **[Best Practices](https://google.com)**
+* **[Remake API](https://google.com)**
 
-### Why Remake?
+### Why We Made Remake
 
-Remake allows you to turn a static website into a dynamic web application in a matter of minutes.
+Remake allows anyone to turn a static website into a dynamic web application in a matter of minutes.
 
-Remake's authors believe there should be more startups in the world — it should be easier to create them! The web is a relatively new technology, with a lot of room for growth. What if your neighbor could create a web app in an afternoon? That would mean you could too. Then, the web would suddenly become a less dangerous, much more interesting, and much more exciting place. 
+Remake's authors believe **there should be more startups in the world** — it should be easier to create them! 
 
-Remake's goal is to foster a more approachable and friendly internet, so more companies and individuals can contributes to the whole ecosystem, connect, and learn from each other. ❤️
+The web is a relatively new technology, with a lot of room for growth. What if your neighbor could create a web app in an afternoon? That would mean you could too. Then, the web would suddenly become a less dangerous, much more interesting, and much more exciting place. 
+
+**Our goal is to foster a more approachable and friendly internet**, so more companies and individuals can contributes to the whole ecosystem, connect, and learn from each other. 
+
+❤️
 
 
 
