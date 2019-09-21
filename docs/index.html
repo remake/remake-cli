@@ -4,9 +4,80 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Rad Markdown Blog Post</title>
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600" rel="stylesheet">
+    <link rel="stylesheet" href="/static/normalize-min.css">
+    <link rel="stylesheet" href="/static/prism.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- favicon: -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="apple-mobile-web-app-title" content="Remake.js">
+    <meta name="application-name" content="Remake.js">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="theme-color" content="#ffffff">
   </head>
   <body>
-    <h1>Hello</h1>
-
+    <div class="page">
+      <div class="sidebar">
+        <div class="sidebar__list-container">
+          <div class="sidebar__list-heading">INTRO</div>
+          <div class="sidebar__list"><a class="sidebar__list-item sidebar__list-item--selected" href="#">Intro &amp; Quick Start</a></div>
+        </div>
+        <div class="sidebar__list-container">
+          <div class="sidebar__list-heading">GETTING STARTED</div>
+          <div class="sidebar__list"><a class="sidebar__list-item" href="#">Turning things on &amp; off</a><a class="sidebar__list-item" href="#">Attaching Data to HTML</a><a class="sidebar__list-item" href="#">Modifying Data</a><a class="sidebar__list-item" href="#">Saving Data</a><a class="sidebar__list-item" href="#">Positioning Elements</a><a class="sidebar__list-item" href="#">Reacting to Changes</a><a class="sidebar__list-item" href="#">What Can We Build?</a><a class="sidebar__list-item" href="#">Best Practices</a></div>
+        </div>
+        <div class="sidebar__list-container">
+          <div class="sidebar__list-heading">API</div>
+          <div class="sidebar__list"><a class="sidebar__list-item" href="#">API Reference</a></div>
+        </div>
+        <div class="sidebar__list-container">
+          <div class="sidebar__list-heading">ABOUT</div>
+          <div class="sidebar__list"><a class="sidebar__list-item" href="#">About this Project</a><a class="sidebar__list-item" href="#">About the Author</a></div>
+        </div>
+      </div>
+      <div class="main">
+        <div class="section">
+  <h1 class="main__logo"> <img class="main__logo-image" src="/static/logo.svg" alt="Remake.js"></h1>
+  <h2 class="main__page-subheading">Powerful web app utility libraries for adding dynamic features to any webpage.</h2>
+  <div class="main__list-container">
+    <div class="main__list-heading">For developers:</div>
+    <ul class="main__list">
+      <li class="main__list-item">Work directly with the DOM </li>
+      <li class="main__list-item">Build new features quickly</li>
+      <li class="main__list-item">It’s easy to get started</li>
+    </ul>
+  </div>
+  <div class="main__list-container">
+    <div class="main__list-heading">For users:</div>
+    <ul class="main__list">
+      <li class="main__list-item">Fast initial load times</li>
+      <li class="main__list-item">Smooth interactions</li>
+      <li class="main__list-item">Feels like using a Single Page App</li>
+    </ul>
+  </div>
+</div>
+<div class="section">
+  <div class="section__heading">How to install</div>
+  <p>Get it from npm:</p>
+  <pre class="code">npm install remakejs --save</pre>
+  <p>Initialize it:</p>
+  <pre class="code"><code class="language-javascript">import Remake from "remakejs";
+<p>// respond to changes to the data
+Remake.onChange(onChangeCallbacks);</p>
+<p>// respond to changes to the data that require a save
+Remake.onSave(onSaveCallbacks);</code></pre></p>
+  <p><b>Tip: </b><span>Although it’s recommended to go through the whole tutorial, you can </span><a href="#">skip ahead </a><span>to working code if you want.</span></p>
+</div>
+<div class="section">
+  <div class="section__heading">A High Level Overview</div>
+</div>
+      </div>
+    </div>
+    <script src="/static/prism.js"></script>
+    <script src="/static/main.js"></script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 ---
-title: My Rad Blog
+title: Remake - A framework for building CRUD web apps quickly
 ---
 <!doctype html>
 <html lang="en">
@@ -7,8 +7,46 @@ title: My Rad Blog
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600" rel="stylesheet">
+    <link rel="stylesheet" href="/static/normalize-min.css">
+    <link rel="stylesheet" href="/static/prism.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- favicon: -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="apple-mobile-web-app-title" content="Remake.js">
+    <meta name="application-name" content="Remake.js">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="theme-color" content="#ffffff">
   </head>
   <body>
-    {{{ content }}}
+    <div class="page">
+      <div class="sidebar">
+        <div class="sidebar__list-container">
+          <div class="sidebar__list-heading">INTRO</div>
+          <div class="sidebar__list"><a class="sidebar__list-item sidebar__list-item--selected" href="#">Intro &amp; Quick Start</a></div>
+        </div>
+        <div class="sidebar__list-container">
+          <div class="sidebar__list-heading">GETTING STARTED</div>
+          <div class="sidebar__list"><a class="sidebar__list-item" href="#">Turning things on &amp; off</a><a class="sidebar__list-item" href="#">Attaching Data to HTML</a><a class="sidebar__list-item" href="#">Modifying Data</a><a class="sidebar__list-item" href="#">Saving Data</a><a class="sidebar__list-item" href="#">Positioning Elements</a><a class="sidebar__list-item" href="#">Reacting to Changes</a><a class="sidebar__list-item" href="#">What Can We Build?</a><a class="sidebar__list-item" href="#">Best Practices</a></div>
+        </div>
+        <div class="sidebar__list-container">
+          <div class="sidebar__list-heading">API</div>
+          <div class="sidebar__list"><a class="sidebar__list-item" href="#">API Reference</a></div>
+        </div>
+        <div class="sidebar__list-container">
+          <div class="sidebar__list-heading">ABOUT</div>
+          <div class="sidebar__list"><a class="sidebar__list-item" href="#">About this Project</a><a class="sidebar__list-item" href="#">About the Author</a></div>
+        </div>
+      </div>
+      <div class="main">
+        {{{ content }}}
+      </div>
+    </div>
+    <script src="/static/prism.js"></script>
+    <script src="/static/main.js"></script>
   </body>
 </html>
