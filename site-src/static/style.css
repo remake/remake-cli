@@ -289,6 +289,10 @@ pre code, pre[class*="language-"] code {
 }
 
 @media (max-width: 1100px) {
+  .logo {
+    margin-top: 2rem;
+  }
+
   .page {
     margin-left: 0;
   }
