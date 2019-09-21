@@ -163,8 +163,8 @@ pre code, pre[class*="language-"] code {
 .sidebar__list-heading {
   margin-bottom: 6px;
   padding: 10px 20px 12px 30px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+  color: #ffb567;
   text-transform: uppercase
 }
 
