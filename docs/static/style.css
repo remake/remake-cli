@@ -137,6 +137,7 @@ pre code, pre[class*="language-"] code {
 /* MAIN CONTENT */
 
 .main {
+  position: relative;
   width: 691px;
   padding: 45px 46px 48px;
   border-right: 1px solid #212529;
@@ -220,6 +221,41 @@ pre code, pre[class*="language-"] code {
 
 .logo-image {
   width: 259px
+}
+
+/* COMPONENTS */
+
+.github-link {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 16px;
+  background-color: #24292e;
+  border-radius: 5px;
+  color: #fff;
+  text-decoration: none;
+  height: 36px;
+  padding-left: .75rem;
+  padding-right: .75rem;
+}
+
+.github-link--top {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+}
+
+.github-link--footer {
+  float: right;
+}
+
+.github-link:hover {
+  background-color: #3a424b;
+}
+
+.github-link img {
+  max-height: 21px;
+  margin-right: 8px;
 }
 
 /* UTILS */
