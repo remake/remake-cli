@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Rad Markdown Blog Post</title>
+    <title>Remake - A framework for building CRUD web apps quickly</title>
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600" rel="stylesheet">
     <link rel="stylesheet" href="/static/normalize-min.css">
     <link rel="stylesheet" href="/static/prism.css">
@@ -41,27 +41,120 @@
       </div>
       <div class="main">
         <h1 class="logo"><img class="logo__image" src="/static/logo.svg" alt="Remake.js"></h1>
-<h2>Build CRUD web apps quickly</h2>
+<h2>Build <a href="https://gist.github.com/panphora/67662b0b0fb2db283a226e9043ad1df4" target="_blank">CRUD</a> web apps quickly</h2>
 <ul>
 <li>Feels like prototyping</li>
-<li>Has an easy to learn syntax</li>
-<li>Takes care of the back-end for you</li>
+<li>Easy-to-learn syntax</li>
+<li>No need to worry about the back-end</li>
 </ul>
-<h3>How to install</h3>
-<p>Get it from npm:</p>
-<pre><code class="language-bash">npm install remakejs --save
+<h3>Getting Started</h3>
+<ol>
+<li>Install Remake globally</li>
+</ol>
+<pre><code class="language-bash">npm install remake -g
 </code></pre>
-<p>Initialize it:</p>
-<pre><code class="language-javascript">import Remake from &quot;remakejs&quot;;
-
-// respond to changes to the data
-Remake.onChange(onChangeCallbacks);
-
-// respond to changes to the data that require a save
-Remake.onSave(onSaveCallbacks);
+<ol start="2">
+<li>Generate a starter project</li>
+</ol>
+<pre><code class="language-bash">remake create &lt;project-dir&gt;
 </code></pre>
-<p><strong>Tip:</strong> Although it’s recommended to go through the whole tutorial, you can <a href="https://gooogle.com">skip ahead</a> to working code if you want.</p>
-<h3>A High Level Overview</h3>
+<ol start="3">
+<li>Run the project locally</li>
+</ol>
+<pre><code class="language-bash">cd projectName &amp;&amp; npm run dev
+</code></pre>
+<h3>Quick Start</h3>
+<p><strong>Creating a web application is hard.</strong> You need to install packages, configure your build process, create API endpoints, set up a database, and load in some demo data, <em>and that's all before even getting started!</em></p>
+<p><strong>It can be easier!</strong></p>
+<div class="spacer--8"></div>
+<p><a class="slanted-link" href="https://google.com" target="_blank"><span>→ Watch 15 minute tutorial</span></a></p>
+<h3>How Remake is Different</h3>
+<ul>
+<li>Remake is server-rendered &amp; uses Handlebars.js for templating</li>
+<li>Remake uses custom data attributes to attach data and behavior to HTML elements</li>
+<li>Remake will automatically save the data on the page for you</li>
+</ul>
+<h4>1. Handling state is simple</h4>
+<p>Given this HTML:</p>
+<pre><code class="language-html">&lt;div data-o-type=&quot;object&quot; data-o-key-name=&quot;John&quot; data-o-key-age=&quot;24&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>Remake will produce this object:</p>
+<pre><code class="language-json">{&quot;name&quot;: &quot;John&quot;, &quot;age&quot;: &quot;24&quot;}
+</code></pre>
+<p>Whenever this data changes, Remake will automatically saves it to the current user's data.</p>
+<h4>2. Multiple items are converted into an array</h4>
+<p>Remake uses the natural structure of this HTML:</p>
+<pre><code class="language-html">&lt;div data-o-type=&quot;list&quot;&gt;
+  &lt;div data-o-type=&quot;object&quot; data-o-key-name=&quot;John&quot; data-o-key-age=&quot;24&quot;&gt;&lt;/div&gt;
+  &lt;div data-o-type=&quot;object&quot; data-o-key-name=&quot;Mary&quot; data-o-key-age=&quot;26&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>To create an arrays of objects:</p>
+<pre><code class="language-json">[
+  {&quot;name&quot;: &quot;John&quot;, &quot;age&quot;: &quot;24&quot;},
+  {&quot;name&quot;: &quot;Mary&quot;, &quot;age&quot;: &quot;26&quot;}
+]
+</code></pre>
+<p>Let's skip a few steps ahead...</p>
+<h4>3. This is what a working Remake web app looks like:</h4>
+<pre><code class="language-html">&lt;ul data-o-type=&quot;list&quot;&gt;
+  
+    &lt;li 
+      data-o-type=&quot;object&quot; 
+      data-l-key-text
+      data-i-editable
+    &gt;&lt;/li&gt;
+  
+&lt;/ul&gt;
+&lt;button data-i-new=&quot;todo&quot;&gt;Add Todo&lt;/button&gt;
+</code></pre>
+<p><strong>Line by line:</strong></p>
+<ol>
+<li>
+<p>The data in this app will be inside of a list</p>
+</li>
+<li>
+<p>Loop through all the existing todos</p>
+</li>
+<li>
+<p>Start an <code>li</code> element</p>
+</li>
+<li>
+<p>Each todo will be an object</p>
+</li>
+<li>
+<p>A key on this object is <code>text</code> and its value is inside the current <code>li</code> element</p>
+</li>
+<li>
+<p>Clicking on this element will trigger a popover for editing the element's data</p>
+</li>
+<li>
+<p>Render the current todo's <code>text</code> key inside the <code>li</code></p>
+</li>
+<li>
+<p>End the loop</p>
+</li>
+<li>
+<p>Close the <code>ul</code></p>
+</li>
+<li>
+<p>Clicking the &quot;Add Todo&quot; button will add a new todo to the end of the list above</p>
+</li>
+</ol>
+<h3>Step-By-Step Tutorial</h3>
+<p>Follow along as we create a <strong>Choose Your Own Ending Game</strong>!</p>
+<p>Along the way, we'll explain what Remake is all about, how it gets its powers, and why it's the fastest way to build a web application.</p>
+<div class="spacer--8"></div>
+<p><a class="slanted-link" href="https://google.com" target="_blank"><span>→ Start the Tutorial</span></a></p>
+<h3>Full Documentation</h3>
+<ul>
+<li><a href="https://google.com">Best Practices</a></li>
+<li><a href="https://google.com">Remake API</a></li>
+</ul>
+<h3>Why Remake?</h3>
+<p>Remake allows you to turn a static website into a dynamic web application in a matter of minutes.</p>
+<p>Remake's authors believe there should be more startups in the world — it should be easier to create them! The web is a relatively new technology, with a lot of room for growth. What if your neighbor could create a web app in an afternoon? That would mean you could too. Then, the web would suddenly become a less dangerous, much more interesting, and much more exciting place.</p>
+<p>Remake's goal is to foster a more approachable and friendly internet, so more companies and individuals can contributes to the whole ecosystem, connect, and learn from each other. ❤️</p>
 
       </div>
     </div>
