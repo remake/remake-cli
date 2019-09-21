@@ -38,7 +38,7 @@ cd projectName && npm run dev
 
 <div class="spacer--8"></div>
 
-<a class="slanted-link" href="#" target="_blank"><span>&rarr; Watch 15 minute tutorial</span></a>
+<a class="slanted-link" href="/not-available"><span>&rarr; Watch 15 minute tutorial</span></a>
 
 
 ### How Remake is Different
@@ -132,12 +132,12 @@ Along the way, we'll explain what Remake is all about, how it gets its powers, a
 
 <div class="spacer--8"></div>
 
-<a class="slanted-link" href="#" target="_blank"><span>&rarr; Start the Tutorial</span></a>
+<a class="slanted-link" href="/not-available"><span>&rarr; Start the Tutorial</span></a>
 
 ### Full Documentation
 
-* **[Best Practices](#)**
-* **[Remake API](#)**
+* **[Best Practices](/not-available)**
+* **[Remake API](/not-available)**
 
 ### Why We Made Remake
 
