@@ -192,6 +192,7 @@ pre code, pre[class*="language-"] code {
 
 .sidebar__list-item--selected, .sidebar__list-item--selected:hover {
   position: relative;
+  z-index: 1;
   margin-left: -11px;
   margin-right: -1px;
   padding-left: 41px;
