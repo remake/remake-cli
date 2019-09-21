@@ -21,6 +21,8 @@ body {
   font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
 }
 
+/* COMMON ELEMENTS */
+
 a {
   color: #228AE6
 }
@@ -29,13 +31,63 @@ a:hover {
   text-decoration: none
 }
 
-.page-notice {
-  padding: 12px;
-  font-weight: bold;
-  background-color: #212529;
-  color: #fff;
-  text-align: center
+h1 {
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+  font-weight: 600;
+  font-size: 2rem;
+  line-height: 1.2em;
 }
+
+h2 {
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+  font-weight: 600;
+  font-size: 1.5em;
+  line-height: 1.3em;
+}
+
+h3 {
+  margin-top: 1.5em;
+  margin-left: -60px;
+  margin-bottom: 1em;
+  display: inline-block;
+  padding: 13px 60px 15px;
+  border: 1px solid #212529;
+  font-size: 1.5em;
+  font-weight: bold;
+  background-color: #FBC9DA
+}
+
+h4 {
+
+}
+
+p {
+  margin-bottom: 1em;
+  line-height: 1.44em
+}
+
+ul {
+  margin-top: 8px;
+  margin-left: -16px
+}
+
+li {
+  margin-bottom: .5em;
+}
+
+
+pre, pre[class*="language-"] {
+  margin-bottom: 28px;
+  padding: 17px 26px 18px;
+  font-family: monospace;
+  background-color: #212529;
+  color: #fff
+}
+
+
+/* PAGE LAYOUT */
 
 .page {
   display: -webkit-box;
@@ -46,6 +98,22 @@ a:hover {
   justify-content: center;
   margin-left: -140px
 }
+
+
+/* MAIN CONTENT */
+
+.main {
+  width: 691px;
+  padding: 45px 46px 48px;
+  border-right: 1px solid #212529;
+  border-left: 1px solid #212529;
+  line-height: 1.44em;
+  font-size: 17px;
+  background-color: #fff
+}
+
+
+/* SIDEBAR */
 
 .sidebar {
   width: 280px;
@@ -107,68 +175,23 @@ a:hover {
   background-color: #fff
 }
 
-.main {
-  width: 691px;
-  padding: 45px 46px 48px;
-  border-right: 1px solid #212529;
-  border-left: 1px solid #212529;
-  line-height: 1.44em;
-  font-size: 17px;
-  background-color: #fff
+
+/* LOGO */
+
+.logo {
+  margin-top: 0;
+  margin-bottom: 1.5em;
+  font-size: 1rem;
 }
 
-.main p {
-  margin-bottom: 1em;
-  line-height: 1.44em
-}
-
-.main__logo {
-  margin-bottom: 36px
-}
-
-.main__logo-image {
+.logo-image {
   width: 259px
 }
 
-.main__page-subheading {
-  font-weight: 400;
-  margin-bottom: 32px;
-  font-size: 20px;
-  line-height: 1.44em
-}
 
-.main__list-container {
-  margin-bottom: 24px
-}
 
-.main__list-heading {
-  font-weight: bold
-}
 
-.main__list {
-  margin-top: 8px;
-  margin-left: -16px
-}
 
-.section {
-  margin-bottom: 38px
-}
 
-.section__heading {
-  display: inline-block;
-  margin-left: -60px;
-  margin-bottom: 32px;
-  padding: 13px 60px 15px;
-  border: 1px solid #212529;
-  font-size: 20px;
-  font-weight: bold;
-  background-color: #FBC9DA
-}
 
-.code {
-  margin-bottom: 28px;
-  padding: 17px 26px 18px;
-  font-family: monospace;
-  background-color: #212529;
-  color: #fff
-}
+

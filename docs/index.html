@@ -40,41 +40,29 @@
         </div>
       </div>
       <div class="main">
-        <div class="section">
-  <h1 class="main__logo"> <img class="main__logo-image" src="/static/logo.svg" alt="Remake.js"></h1>
-  <h2 class="main__page-subheading">Powerful web app utility libraries for adding dynamic features to any webpage.</h2>
-  <div class="main__list-container">
-    <div class="main__list-heading">For developers:</div>
-    <ul class="main__list">
-      <li class="main__list-item">Work directly with the DOM </li>
-      <li class="main__list-item">Build new features quickly</li>
-      <li class="main__list-item">It’s easy to get started</li>
-    </ul>
-  </div>
-  <div class="main__list-container">
-    <div class="main__list-heading">For users:</div>
-    <ul class="main__list">
-      <li class="main__list-item">Fast initial load times</li>
-      <li class="main__list-item">Smooth interactions</li>
-      <li class="main__list-item">Feels like using a Single Page App</li>
-    </ul>
-  </div>
-</div>
-<div class="section">
-  <div class="section__heading">How to install</div>
-  <p>Get it from npm:</p>
-  <pre class="code">npm install remakejs --save</pre>
-  <p>Initialize it:</p>
-  <pre class="code"><code class="language-javascript">import Remake from "remakejs";
-<p>// respond to changes to the data
-Remake.onChange(onChangeCallbacks);</p>
-<p>// respond to changes to the data that require a save
-Remake.onSave(onSaveCallbacks);</code></pre></p>
-  <p><b>Tip: </b><span>Although it’s recommended to go through the whole tutorial, you can </span><a href="#">skip ahead </a><span>to working code if you want.</span></p>
-</div>
-<div class="section">
-  <div class="section__heading">A High Level Overview</div>
-</div>
+        <h1 class="logo"><img class="logo__image" src="/static/logo.svg" alt="Remake.js"></h1>
+<h2>Build CRUD web apps quickly</h2>
+<ul>
+<li>Feels like prototyping</li>
+<li>Has an easy to learn syntax</li>
+<li>Takes care of the back-end for you</li>
+</ul>
+<h3>How to install</h3>
+<p>Get it from npm:</p>
+<pre><code class="language-bash">npm install remakejs --save
+</code></pre>
+<p>Initialize it:</p>
+<pre><code class="language-javascript">import Remake from &quot;remakejs&quot;;
+
+// respond to changes to the data
+Remake.onChange(onChangeCallbacks);
+
+// respond to changes to the data that require a save
+Remake.onSave(onSaveCallbacks);
+</code></pre>
+<p><strong>Tip:</strong> Although it’s recommended to go through the whole tutorial, you can <a href="https://gooogle.com">skip ahead</a> to working code if you want.</p>
+<h3>A High Level Overview</h3>
+
       </div>
     </div>
     <script src="/static/prism.js"></script>
