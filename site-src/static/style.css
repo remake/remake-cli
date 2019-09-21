@@ -151,6 +151,7 @@ pre code, pre[class*="language-"] code {
 /* SIDEBAR */
 
 .sidebar {
+  visibility: hidden;
   width: 280px;
   padding-top: 36px;
   background-color: #4d81ed

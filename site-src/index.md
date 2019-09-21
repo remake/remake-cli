@@ -4,7 +4,7 @@ layout: layout.hbs
 
 <h1 class="logo"><img class="logo__image" src="/static/logo.svg" alt="Remake.js"></h1>
 
-## Build <a href="https://gist.github.com/panphora/67662b0b0fb2db283a226e9043ad1df4" target="_blank">CRUD</a> web apps quickly
+## Build <a href="/what-is-crud">CRUD</a> web apps quickly
 
 * Feels like prototyping
 * Easy-to-learn syntax
