@@ -2,21 +2,19 @@
 layout: layout.hbs
 ---
 
-# Remake's API
+# Data Attributes API
 
-Remake relies on data attributes for storing data and defining behavior. In fact, you can create an entire web application just using data attributes.
+Remake relies on data attributes for storing data inside of elements and defining an application's behavior.
 
-Let's explore what they can do!
+In fact, you can create a fully working web application in Remake by just using data attributes.
 
-# Attaching Data to the Page
-
-The following attributes let you attach data to HTML elements.
+<h2 class="api">Attaching Data to Elements</h2>
 
 ### `data-o-type`
 
-By attaching this attribute to an HTML element, you're telling Remake that there's data on (and possibly inside) that element. Remake scans the page for all elements with a `data-o-type` attribute and converts them into data.
+By adding this attribute to an HTML element, you're telling Remake that there's data on (and possibly inside) the element. Remake scans the page for all elements with a `data-o-type` attribute and converts them into data.
 
-Remake can convert an element's data into one of two data structures: either an **object** or an **array**.
+Remake can convert an element into one of two data structures: an **object** or **array**.
 
 To define an array, use `data-o-type="list"`.
 
@@ -32,14 +30,14 @@ These will be converted into `[]` and `{}`, respectively.
 </div>
 ```
 
-This is valid and will be converted into `[{}]`.
+This is valid Remake code and will be converted into `[{}]`.
 
 
 ### `data-o-key="someKeyName"`
 
-This attribute is used to nest data inside of a parent object using the provided key.
+This attribute allows you to namespace data inside an object.
 
-Normally, if there's an object nested in another object, they'll be merged together:
+Normally, if there's an object nested in another object, they'll be merged into a single object:
 
 ```html
 <div data-o-type="object">
@@ -48,9 +46,9 @@ Normally, if there's an object nested in another object, they'll be merged toget
 </div>
 ```
 
-The above objects will be merged into a single object (i.e. `{}`) because Remake doesn't know what else to do.
+The above, for example, is converted into `{}`.
 
-However, if you give the nested data a key name, it'll use that key to nest itself in its parent object.
+However, if you give the nested element a key name with the `data-o-key` attribute, it'll use that key to nest itself inside the parent object.
 
 ```html
 <div data-o-type="object">
@@ -59,15 +57,17 @@ However, if you give the nested data a key name, it'll use that key to nest itse
 </div>
 ```
 
-Now the nested object will have a key name inside the parent object: `{someData: {}}`.
+Now the nested object is inside the provided key name: `{someData: {}}`.
 
-Now we know how to export structured data, but not how to attach values to elements. Let's learn that next.
+---
+
+Now that we know how to attach data structures like arrays and objects to the page, but what about storing things like strings and numbers?
 
 ### `data-o-key-[some-key-name]`
 
 This attribute lets you attach key/value pairs to an element. 
 
-**Important:** In order to use this attribute, you need to use the `data-o-type="object"` attribute as well.
+You must always use the `data-o-type="object"` attribute in addition to this attribute.
 
 You can attach as many key/value pairs to the same element as you want, as long as their key names are unique.
 
@@ -81,31 +81,32 @@ For example:
 ></div>
 ```
 
-Remake will convert this into an object with two key/value pairs: `{firstName: "David", favoriteColor: "green"}`.
+Remake will convert this HTML into an object that has two key/value pairs: 
 
-The key is the part of the attribute after `data-o-key-` and the value is simply the attributes value. The only type of primitive value Remake knows how to export is a `String`.
+```javascript
+{firstName: "David", favoriteColor: "green"}
+```
 
-You'll also notice that the key names are automatically camel-cased for you. This makes them easier to work with in JavaScript.
+Remake extracts the key name from the part of the attribute immediately following `data-o-key-`.
 
-**Note:** In Remake, a key with an empty string as its value (e.g. `data-o-key-enable-widescreen=""`) is considered `false`. This will come into play later when we start to toggle values with checkboxes.
+**Good to know:**
 
-**Note:** Todo: mention `data-o-key-id`
+* Remake can only export strings as values
+* Key names are automatically camel-cased for you
+* By convention, a key that's being used as a boolean is considered `false` when it has no value. This will come into play later when we start to toggle values with checkboxes.
+* There's one special type of key in Remake: `data-o-key-id`. Read more in the [Saving Data](not-available) tutorial step.
 
 ### `data-l-key-[some-key-name]`
 
-You might be wondering what this attribute is doing under the `data-o` section since it doesn't start with `data-o`.
+This attribute behaves exactly like the `data-o-key-*` attribute, except its value lives somewhere else.
 
-The truth is, it's so similar to the `data-o-key-*` attribute (i.e. the previous attribute above) that it really does belong in this area.
-
-Like the attribute directly above, it also lets you attach key/value pairs to an element. However, this time the value that's exported is **not** the value of the attribute, but rather lives somewhere else. 
-
-(The `l` in this attribute stands for "location")
-
-This is useful for getting and saving data that's inside an element's property (e.g. `src`, `innerHTML`, or `style`).
+The value of this attribute lets you tell Remake where to look for the actual value.
 
 The syntax for this attribute's value is: `selector property`.
 
-The selector will be used to look for a matching element inside the current element, while the property will be used to get the correct value from that element.
+The CSS `selector` argument will be used to look for an element inside the current element.
+
+The `property` argument will be used to get the correct property from that element.
 
 For example:
 
@@ -115,9 +116,19 @@ For example:
 </div>
 ```
 
-Remake will convert this into: `{imgSrc: "/images/beautiful.jpg"}`.
+Remake will use `"img"` as a CSS selector to find an element within the current element.
 
-However, you don't need to specify any value at all if you just want to get the `innerText` of the current element, as this is Remake's default.
+It will then get the `src` property of this element to use as the final value.
+
+When it's done, the resulting data will look like this:
+
+```javascript
+{imgSrc: "/images/beautiful.jpg"} // e.g. elem.querySelector("img").src
+```
+
+**Defaults:**
+
+* If no attribute value is provided, this attribute will default to using the `innerText` of the current element.
 
 For example:
 
@@ -125,34 +136,39 @@ For example:
 <div data-o-type="object" data-l-key-text>Hello, world!</div>
 ```
 
-Will be automatically converted into: `{text: "Hello, world!"}`.
+Is converted into: `{text: "Hello, world!"}`.
 
+**Good to know:**
 
-# Reacting To Changes in the Data
+* This attribute is useful for using data from an element's properties (e.g. `innerText`, `src`, `innerHTML`, `style`).
 
-The following attributes let you watch for changes to the data and update HTML elements based on the new data.
+<h2 class="api">Reacting To Data Changes</h2>
 
 ### `data-w-key-[some-key-name]`
 
-This attribute is used for watching other values for changes and responding to those changes.
+Use this attribute to react to changes in another key's value.
 
-If you create a `data-w-key-*` whose key name matches either a `data-o-key-*` or `data-l-key-*` attribute, the function that you define inside of the `data-w-key-*` attribute will be called whenever the other attributes change their values.
+If the key name you use to define this attribute matches the key name of either a `data-o-key-*` or `data-l-key-*` attribute, then this attribute will be triggered when their data changes.
 
-This is very useful for displaying the same values in multiple places across a page while using the same data source.
-
-The syntax for this attribute's value is: 
+The value for this attribute uses the following syntax:
 
 ```javascript
 customFunction1(arg1, arg2, ...) customFunction2(arg1, arg2, ...)
 ```
 
-You can define these custom functions when you initialize Remake.
+In this example, `customFunction1` and `customFunction2` would be defined when you first initialize Remake.
 
-However, most of the time, you won't need a custom function — you'll be just fine using Remake's defaults.
+**Defaults:**
 
-By default, if you provide a valid element property (e.g. `src`, `innerHTML`, or `style`) as the value for a `data-w-key-*` attribute, Remake will set the key's new value on that property.
+* If no value is provided, Remake will default to setting the `innerText` of the current element to the new value.
+* If a value matching a valid HTML element property is provided (e.g. `innerText`, `src`, `innerHTML`, `style`), Remake will default to setting that attribute's value on the current element to the new value.
 
-Also, by default, if no value is provided, Remake will default to setting the `innerText` of this element. *So, you don't even need a value for this attribute most of the time!*
+**Good to know:**
+
+* In order for a watch function to be called, this attribute needs to be on or inside the data source element.
+* If you have two `data-o-key-*` attributes with the same name on your page and they are nested inside of each other (**tip:** try not to do this), the watch attribute will only watch its `closest` ancestor. This makes it possible to have different levels of data on the same page.
+* By convention, a this attribute should be attached to the element it's modifying.
+* This attribute is very useful for displaying the same values in multiple places across a page while using the same data source.
 
 For example, let's say you wanted to have a button on a landing page that had the same text no matter where it was displayed, you could do this:
 
@@ -166,42 +182,25 @@ For example, let's say you wanted to have a button on a landing page that had th
 
 With this setup, if the value of `buttonText` ever changes on the parent element, all of the buttons will get the new value inserted into their `innerText`.
 
-It would be the equivalent of doing this:
-
-```html
-<div data-o-type="object" data-o-key-button-text="Buy Now!">
-  <button data-w-key-button-text="innerText">Buy Now!</button>
-  <button data-w-key-button-text="innerText">Buy Now!</button>
-  <button data-w-key-button-text="innerText">Buy Now!</button>
-</div>
-```
-
-**Some important notes:**
-
-* In order for a watch function to be called, it needs to be on or inside the element with the data it's watching.
-* If you have two `data-o-key-*` attributes with the same name on your page and they are nested inside of each other (tip: try not to do this), the watch attribute will only watch its `closest` ancestor's data. This makes it possible to have different levels of data on the same page and have everything still play nicely.
-* By convention, even when you define custom watch functions, you should add `data-w-key-*` attributes to the element they're going to modify. This makes your HTML easier to understand in the long run.
-
-
-# Inputting Data
-
-The following attributes let you modify the data on the page.
+<h2 class="api">Modifying Data</h2>
 
 ### `data-i-editable`
 
-Adding this attribute to an element makes clicking on it trigger an inline edit popover.
+Add this attribute to an element if you want to make clicking on it trigger an inline edit popover.
 
-This is the primary way of making data editable in Remake. Currently, only two types of edit fields are available, one for short text (`text-single-line`) and one for long text (`text-multi-line`), but in the near future there will be edit fields for images, numbers, dates, etc.
+This is the primary way of making data on a page editable. 
 
-The syntax for the value is: 
+The syntax for the value of this attribute is: 
 
 ```javascript
-someKeyName1(editType) someKeyName2(editType)
+someKeyName1(the-type-of-edit-field) someKeyName2(the-type-of-edit-field)
 ```
 
 A `data-i-editable` attribute with this value will trigger a popover that edits two fields at once.
 
-However, most of the the time, you won't need to provide a value since this attribute defaults to editing the data on the `closest` ancestor element with data.
+**Defaults:**
+
+* If no value is provided, this attribute defaults to editing *all of the data* on the `closest` ancestor element with data.
 
 For example:
 
@@ -213,35 +212,42 @@ For example:
 
 The above will create an inline edit popover after you click on the button. Since no value is provided, it will default to editing the key `firstName` since that's the `closest` data it can find.
 
-Also: `data-i-editable-without-remove` and `data-i-editable-with-hide` (todo: add more details)
+**Good to know:**
+
+* Currently, only two types of edit fields are available, one for short text (`text-single-line`) and one for long text (`text-multi-line`), but in the near future there will be edit fields for images, numbers, dates, choices, toggles, etc.
+* If, when a user clicks the "remove" button inside the inline edit popover, you want it to set all of the target data to empty strings (instead of removing the data source element altogether), use the alternate attribute `data-i-editable-with-hide`
+* If you don't want to provide a "remove" button in the inline edit popover, use the altnernate attribute `data-i-editable-without-remove`.
 
 ---
 
-**Note:** You probably don't have to worry about the rest of the `data-i` attributes if you're just getting started. They're used heavily inside of the inline edit popovers, but since those are generated automatically when you use the `data-i-editable` attribute, you don't need to understand how they work. However, if you're building your own editable components with custom code, these will be useful.
+**Note:** You only need to know about the following `data-i` attributes if you need more advanced editing capabilities beyond what the `data-i-editable` popovers provide.
 
 ### `data-i`
 
-Use this attribute on any type of `<input>` element (e.g. `text`, `textarea`, `select`, `checkbox`, `radio`) so it can edit the data on the `closest` ancestor element with a matching key name.
+Use this attribute on any type of `<input>` element in order to make it able to edit data on the page.
 
-The ancestor element will be found by matching the `name` property on the `<input>` element to the key name of a `data-o-key-*` or `data-l-key-*` attribute.
+It will find the data its supposed to edit by finding the closest ancestor element with a data key that matches the `input`'s `name` attribute.
 
 For example:
 
 ```html
-todo
+<div data-o-type="object" data-o-type-favorite-animal="">
+  <input type="radio" name="favoriteAnimal" value="giraffe">
+  <input type="radio" name="favoriteAnimal" value="pangolin">
+  <input type="radio" name="favoriteAnimal" value="zebra">
+</div>
 ```
 
+**Goot to know:**
 
-These `<input>` elements are usually inside of inline edit popovers. However, if you want to use them outside of a popover and have them trigger a save every time the data changes, give the `data-i` attribute a value of `triggerSaveOnChange`.
+* If you want to a `data-i` attribute outside an inline edit popover and have them trigger a save every time the data changes, give the `data-i` attribute a value of `triggerSaveOnChange` (e.g. `data-i="triggerSaveOnChange"`)
 
 
 ### `data-i-new`
 
-This attribute allows you to create a new item and add it somewhere on the page.
+Use this attribute on any element in order to make it able to create and render new elements into the page.
 
-The item is rendered server-side and passed back to the client-side.
-
-The template for the new item is gotten from a template file in the `/project-files/partials` directory *or* from a named item in a `#forEachItem` loop. 
+It will find the element its supposed to render by looking through all your partial templates. The template is rendered server-side and then passed back to the client-side to be added to the page.
 
 The syntax for the value of this attribute is: `templateName selector position`.
 
@@ -260,6 +266,11 @@ For example:
 ```html
 <button data-i-new="todoItem"></button>
 ```
+
+**Good to know:**
+
+* If you name an item inside of a `#forEachItem` loop, you can also use that inner template to render a new element.
+
 
 ### `data-i` `data-i-key` `data-i-value`
 
@@ -293,9 +304,9 @@ If this attribute is attached to an element that's inside of an inline edit popo
 
 
 
-# Some Tips 
+<h2 class="api">Some Tips</h2>
 
-## CSS
+#### CSS
 
 You can use CSS to style the page based on a data attribute's value.
 
@@ -322,9 +333,7 @@ body[data-o-key-dark-mode="true"] {
 }
 ```
 
-# Remake's Advanced Data Attributes
-
-**Note:** If you're just getting started, you probably don't need to read this section. 
+<h2 class="api">Advanced Data Attributes</h2>
 
 ### `data-o-ignore`
 
@@ -393,9 +402,9 @@ Used by Remake to enable and disable the inline edit popovers, but can also be u
 A data-attribute library for copying the position and/or dimensions of one element to another. Used by Remake to position inline edit popovers.
 
 
-# Glossary
+<h2 class="api">Glossary</h2>
 
-## Inline Edit Popover
+#### Inline Edit Popover
 
 The areas that pop up when you click an editable item.
 
@@ -405,7 +414,7 @@ They also allow you to delete elements or remove data from the page.
 
 They're the primary way of editing data in Remake.
 
-## Closest
+#### Closest
 
 This has an exact definition in Remake and is the basis for a lot of the code. In order to understand how Remake works, you need to understand `closest`.
 
@@ -413,16 +422,17 @@ Here's the exact definition from [the MDN web docs](https://developer.mozilla.or
 
 > Starting with the Element itself, the closest() method traverses parents (heading toward the document root) of the Element until it finds a node that matches the provided selectorString. Will return itself or the matching ancestor. If no such element exists, it returns null.
 
-## Nearest
+#### Nearest
 
 This means we start looking for the matching element at the current element, followed by looking inside the current element's parent, followed by looking in its grand parent, etc., etc. until we find a match — that's the closest element.
 
-## Key/value Pair
+#### Key/value Pair
 
 A key/value pair is a way to store data: there's a unique identifier (key) for some item of data and a value for that identifier.
 
+#### Data Source Element
 
-
+When something happens in response to data changing on a page, the element that the data is stored on is called the data source element.
 
 
 

@@ -137,7 +137,7 @@ Along the way, we'll explain what Remake is all about, how it gets its powers, a
 ### Full Documentation
 
 * **[Best Practices](/not-available)**
-* **[Remake API](/api-reference)**
+* **[Data Attributes API](/data-attributes-api)**
 
 ### Why We Made Remake
 

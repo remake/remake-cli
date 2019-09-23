@@ -53,6 +53,13 @@ h2 {
   line-height: 1.3em;
 }
 
+h2.api {
+  padding-bottom: .75em;
+  border-bottom: 1px solid #e9ecef;
+  font-size: 1.7em;
+  font-weight: 700;
+}
+
 h3 {
   margin-top: 1.5em;
   margin-left: -60px;
@@ -66,6 +73,7 @@ h3 {
 }
 
 h3 code {
+  padding: 0;
   color: #212529;
   background-color: transparent;
 }
@@ -78,9 +86,13 @@ h4 {
   line-height: 1.4em;
 }
 
+h1 + h2, h2 + h3, h3 + h4, h1 + h3, h1 + h4, h2 + h4 {
+  margin-top: .5em;
+}
+
 p {
-  margin-bottom: 1em;
-  line-height: 1.44em
+  margin-bottom: 1.5em;
+  line-height: 1.65em;
 }
 
 ul, ol {
@@ -90,12 +102,13 @@ ul, ol {
 
 li {
   margin-bottom: .5em;
+  line-height: 1.65em;
 }
 
 code {
-  padding: 0px 5px 2px;
-  color: #fff;
-  background-color: #212529;
+  line-height: 1em;
+  padding: 2px 5px 3px;
+  background-color: #e9ecef;
   border-radius: 2px;
 }
 
@@ -111,6 +124,20 @@ pre, pre[class*="language-"] {
 pre code, pre[class*="language-"] code {
   padding: 0;
   border-radius: 0px;
+}
+
+hr {
+  margin: 2.5rem 0 2rem;
+  border: 0;
+  height: 0;
+  border-top: 1px solid #ced4da;
+  border-bottom-width: 0;
+}
+
+blockquote {
+  margin: 0;
+  padding: 1px 2rem;
+  border-left: 5px solid #ced4da;
 }
 
 
@@ -135,8 +162,8 @@ pre code, pre[class*="language-"] code {
   padding: 45px 46px 48px;
   border-right: 1px solid #212529;
   border-left: 1px solid #212529;
-  line-height: 1.44em;
-  font-size: 17px;
+  line-height: 1.4em;
+  font-size: 18px;
   background-color: #fff
 }
 
