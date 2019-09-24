@@ -4,12 +4,12 @@ import { formatSpaces } from "../parse-data-attributes";
 
 // example return value:
 // {elemType: "object", key: "profileInfo", value: {name: "Kate"}}
-function parseNode (elem, isParentDataAnObject) { 
+function parseNode (elem) { 
   let elemType = elem.getAttribute("data-o-type"); // elemType can be `object` or `list`
 
   return {
     elemType: elemType,
-    key: isParentDataAnObject ? elem.getAttribute("data-o-key") : null,
+    key: elem.getAttribute("data-o-key"),
     value: elemType === "list" ? [] : getDataFromNode(elem)
   };
 }

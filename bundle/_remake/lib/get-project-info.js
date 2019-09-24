@@ -12,6 +12,7 @@ import { isPlainObject } from "lodash-es";
 import { showConsoleError } from "../utils/console-utils";
 let layoutNameRegex = /\{\{\s+layout\s+["'](\w+)["']\s+\}\}/;
 let yieldCommandRegex = /\{\{>\s+yield\s+\}\}/;
+let forInLoopRegex = /\{\{#for\s+(\S+)\s+in\s+([^\}\s]+)/g;
 
 
 // app folders that start with an underscore don't have app data associated with them
@@ -45,9 +46,12 @@ function _getProjectInfo () {
         // remove the special "layout" command from the page template
         let templateStringCleaned = _templateString.replace(layoutNameRegex, "");
 
+        // replace any "for...in" loops with real #for helper syntax
+        let templateStringUpdated = templateStringCleaned.replace(forInLoopRegex, '{{#for $2 itemName="$1"');
+
         // insert the page template into its layout
         let layoutTemplateString = fs.readFileSync(path.join(__dirname, `../../project-files/layouts/${layoutName}.hbs`), "utf8");
-        let templateString = layoutTemplateString.replace(yieldCommandRegex, templateStringCleaned);
+        let templateString = layoutTemplateString.replace(yieldCommandRegex, templateStringUpdated);
 
         // create the base route (these need to render BEFORE dynamic :username routes)
         let baseRoute = fileNameWithoutExtension === "index" ? "/" : `/${fileNameWithoutExtension}`; // e.g. /todos

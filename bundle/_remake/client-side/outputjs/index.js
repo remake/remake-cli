@@ -44,11 +44,8 @@ function getDataFromRootNode (rootNode) {
       // if there's no parent data, create new parent data
       if (!parentData && !rootData) {
 
-        // create new parent data
-        parentData = createDataObjectFromElement(currentElement);
-
-        // it will also be the original data, since this is the first time through
-        rootData = parentData;
+        // create new parent and root data
+        [parentData, rootData] = createDataObjectFromElement(currentElement);
 
       } else if (!parentData && rootData) {
 

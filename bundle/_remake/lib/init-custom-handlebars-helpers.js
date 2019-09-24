@@ -9,7 +9,7 @@ export function initCustomHandlebarsHelpers ({Handlebars}) {
   // if you pass in a named param called `itemName`, you can refer to its 
   // name later in a data-i-new attribute in order to render a new item on 
   // the page
-  Handlebars.registerHelper('forEachItem', function(context, options) {
+  Handlebars.registerHelper('for', function(context, options) {
     RemakeStore.addNewItemRenderFunction({
       name: options.hash.itemName, 
       func: options.fn
