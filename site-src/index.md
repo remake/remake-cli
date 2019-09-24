@@ -83,46 +83,48 @@ To create an arrays of objects:
 ]
 ```
 
-Let's skip a few steps ahead...
+Let's skip a few steps ahead to:
 
-#### 3. This is what a working Remake web app looks like:
+#### 3. A working Remake web app:
 
+<div class="line-numbers">
 {% raw %}
 ```html
-<ul data-o-type="list">
-  {{#forEachItem data.todos itemName="todo"}}
+<ul data-o-key="todos" data-o-type="list">
+  {{#for todo in data.todos}}
     <li 
       data-o-type="object" 
       data-l-key-text
       data-i-editable
     >{{ todo.text }}</li>
-  {{/forEachItem}}
+  {{/for}}
 </ul>
 <button data-i-new="todo">Add Todo</button>
 ```
 {% endraw %}
+</div>
 
 **Line by line:**
 
-1. The data in this app will be inside of a list
+1. The data on this page will be under the key `todos` and inside an array
 
-2. Loop through all the existing todos
+2. Start a `#for` loop to render all the existing todos
 
-3. Start an `li` element
+3. Start an `li` list item element
 
 4. Each todo will be an object
 
-5. A key on this object is `text` and its value is inside the current `li` element
+5. The key `"text"` that this element exports will be set to the current text of this element
 
-6. Clicking on this element will trigger a popover for editing the element's data
+6. Clicking on this element will trigger an editable popover
 
-7. Render the current todo's `text` key inside the `li`
+7. Render the current todo's `text` key
 
-8. End the loop
+8. End the `#for` loop
 
 9. Close the `ul`
 
-10. Clicking the "Add Todo" button will add a new todo to the end of the list above
+10. Click the button to render a new todo at the end of the list
 
 ### Step-By-Step Tutorial
 

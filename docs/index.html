@@ -107,50 +107,52 @@
   {&quot;name&quot;: &quot;Mary&quot;, &quot;age&quot;: &quot;26&quot;}
 ]
 </code></pre>
-<p>Let's skip a few steps ahead...</p>
-<h4>3. This is what a working Remake web app looks like:</h4>
-<pre><code class="language-html">&lt;ul data-o-type=&quot;list&quot;&gt;
-  {{#forEachItem data.todos itemName=&quot;todo&quot;}}
+<p>Let's skip a few steps ahead to:</p>
+<h4>3. A working Remake web app:</h4>
+<div class="line-numbers">
+<pre><code class="language-html">&lt;ul data-o-key=&quot;todos&quot; data-o-type=&quot;list&quot;&gt;
+  {{#for todo in data.todos}}
     &lt;li 
       data-o-type=&quot;object&quot; 
       data-l-key-text
       data-i-editable
     &gt;{{ todo.text }}&lt;/li&gt;
-  {{/forEachItem}}
+  {{/for}}
 &lt;/ul&gt;
 &lt;button data-i-new=&quot;todo&quot;&gt;Add Todo&lt;/button&gt;
 </code></pre>
+</div>
 <p><strong>Line by line:</strong></p>
 <ol>
 <li>
-<p>The data in this app will be inside of a list</p>
+<p>The data on this page will be under the key <code>todos</code> and inside an array</p>
 </li>
 <li>
-<p>Loop through all the existing todos</p>
+<p>Start a <code>#for</code> loop to render all the existing todos</p>
 </li>
 <li>
-<p>Start an <code>li</code> element</p>
+<p>Start an <code>li</code> list item element</p>
 </li>
 <li>
 <p>Each todo will be an object</p>
 </li>
 <li>
-<p>A key on this object is <code>text</code> and its value is inside the current <code>li</code> element</p>
+<p>The key <code>&quot;text&quot;</code> that this element exports will be set to the current text of this element</p>
 </li>
 <li>
-<p>Clicking on this element will trigger a popover for editing the element's data</p>
+<p>Clicking on this element will trigger an editable popover</p>
 </li>
 <li>
-<p>Render the current todo's <code>text</code> key inside the <code>li</code></p>
+<p>Render the current todo's <code>text</code> key</p>
 </li>
 <li>
-<p>End the loop</p>
+<p>End the <code>#for</code> loop</p>
 </li>
 <li>
 <p>Close the <code>ul</code></p>
 </li>
 <li>
-<p>Clicking the &quot;Add Todo&quot; button will add a new todo to the end of the list above</p>
+<p>Click the button to render a new todo at the end of the list</p>
 </li>
 </ol>
 <h3>Step-By-Step Tutorial</h3>
