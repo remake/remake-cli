@@ -45,6 +45,11 @@ export default function () {
       // find the closest element matching the selector
       let listElem = findInParents(triggerElem, selector);
 
+      if (!listElem) {
+        console.log("Error: Couldn't find list element to insert new item into");
+        return;
+      }
+
       // insert the rendered template into that element
       let whereToInsert = position === "top" ? "afterbegin" : "beforeend";
       listElem.insertAdjacentHTML(whereToInsert, htmlString);

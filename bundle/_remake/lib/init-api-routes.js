@@ -10,6 +10,7 @@ import { getPartials, getBootstrapData } from "./get-project-info";
 import { getParamsFromPathname } from "../utils/get-params-from-pathname";
 import { capture } from "../utils/async-utils";
 import { preProcessData } from "./pre-process-data";
+import { showConsoleError } from "../utils/console-utils";
 import RemakeStore from "./remake-store";
 
 
@@ -110,6 +111,11 @@ export function initApiRoutes ({app}) {
     // default to using inline named partials as opposed to partial files
     let templateRenderFunc = RemakeStore.getNewItemRenderFunction({name: templateName});
     let bootstrapData = getBootstrapData().partials[templateName] || {};
+
+    if (!templateRenderFunc && (!matchingPartial || !matchingPartial.templateString)) {
+      showConsoleError(`Error: Couldn't find a template or partial named "${templateName}"`);
+      return;
+    }
 
     // use the user-defined partial files only if no render functions are found
     if (!templateRenderFunc) {
