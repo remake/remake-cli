@@ -22,6 +22,7 @@ module.exports = () => {
   program.parse(process.argv);
 
   let bundlePath = path.join(__dirname, "bundle");
+  let remakeFrameworkPath = path.join(bundlePath, "_remake");
 
   let projectDir = program.create;
   if (projectDir) {
@@ -67,16 +68,16 @@ module.exports = () => {
   if (program.updateFramework) {
     let ncpOptions = {clobber: true, dereference: false, stopOnErr: true};
 
-    let remakeFrameworkDirectoryPath = path.join(process.cwd(), "_remake");
+    let remakeFrameworkPathInApplicationDirectory = path.join(process.cwd(), "_remake");
     
     console.log(chalk.bgGreen("Important: Make sure you update to the latest version of the npm remake package before updating!"));
 
-    if (!fs.existsSync(remakeFrameworkDirectoryPath)) {
+    if (!fs.existsSync(remakeFrameworkPathInApplicationDirectory)) {
       console.log(chalk.bgRed("Error: Cannot find a _remake directory in this project"));
       return;
     }
 
-    rimraf(remakeFrameworkDirectoryPath, function (rimrafError) {
+    rimraf(remakeFrameworkPathInApplicationDirectory, function (rimrafError) {
 
       if (rimrafError) {
         console.log(chalk.bgRed("Error: Couldn't remove old _remake directory"));
@@ -85,7 +86,7 @@ module.exports = () => {
 
       console.log(chalk.bgGreen("1. Old _remake directory removed..."));
 
-      ncp(bundlePath, remakeFrameworkDirectoryPath, ncpOptions, function (err) {
+      ncp(remakeFrameworkPath, remakeFrameworkPathInApplicationDirectory, ncpOptions, function (err) {
 
         if (err) {
           console.log(chalk.bgRed("Error: Couldn't create new project files"));
