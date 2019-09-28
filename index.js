@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require('path');
+const rimraf = require('rimraf');
 const shell = require('shelljs');
 const program = require('commander');
 const ncp = require('ncp');
@@ -8,23 +9,24 @@ const chalk = require('chalk');
 const { getSuccessMessage } = require('./utils/get-success-message');
 const { getVariablesEnvFileText } = require('./utils/get-variables-env-file-text');
 const { version } = require('./package.json');
-let ncpOptions = {clobber: false, dereference: false, stopOnErr: true};
 let boxenOptions = {padding: 3, margin: 1, borderStyle: 'double', borderColor: 'green'};
 
 program.version("v" + version);
 
 program
-  .option('create <project-dir>', 'Generate a new Remake project');
+  .option('create <project-dir>', 'Generate a new Remake project')
+  .option('update-framework', 'Update the Remake framework in your project');
 
 
 module.exports = () => {
   program.parse(process.argv);
 
+  let bundlePath = path.join(__dirname, "bundle");
+
   let projectDir = program.create;
-
   if (projectDir) {
+    let ncpOptions = {clobber: false, dereference: false, stopOnErr: true};
 
-    let bundlePath = path.join(__dirname, "bundle");
     let newProjectDirPath = path.join(process.cwd(), projectDir);
 
     if (fs.existsSync(newProjectDirPath)) {
@@ -60,5 +62,40 @@ module.exports = () => {
       });
 
     });
+  }
+
+  if (program.updateFramework) {
+    let ncpOptions = {clobber: true, dereference: false, stopOnErr: true};
+
+    let remakeFrameworkDirectoryPath = path.join(process.cwd(), "_remake");
+    
+    console.log(chalk.bgGreen("Important: Make sure you update to the latest version of the npm remake package before updating!"));
+
+    if (!fs.existsSync(remakeFrameworkDirectoryPath)) {
+      console.log(chalk.bgRed("Error: Cannot find a _remake directory in this project"));
+      return;
+    }
+
+    rimraf(remakeFrameworkDirectoryPath, function (rimrafError) {
+
+      if (rimrafError) {
+        console.log(chalk.bgRed("Error: Couldn't remove old _remake directory"));
+        return;
+      }
+
+      console.log(chalk.bgGreen("1. Old _remake directory removed..."));
+
+      ncp(bundlePath, remakeFrameworkDirectoryPath, ncpOptions, function (err) {
+
+        if (err) {
+          console.log(chalk.bgRed("Error: Couldn't create new project files"));
+          return;
+        }
+
+        console.log(chalk.bgGreen("2. Updated _remake directory added"));
+        console.log(chalk.bgGreen("Successfully updated Remake!"));
+      });
+    });
+
   }
 }
