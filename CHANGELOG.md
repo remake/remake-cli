@@ -1,3 +1,12 @@
+# 1.3.0
+
+- the `data-i-click-to-save` attribute doesn't need a value to work
+- editable popovers will be automatically suppressed if the user isn't logged in
+- if you're on a route with a unique id in it, a warning will pop up if there's no data key with an id that matches it
+- attributes are added to the `<body>` element to inform you the status of the app: `data-user-logged-in`, `data-user-not-logged-in`, `data-base-route`, `data-username-route`, `data-item-route`
+- the full handlebars helpers library has been added
+- the CLI now supports the command `remake update-framework` (however, the latest version of the CLI needs to be installed first)
+
 # 1.2.0
 
 - `data-i-new` doesn't require as many arguments now. It defaults to adding a new item to the closest `[data-o-type="list"]` element
