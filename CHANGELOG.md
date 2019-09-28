@@ -1,4 +1,4 @@
-# 1.3.0
+# 1.3.0 (September 27, 2019)
 
 - the `data-i-click-to-save` attribute doesn't need a value to work
 - editable popovers will be automatically suppressed if the user isn't logged in
@@ -7,7 +7,7 @@
 - the full handlebars helpers library has been added
 - the CLI now supports the command `remake update-framework` (however, the latest version of the CLI needs to be installed first)
 
-# 1.2.0
+# 1.2.0 (September 14, 2019)
 
 - `data-i-new` doesn't require as many arguments now. It defaults to adding a new item to the closest `[data-o-type="list"]` element
 - `data-i-editable` doesn't require any arguments now. It defaults to creating an inline edit popover for all data on the current element
@@ -18,12 +18,12 @@
 - There's a new custom handlebars helper: `#forEachItem`. This allows you to define the name of an item inline instead of by using a partial. This makes it possible to make an app in a single template instead of being forced to use partials if you want to use the `data-i-new` attribute
 - There are three other new custom handlebars helpers: `#BaseRoute`, `#UsernameRoute`, `#ItemRoute`. These allow you to easily determine the type of route you're on when rendering your page.
 
-# 1.1.0
+# 1.1.0 (August 22, 2019)
 
 - New option for `data-i` attribute: `data-i="triggerSaveOnChange"`. Makes it so when an `<input>`'s value changes, save its data
 - Replaced simple todos app in starter project with a multi todo lists app
 
-# 1.0.0
+# 1.0.0 (August 22, 2019)
 
 - Remake is now a CLI tool for generating a starter project instead of just a starter project
 - Moved Remake's front-end code inside the starter project instead of having it be a separate npm package
