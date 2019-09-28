@@ -7,7 +7,7 @@ import { preProcessData } from "./pre-process-data";
 import { getUserData } from "./user-data";
 import { initCustomHandlebarsHelpers } from "./init-custom-handlebars-helpers";
 import { capture } from "../utils/async-utils";
-
+import { addRemakeAppStatusToPage } from "./add-remake-app-status";
 
 // USER-DEFINED PARTIALS
 let partials = getPartials();
@@ -80,6 +80,8 @@ export async function initRenderedRoutes ({ app }) {
         isPageAuthor,
         pageHasAppData: !!pageAuthor
       });
+
+      html = addRemakeAppStatusToPage({html, currentUser, params});
 
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.send(html);

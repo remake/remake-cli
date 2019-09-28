@@ -46,7 +46,7 @@ export default function () {
       let listElem = findInParents(triggerElem, selector);
 
       if (!listElem) {
-        console.log("Error: Couldn't find list element to insert new item into");
+        console.log("%cError: Couldn't find list element to insert new item into", "color: #e03131;");
         return;
       }
 

@@ -74,6 +74,13 @@ export function callSaveFunction ({elementDataWasSyncedInto, targetElement}) {
       // save the data
       saveFunc({data: dataFromSaveElement, elem: elementDataWasSyncedInto, path: savePath, saveToId});
 
+      // show a warning if you think the save might be a mistakes
+      let idInRoute = document.body.getAttribute("data-item-route");
+      let matchingIdKeyElem = document.querySelector(`[data-o-key-id="${idInRoute}"]`);
+      if (isDefaultingToGlobalSave && idInRoute && !matchingIdKeyElem) {
+        console.log(`%cWarning: No element on this page has a data-o-key-id attribute that matches the id defined by the route (id: ${idInRoute}). This means the page's data will not be saved to an id.`, "color: #e03131;");
+      }
+
       // log the data if this debug option is turned on
       if (optionsData.logDataOnSave) {
         console.log("# logDataOnSave");
