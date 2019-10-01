@@ -21,9 +21,6 @@ program
 module.exports = () => {
   program.parse(process.argv);
 
-  let bundlePath = path.join(__dirname, "bundle");
-  let remakeFrameworkPath = path.join(bundlePath, "_remake");
-
   let projectDir = program.create;
   if (projectDir) {
     let ncpOptions = {clobber: false, dereference: false, stopOnErr: true};
