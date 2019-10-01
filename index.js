@@ -36,22 +36,28 @@ module.exports = () => {
     }
 
     // STEP 1
-    console.log(chalk.bgGreen("(1/3) Creating new project"));
+    console.log(chalk.bgGreen("(1/4) Creating new project"));
+    shell.exec(`git clone --depth 1 https://github.com/panphora/remake-framework.git ${projectDir}`);
 
-    ncp(bundlePath, newProjectDirPath, ncpOptions, function (err) {
+    // STEP 2a & 2b
+    console.log(chalk.bgGreen("(2/4) Tidy up new project directory"));
+    rimraf(path.join(newProjectDirPath, ".git"), function (rimrafError) {
 
-      if (err) {
-        console.log(chalk.bgRed("Error: Couldn't create new project files"));
+      if (rimrafError) {
+        console.log(chalk.bgRed("Error: Couldn't remove old .git directory from new project"));
         return;
       }
 
-      // STEP 2
-      console.log(chalk.bgGreen("(2/3) Installing npm dependencies"));
+      // put project README in the right place
+      shell.mv(path.join(newProjectDirPath, "README-FOR-BUNDLE.md"), path.join(newProjectDirPath, "README.md"));
+
+      // STEP 3
+      console.log(chalk.bgGreen("(3/4) Installing npm dependencies"));
       shell.cd(newProjectDirPath);
       shell.exec("npm install");
 
-      // STEP 3
-      console.log(chalk.bgGreen("(3/3) Setting up variables.env"));
+      // STEP 4
+      console.log(chalk.bgGreen("(4/4) Setting up variables.env"));
       fs.writeFile(path.join(newProjectDirPath, "variables.env"), getVariablesEnvFileText(), function (err) {
         if (err) {
           console.log(chalk.bgRed("Error: Couldn't create variables.env file"));
@@ -63,6 +69,7 @@ module.exports = () => {
       });
 
     });
+
   }
 
   if (program.updateFramework) {
@@ -77,7 +84,7 @@ module.exports = () => {
     }
 
     // 2. REMOVE OLD _remake DIRECTORY
-    console.log(chalk.bgGreen("1. Removing old _remake directory..."));
+    console.log(chalk.bgGreen("(1/2) Removing old _remake directory..."));
     rimraf(remakeFrameworkPathInApplicationDirectory, function (rimrafError) {
 
       if (rimrafError) {
@@ -86,8 +93,8 @@ module.exports = () => {
       }
 
       // 3. GIT CLONE THE ENTIRE FULL STACK STARTER PROJECT INTO THE CURRENT DIRECTORY
-      console.log(chalk.bgGreen("2. Copying framework into _remake directory..."));
-      shell.exec("git clone https://github.com/panphora/remake-framework.git");
+      console.log(chalk.bgGreen("(2/2) Copying framework into _remake directory..."));
+      shell.exec("git clone --depth 1 https://github.com/panphora/remake-framework.git");
 
       // 4. MOVE THE _remake DIRECTORY TO WHERE THE OLD _remake DIRECTORY WAS
       let currentRemakeDir = path.join(cwd, "remake-framework/_remake");
