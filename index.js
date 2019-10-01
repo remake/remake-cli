@@ -67,16 +67,17 @@ module.exports = () => {
 
   if (program.updateFramework) {
     let ncpOptions = {clobber: true, dereference: false, stopOnErr: true};
-
+    let cwd = process.cwd();
     let remakeFrameworkPathInApplicationDirectory = path.join(process.cwd(), "_remake");
     
-    console.log(chalk.bgGreen("Important: Make sure you update to the latest version of the npm remake package before updating!"));
-
+    // 1. CHECK IF _remake DIRECTORY EXISTS
     if (!fs.existsSync(remakeFrameworkPathInApplicationDirectory)) {
       console.log(chalk.bgRed("Error: Cannot find a _remake directory in this project"));
       return;
     }
 
+    // 2. REMOVE OLD _remake DIRECTORY
+    console.log(chalk.bgGreen("1. Removing old _remake directory..."));
     rimraf(remakeFrameworkPathInApplicationDirectory, function (rimrafError) {
 
       if (rimrafError) {
@@ -84,18 +85,25 @@ module.exports = () => {
         return;
       }
 
-      console.log(chalk.bgGreen("1. Old _remake directory removed..."));
+      // 3. GIT CLONE THE ENTIRE FULL STACK STARTER PROJECT INTO THE CURRENT DIRECTORY
+      console.log(chalk.bgGreen("2. Copying framework into _remake directory..."));
+      shell.exec("git clone https://github.com/panphora/remake-framework.git");
 
-      ncp(remakeFrameworkPath, remakeFrameworkPathInApplicationDirectory, ncpOptions, function (err) {
+      // 4. MOVE THE _remake DIRECTORY TO WHERE THE OLD _remake DIRECTORY WAS
+      let currentRemakeDir = path.join(cwd, "remake-framework/_remake");
+      shell.mv(path.join(cwd, "remake-framework/_remake"), remakeFrameworkPathInApplicationDirectory);
 
-        if (err) {
-          console.log(chalk.bgRed("Error: Couldn't create new project files"));
+      rimraf(path.join(cwd, "remake-framework"), function (rimrafError) {
+
+        if (rimrafError) {
+          console.log(chalk.bgRed("Error cleaning up: Couldn't remove the ./remake-framework directory"));
           return;
         }
 
-        console.log(chalk.bgGreen("2. Updated _remake directory added"));
         console.log(chalk.bgGreen("Successfully updated Remake!"));
+
       });
+
     });
 
   }
