@@ -10,6 +10,8 @@ layout: layout.hbs
 * Easy-to-learn syntax
 * No need to worry about the back-end
 
+<a class="slanted-link" href="https://mailchi.mp/59def7603a0f/remake"><span>&rarr; Sign up for updates</span></a>
+
 ### Getting Started
 
 1. Install Remake globally
