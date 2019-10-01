@@ -1,3 +1,9 @@
+# 1.3.1 (October 1, 2019)
+
+- This repo no longer stores a copy of the Remake framework inside of it. When a project is created or updated, the framework code is downloaded from its GitHub repository. This means that, even if this CLI isn't up to date, it will still download the latest framework code.
+  - `remake create <project-dir>` now downloads the full framework starter project from GitHub
+  - `remake update-framework` now downloads the the framework code from GitHub and replaces it in the current directory
+
 # 1.3.0 (September 27, 2019)
 
 - the `data-i-click-to-save` attribute doesn't need a value to work
