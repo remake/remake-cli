@@ -4,9 +4,11 @@ function getUniqueId () {
   return nanoidGenerate("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 30);
 }
 
-function getVariablesEnvFileText () {
-  return `PORT=3000
-SESSION_SECRET=${getUniqueId()}`;
+function getEnvVariables () {
+  return {
+    port: 3000,
+    sessionSecret: getUniqueId()
+  }
 }
 
-module.exports = {getVariablesEnvFileText}
+module.exports = {getEnvVariables}
