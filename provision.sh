@@ -18,6 +18,9 @@ cd deployment
 npm run build
 pm2 start /opt/remake/deployment/server.js --name remake-server
 
+# install mariadb
+apt install -y mariadb
+
 # forward requests from :3000 to :80 via nginx
 sed -i "51s/try_files \$uri \$uri\/ =404;/proxy_pass http:\/\/127.0.0.1:3000\/;/" /etc/nginx/sites-available/default
 service restart nginx
