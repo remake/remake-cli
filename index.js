@@ -10,7 +10,7 @@ const nanoid = require('nanoid');
 const inquirer = require('inquirer');
 
 const { getSuccessMessage } = require('./utils/get-success-message');
-const { getEnvVariables } = require('./utils/get-env-variables');
+const { generateDotRemakeContent, writeDotRemake, readDotRemake } = require('./utils/dot-remake');
 const { version } = require('./package.json');
 
 const boxenOptions = {padding: 3, margin: 1, borderStyle: 'double', borderColor: 'green'};
@@ -29,6 +29,70 @@ program
 const cwd = process.cwd();
 
 let rimrafError = null;
+
+const validateSubdomain = (subdomain) => {
+  const subdomainRegex = /^[a-z]+[a-z0-9\-]*$/
+  if (subdomainRegex.test(subdomain) === null) 
+    return 'The project name should start with a lowercase letter and should contain only lowercase letters, numbers and dashes.'
+  else return true;
+} 
+
+const questions = {
+  INPUT_SUBDOMAIN: {
+    message: `Type a project name which will be used as a subdomain.
+The project name should start with a lowercase letter and should contain only lowercase letters, numbers and dashes.
+Your app will be accessible at <subdomain>.remaketheweb.com
+> `,
+    name: 'subdomain',
+    type: 'input',
+    validate: validateSubdomain
+  },
+  CONFIRM_SUBDOMAIN: {
+    name: 'deployOk',
+    message: 'Subdomain is available. Do you want to proceed?',
+    type: 'confirm'
+  }
+}
+
+const clean = () => {
+  let dotRemakeObj = readDotRemake();
+  if (!dotRemakeObj) {
+    log(chalk.yellow('You are not in the root directory of a remake project.'));
+    return;
+  }
+  log(chalk.greenBright('Cleaning project'));
+  // shell.exec('npm run clean');
+  shell.exec('rm -rf .cache && rm -rf _remake/dist');
+}
+
+const build = () => {
+  let dotRemakeObj = readDotRemake();
+  if (!dotRemakeObj) {
+    log(chalk.yellow('You are not in the root directory of a remake project.'));
+    return;
+  }
+  log(chalk.greenBright('Building project'));
+  console.log(process.cwd())
+  shell.exec('npm run build');
+}
+
+const serve = () => {
+  log('TODO');
+}
+
+const deploy = (dotRemakeObj) => {
+  clean();
+  build();
+
+  // push files to server
+  // axios(/service/deploy)
+  // {
+  //    projectName
+  //    projectFiles
+  // }
+
+  log(chalk.greenBright(`The app is accessible at this URL: https://${dotRemakeObj.projectName}.remaketheweb.com`))
+}
 
 module.exports = async () => {
   program.parse(process.argv);
@@ -68,17 +132,14 @@ module.exports = async () => {
     // write project name and env variables to .remake file
     log(chalk.bgGreen("(4/4) Setting up .remake"));
     const dotRemakeObj = {
-      projectName: `${projectDir}-${nanoid(15)}`,
-      ...getEnvVariables()
+      ...generateDotRemakeContent()
     }
 
-    fs.writeFile(path.join(newProjectDirPath, ".remake"), JSON.stringify(dotRemakeObj, null, 4), function (err) {
-      if (err) {
-        log(chalk.bgRed("Error: Couldn't create .remake file"));
-        return;
-      }
+    const dotRemakeReady = writeDotRemake(dotRemakeObj);
+
+    if (dotRemakeReady) {
       log(boxen(getSuccessMessage(projectDir), boxenOptions));
-    }) 
+    }
   }
 
   if (program.updateFramework) {
@@ -119,51 +180,49 @@ module.exports = async () => {
   }
 
   if (program.deploy) {
-    const dotRemakePath = path.join(cwd, '.remake');
 
-    // check if .remake file exists
-    const dotRemakeExists = fs.existsSync(dotRemakePath);
-    if (!dotRemakeExists) {
+    let dotRemakeObj = readDotRemake();
+    if (!dotRemakeObj) {
       log(chalk.yellow('You are not in the root directory of a remake project.'));
       return;
     }
-    try {
-      // read remake file content
-      const dotRemake = fs.readFileSync(dotRemakePath, 'utf8');
-      const dotRemakeObj = JSON.parse(dotRemake);
-      log(chalk.greenBright(`Deploying project "${dotRemakeObj.projectName}" on the remake deployment server.`))
-      
-      // check if name is available      
-      log(`Checking if the name of your project is unique`)
+    if (!dotRemakeObj.projectName) {
+      const subdomainAnswer = await inquirer.prompt([questions.INPUT_SUBDOMAIN])
+      log(`Checking if ${subdomainAnswer.subdomain}.remaketheweb.com is available`)
+
+      // check if name is available
+      // ora
       // axios(/service/subdomain/availability)
+      log (chalk.greenBright(`${subdomainAnswer.subdomain}.remaketheweb.com is available`))
       
       // prompt yes to confirm
-      const answers = await inquirer.prompt([{
-                              message: 'Subdomain is available. Do you want to proceed? (y/n)',
-                              name: 'deployOk',
-                            }]);
-
-      if (answers.deployOk === 'y') {
-        // push files to server
-        // remake clean
-        log(chalk.greenBright('Cleaning project'))
-        // remake build
-        log(chalk.greenBright('Building project'))
-        // axios(/service/deploy)
-        // {
-        //    projectName
-        //    projectFiles
-        // }
-
-        log(chalk.greenBright(`The app is accessible at this URL: https://${dotRemakeObj.projectName}.remaketheweb.com`))
-      } else {
+      const answers = await inquirer.prompt([questions.CONFIRM_SUBDOMAIN]);
+      if (answers.deployOk === false) {
         log(chalk.yellow('Stopped deployment.'))
         return;
       }
-
-    } catch (err) {
-      log(err)
-      return;
+      
+      dotRemakeObj.projectName = subdomainAnswer.subdomain
+      log(dotRemakeObj);
+      const writtenDotRemake = writeDotRemake(dotRemakeObj)
+      if (!writtenDotRemake) {
+        log(chalk.red('Could not write subdomain to .remake'));
+        return;
+      }
     }
+    deploy(dotRemakeObj);
+
+  }
+
+  if (program.build) {
+    build();
+  }
+
+  if (program.clean) {
+    clean();
+  }
+
+  if (program.serve) {
+    serve();
   }
 }
