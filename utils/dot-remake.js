@@ -19,7 +19,6 @@ function generateDotRemakeContent () {
 function writeDotRemake (content) {
   const cwd = process.cwd();
   const dotRemakePath = path.join(cwd, '.remake');
-  log(content);
   try {
     fs.writeFileSync(dotRemakePath, JSON.stringify(content, null, 4))
     return true;
