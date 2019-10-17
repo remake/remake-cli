@@ -52,19 +52,25 @@ const registerUser = async () => {
 }
 
 const getSubdomainAvailability = async (subdomain) => {
-  const availabilityRes = await axios({
-    method: 'get',
-    url: `${remakeServiceHost}/service/subdomain/availability`, 
-    headers: {
-      'Authorization': `Bearer ${remakeCliConfig.get('user.authToken')}`
-    },
-    params: {
-      subdomain: subdomain,
-    }
-  });
+  const userEmail = remakeCliConfig.get('user.email');
+  try {
 
-  if (availabilityRes.status === 200) return true;
-  else return false;
+    const availabilityRes = await axios({
+      method: 'get',
+      url: `${remakeServiceHost}/service/subdomain/availability`, 
+      headers: {
+        'Authorization': `Bearer ${remakeCliConfig.get('user.authToken')}`
+      },
+      params: {
+        subdomain: subdomain,
+        email: userEmail,
+      }
+    });
+    if (availabilityRes.status === 200) return true;
+    else return false;
+  } catch (err) {
+    return false;
+  }
 }
 
 module.exports = { getSubdomainAvailability, registerUser }
