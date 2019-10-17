@@ -3,7 +3,9 @@
 apt update -y
 
 # install all the needed dependencies
-apt install -y nodejs npm nginx
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+apt install -y nodejs
+apt install -y nginx
 npm i -g remake pm2
 pm2 startup systemd
 
