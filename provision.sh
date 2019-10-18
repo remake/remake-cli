@@ -23,12 +23,6 @@ pm2 start /opt/remake/deployment/server.js --name remake-server
 # install mariadb
 apt install -y mariadb
 
-# forward requests from :3000 to :80 via nginx
-sed -i "51s/try_files \$uri \$uri\/ =404;/proxy_pass http:\/\/127.0.0.1:3000\/;/" /etc/nginx/sites-available/default
-service restart nginx
-
-# TODO: add server_name remakeapps.com www.remakeapps.com
-
 # SSL
 apt update
 apt install -y software-properties-common
@@ -49,6 +43,9 @@ certbot certonly --dns-digitalocean --dns-digitalocean-credentials \
 # TODO: replace this with copying actual nginx config for /
 certbot --nginx                 # configure nginx
 sudo certbot renew --dry-run    # auto-renew
+
+# restart nginx
+service restart nginx
 
 # NOTE: generate nginx configs for subdomains while deploying starting from template
 
