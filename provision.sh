@@ -42,10 +42,20 @@ apt install python3-certbot-dns-digitalocean -y
 # TODO: copy dns-digitalocean-credentials
 chmod 600 ~/dns-digitalocean-credentials
 
-# needs manual input
 certbot certonly --dns-digitalocean --dns-digitalocean-credentials \
         ~/dns-digitalocean-credentials -d remakeapps.com -d *.remakeapps.com
 
 # needs manual input
+# TODO: replace this with copying actual nginx config for /
 certbot --nginx                 # configure nginx
 sudo certbot renew --dry-run    # auto-renew
+
+# NOTE: generate nginx configs for subdomains while deploying starting from template
+
+# INFO: to move files to the server with scp use these commands
+# scp -i ~/.ssh/remake-ct /path/to/file root@159.89.45.187:/destination/path/on/server
+# scp -R -i ~/.ssh/remake-ct /path/to/dir root@159.89.45.187:/destination/path/on/server
+
+# INFO: to move files from the server to local machine with scp use these commands
+# scp -i ~/.ssh/remake-ct root@159.89.45.187:/path/to/file/on/server /local/path
+# scp -R -i ~/.ssh/remake-ct root@159.89.45.187:/path/to/dir/on/server /local/path
