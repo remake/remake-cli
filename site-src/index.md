@@ -40,7 +40,7 @@ cd projectName && npm run dev
 
 <div class="spacer--8"></div>
 
-<a class="slanted-link" href="/not-available"><span>&rarr; Watch 15 minute tutorial</span></a>
+<a class="slanted-link" href="https://www.youtube.com/watch?v=la5uhrYSzy8"><span>&rarr; Watch 15 minute tutorial</span></a>
 
 
 ### How Remake is Different
