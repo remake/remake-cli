@@ -321,6 +321,10 @@ blockquote {
   height: 32px;
 }
 
+#ph-upcoming-widget, #ph-upcoming-widget * {
+  font-size: 15px !important;
+}
+
 @media (max-width: 1100px) {
   .logo {
     margin-top: 2rem;
