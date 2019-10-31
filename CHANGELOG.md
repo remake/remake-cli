@@ -1,3 +1,8 @@
+# 1.6.0 (October 31, 2019)
+
+- Added support for sortable items. Instructions for how to enable: https://www.notion.so/hellounicorns/Docs-Sortable-Plugin-3cdd44ece76745faa1a6e043ef0c3a76
+- Fixed asset bundler bug. Changing Remake's client-side framework code (in `/_remake/client-side`) will now cause the asset bundler to recompile all the JS in `/app`. Before, it wasn't watching the code in `/_remake/client-side` at all.
+
 
 # 1.5.0 (October 31, 2019)
 
