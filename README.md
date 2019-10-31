@@ -179,3 +179,13 @@ Sign up for [the newsletter](https://mailchi.mp/59def7603a0f/remake) to get upda
 * [Contact the author on Twitter](https://twitter.com/panphora)
 * [View the public roadmap](https://trello.com/b/BXvugSjT/remake)
 * [View a live product app: RequestCreative](https://requestcreative.com)
+
+## Contributors
+
+* **[Andrew de Jong](https://gitlab.com/android4682)**
+
+
+
+
+
+
