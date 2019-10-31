@@ -1,3 +1,15 @@
+
+# 1.5.0 (October 31, 2019)
+
+- Added support for multi-tenant mode, which allows running multiple Remake apps inside the same Remake instance. It reads template, partials, and data on the fly and caches nothing, so apps can be changed without reloading the server.
+  - To support this, we now have a `directory-helpers.js` library that fetches data and templates depending on which app you're in and takes into consideration if you're in a single-tenant instance
+  - Also, we parse the url params differently depending if you're in multi-tenant mode or not
+  - For a guide on how to set up a multi-tenant instance on your local machine, go here: https://www.notion.so/hellounicorns/Docs-Set-up-multi-tenant-Remake-instance-4ff53fac7a864d25bb3aaf6ddad4cf30
+- Each user's details now contains the app name that the user was created in
+- We parse the url parameters at a higher level (in `main.js`), so we can use them wherever we need them without having to parse them again
+- Created a new asset bundler that can transpile any file that doesn't start with an underscore (before where it just worked with `main.js` and `main.sass`). The new asset bundler also supports multi-tenant builds.
+- Added list of minimum supported browsers in `.babelrc`
+
 # 1.4.0 (October 1, 2019)
 
 - This repo no longer stores a copy of the Remake framework inside of it. When a project is created or updated, the framework code is downloaded from its GitHub repository. This means that, even if this CLI isn't up to date, it will still download the latest framework code.
