@@ -113,17 +113,19 @@ const removeDeploymentZip = (projectName) => {
 }
 
 const pushZipToServer = async (projectName) => {
+  const email = remakeCliConfig.get('user.email');
   const cwd = process.cwd();
   const zipPath = path.join(cwd, `deployment-${projectName}.zip`);
   const formData = new FormData();
   formData.append('deployment', fs.readFileSync(zipPath), `${projectName}.zip`);
+  formData.append('appName', projectName);
+  formData.append('email', email);
 
   try {
     const res = await axios({
       method: 'POST',
       url: `${remakeServiceHost}/service/deploy`,
       headers: {
-        // 'Content-Type': 'multipart/form-data',
         ...formData.getHeaders(),
         'Authorization': `Bearer ${remakeCliConfig.get('user.authToken')}`,
       },
@@ -135,7 +137,6 @@ const pushZipToServer = async (projectName) => {
   } catch (err) {
     throw new Error('Could not upload your files to the server');
   }
-
 }
 
 module.exports = { getSubdomainAvailability, registerUser, createDeploymentZip, removeDeploymentZip, pushZipToServer }
