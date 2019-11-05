@@ -8,7 +8,7 @@ const rimraf = promisify(require('rimraf'));
 const boxen = require('boxen');
 
 const { readDotRemake, writeDotRemake, generateDotRemakeContent } = require('./dot-remake');
-const { registerUser, getSubdomainAvailability } = require('./helpers');
+const { registerUser, getSubdomainAvailability, createDeploymentZip, removeDeploymentZip, pushZipToServer } = require('./helpers');
 const { questions } = require('./inquirer-questions');
 const { getSuccessMessage } = require('./get-success-message');
 
@@ -90,13 +90,11 @@ const deploy = async () => {
   clean();
   build();
 
-  ///
   let dotRemakeObj = readDotRemake();
   if (!dotRemakeObj) {
     log(chalk.yellow('You are not in the root directory of a remake project.'));
     return;
   }
-
   await registerUser();
 
   if (!dotRemakeObj.projectName) {
@@ -125,14 +123,16 @@ const deploy = async () => {
       return;
     }
   }
-  // push files to server
-  // axios(/service/deploy)
-  // {
-  //    projectName
-  //    projectFiles
-  // }
 
-  log(chalk.greenBright(`The app is accessible at this URL: https://${dotRemakeObj.projectName}.remakeapps.com`))
+  try {
+    await createDeploymentZip(dotRemakeObj.projectName);
+    await pushZipToServer(dotRemakeObj.projectName);
+    removeDeploymentZip(dotRemakeObj.projectName);
+    log(chalk.greenBright(`The app is accessible at this URL: https://${dotRemakeObj.projectName}.remakeapps.com`))
+  } catch (err) {
+    log(chalk.red(err.message));
+    return;
+  }
 }
 
 const updateFramework = async () => {

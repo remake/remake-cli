@@ -1,6 +1,13 @@
+const fs = require('fs');
+const path = require('path');
+const process = require('process');
 const inquirer = require('inquirer');
 const axios = require('axios');
 const chalk = require('chalk');
+const archiver = require('archiver');
+const shell = require('shelljs');
+const FormData = require('form-data');
+
 const { questions } = require('./inquirer-questions');
 
 const registerUser = async () => {
@@ -73,4 +80,62 @@ const getSubdomainAvailability = async (subdomain) => {
   }
 }
 
-module.exports = { getSubdomainAvailability, registerUser }
+const createDeploymentZip = (projectName) => {
+  return new Promise((resolve, reject) => {
+    const cwd = process.cwd();
+    const output = fs.createWriteStream(path.join(cwd, `deployment-${projectName}.zip`), { encoding: 'base64' });
+    const archive = archiver('zip', { zlib: { level: 9 } });
+
+    output.on('warning', (err) => {
+      reject(err);
+    });
+
+    output.on('error', (err) => {
+      reject(err);
+    });
+
+    output.on('close', () => {
+      log(chalk.greenBright('Done archiving! ' + archive.pointer() + ' total bytes.'));
+      resolve();
+    })
+
+    archive.pipe(output);
+    archive.glob('project-files/[a-z]*/*');
+    archive.glob('_remake-data/user-app-data/*.json');
+    archive.finalize();
+  })
+}
+
+const removeDeploymentZip = (projectName) => {
+  const cwd = process.cwd();
+  shell.exec(`rm ${path.join(cwd, `deployment-${projectName}.zip`)}`);
+
+}
+
+const pushZipToServer = async (projectName) => {
+  const cwd = process.cwd();
+  const zipPath = path.join(cwd, `deployment-${projectName}.zip`);
+  const formData = new FormData();
+  formData.append('deployment', fs.readFileSync(zipPath), `${projectName}.zip`);
+
+  try {
+    const res = await axios({
+      method: 'POST',
+      url: `${remakeServiceHost}/service/deploy`,
+      headers: {
+        // 'Content-Type': 'multipart/form-data',
+        ...formData.getHeaders(),
+        'Authorization': `Bearer ${remakeCliConfig.get('user.authToken')}`,
+      },
+      data: formData.getBuffer()
+    });
+    if (res.status === 200)
+      log(chalk.greenBright('App files successfully uploaded to server'))
+    else throw new Error('Could not upload your files to the server');
+  } catch (err) {
+    throw new Error('Could not upload your files to the server');
+  }
+
+}
+
+module.exports = { getSubdomainAvailability, registerUser, createDeploymentZip, removeDeploymentZip, pushZipToServer }

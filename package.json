@@ -28,12 +28,14 @@
     "@11ty/eleventy": "^0.9.0"
   },
   "dependencies": {
+    "archiver": "^3.1.1",
     "axios": "^0.19.0",
     "boxen": "^4.1.0",
     "chalk": "^2.4.2",
     "commander": "^3.0.0",
     "configstore": "^5.0.0",
     "es6-promisify": "^6.0.2",
+    "form-data": "^2.5.1",
     "inquirer": "^7.0.0",
     "nanoid": "^2.0.3",
     "ncp": "^2.0.0",
