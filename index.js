@@ -8,41 +8,38 @@ log = console.log;
 
 remakeCliConfig = new Configstore(name, { user: {} });
 remakeServiceHost = 'http://127.0.0.1:3000';
-program.version("v" + version);
 
 program
-  .option('create <project-dir>', 'Generate a new Remake project')
-  .option('update-framework', 'Update the Remake framework in your project')
-  .option('deploy', 'Deploy your Remake app on the Remake server')
-  .option('build', 'Build your Remake app')
-  .option('clean', 'Wipe the local Remake environment including caches and build assets')
-  // .option('serve', 'Serve previously built Remake app');
+  .version('v' + version, '-v, --version', 'output the current version')
+  .name('remake')
+  .usage('command [--help]')
+
+program
+  .command('create <projectDir>')
+  .description('Create a new Remake project')
+  .option('-m, --multitenant', 'create a multi tenant Remake app')
+  .action((projectDir, options) => create(projectDir, options));
+
+program
+  .command('update-framework')
+  .description('Update the Remake framework in your project')
+  .action(() => updateFramework());
+
+program
+  .command('deploy')
+  .description('Deploy your Remake app on the Remake server')
+  .action(() => deploy());
+
+program
+  .command('build')
+  .description('Build your Remake app')
+  .action(() => build());
+
+program
+  .command('clean')
+  .description('Wipe the local Remake environment including caches and build assets')
+  .action(() => clean());
 
 module.exports = async () => {
-  program.parse(process.argv);
-
-  if (program.create) {
-    let projectDir = program.create;
-    create(projectDir);
-  }
-
-  if (program.updateFramework) {
-    updateFramework();
-  }
-
-  if (program.deploy) {
-    deploy();
-  }
-
-  if (program.build) {
-    build();
-  }
-
-  if (program.clean) {
-    clean();
-  }
-
-  if (program.serve) {
-    serve();
-  }
+  program.parse(process.argv)
 }

@@ -9,11 +9,16 @@ function getUniqueId () {
   return nanoidGenerate("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 30);
 }
 
-function generateDotRemakeContent () {
-  return {
+function generateDotRemakeContent (multitenant) {
+  const dotRemakeContent = {
     port: 3000,
     sessionSecret: getUniqueId()
   }
+  if (multitenant) {
+    dotRemakeContent.remakeMultiTenant = true;
+    dotRemakeContent.jwtSecret = nanoidGenerate("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 30);
+  }
+  return dotRemakeContent;
 }
 
 function writeDotRemake (content) {

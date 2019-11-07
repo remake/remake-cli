@@ -14,7 +14,7 @@ const { getSuccessMessage } = require('./get-success-message');
 
 const boxenOptions = {padding: 3, margin: 1, borderStyle: 'double', borderColor: 'green'};
 
-const create = async (projectDir) => {
+const create = async (projectDir, options) => {
   const cwd = process.cwd();
   const newProjectDirPath = path.join(cwd, projectDir);
   let rimrafError = null;
@@ -49,7 +49,7 @@ const create = async (projectDir) => {
   // write project name and env variables to .remake file
   log(chalk.bgGreen("(4/4) Setting up .remake"));
   const dotRemakeObj = {
-    ...generateDotRemakeContent()
+    ...generateDotRemakeContent(options.multitenant)
   }
 
   const dotRemakeReady = writeDotRemake(dotRemakeObj);
