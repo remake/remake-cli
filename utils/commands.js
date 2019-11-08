@@ -8,7 +8,7 @@ const rimraf = promisify(require('rimraf'));
 const boxen = require('boxen');
 
 const { readDotRemake, writeDotRemake, generateDotRemakeContent } = require('./dot-remake');
-const { registerUser, getSubdomainAvailability, createDeploymentZip, removeDeploymentZip, pushZipToServer } = require('./helpers');
+const { registerUser, registerSubdomain, createDeploymentZip, removeDeploymentZip, pushZipToServer } = require('./helpers');
 const { questions } = require('./inquirer-questions');
 const { getSuccessMessage } = require('./get-success-message');
 
@@ -102,7 +102,7 @@ const deploy = async () => {
     log(`Checking if ${subdomainAnswer.subdomain}.remakeapps.com is available`)
 
     // check if name is available
-    const isSubdomainAvailable = await getSubdomainAvailability(subdomainAnswer.subdomain);
+    const isSubdomainAvailable = await registerSubdomain(subdomainAnswer.subdomain);
     if (!isSubdomainAvailable) {
       log(chalk.red(`${subdomainAnswer.subdomain}.remakeapps.com is not available`))
       return;

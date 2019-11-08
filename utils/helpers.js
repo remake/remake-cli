@@ -58,13 +58,13 @@ const registerUser = async () => {
   }
 }
 
-const getSubdomainAvailability = async (subdomain) => {
+const registerSubdomain = async (subdomain) => {
   const userEmail = remakeCliConfig.get('user.email');
   try {
 
     const availabilityRes = await axios({
       method: 'get',
-      url: `${remakeServiceHost}/service/subdomain/availability`, 
+      url: `${remakeServiceHost}/service/subdomain/register`, 
       headers: {
         'Authorization': `Bearer ${remakeCliConfig.get('user.authToken')}`
       },
@@ -101,7 +101,7 @@ const createDeploymentZip = (projectName) => {
 
     archive.pipe(output);
     archive.glob('project-files/[a-z]*/*');
-    archive.glob('_remake-data/user-app-data/*.json');
+    archive.glob('_remake-data/*');
     archive.finalize();
   })
 }
@@ -139,4 +139,4 @@ const pushZipToServer = async (projectName) => {
   }
 }
 
-module.exports = { getSubdomainAvailability, registerUser, createDeploymentZip, removeDeploymentZip, pushZipToServer }
+module.exports = { registerSubdomain, registerUser, createDeploymentZip, removeDeploymentZip, pushZipToServer }

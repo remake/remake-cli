@@ -7,7 +7,7 @@ const { version, name } = require('./package.json');
 log = console.log;
 
 remakeCliConfig = new Configstore(name, { user: {} });
-remakeServiceHost = 'http://127.0.0.1:3000';
+remakeServiceHost = 'https://remakeapps.com';
 
 program
   .version('v' + version, '-v, --version', 'output the current version')
