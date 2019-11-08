@@ -66,7 +66,8 @@ const clean = () => {
     return;
   }
   log(chalk.greenBright('Cleaning project'));
-  shell.exec('rm -rf .cache && rm -rf _remake/dist');
+  shell.rm('-rf', '.cache/');
+  shell.rm('-rf', '_remake/dist');
   // TODO - replace above statement with bellow statement once the framework is 
   // updated with the clean script
   // shell.exec('npm run clean');

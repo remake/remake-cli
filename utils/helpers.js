@@ -108,8 +108,7 @@ const createDeploymentZip = (projectName) => {
 
 const removeDeploymentZip = (projectName) => {
   const cwd = process.cwd();
-  shell.exec(`rm ${path.join(cwd, `deployment-${projectName}.zip`)}`);
-
+  shell.rm(path.join(cwd, `deployment-${projectName}.zip`))
 }
 
 const pushZipToServer = async (projectName) => {
