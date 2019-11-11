@@ -100,8 +100,8 @@ const createDeploymentZip = (projectName) => {
     })
 
     archive.pipe(output);
-    archive.glob('project-files/[a-z]*/*');
-    archive.glob('_remake-data/*');
+    archive.glob('project-files/[a-z]*/**/*');
+    archive.glob('_remake-data/*/*.json');
     archive.finalize();
   })
 }
