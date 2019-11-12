@@ -58,22 +58,39 @@ const registerUser = async () => {
   }
 }
 
-const registerSubdomain = async (subdomain) => {
-  const userEmail = remakeCliConfig.get('user.email');
+const checkSubdomain = async (subdomain) => {
   try {
-
     const availabilityRes = await axios({
       method: 'get',
-      url: `${remakeServiceHost}/service/subdomain/register`, 
+      url: `${remakeServiceHost}/service/subdomain/check`, 
       headers: {
         'Authorization': `Bearer ${remakeCliConfig.get('user.authToken')}`
       },
       params: {
-        subdomain: subdomain,
-        email: userEmail,
+        subdomain,
       }
     });
     if (availabilityRes.status === 200) return true;
+    else return false;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
+const registerSubdomain = async (subdomain) => {
+  try {
+    const domainRegistered = await axios({
+      method: 'post',
+      url: `${remakeServiceHost}/service/subdomain/register`, 
+      headers: {
+        'Authorization': `Bearer ${remakeCliConfig.get('user.authToken')}`
+      },
+      data: {
+        subdomain,
+      }
+    });
+    if (domainRegistered.status === 200) return true;
     else return false;
   } catch (err) {
     return false;
@@ -112,13 +129,11 @@ const removeDeploymentZip = (projectName) => {
 }
 
 const pushZipToServer = async (projectName) => {
-  const email = remakeCliConfig.get('user.email');
   const cwd = process.cwd();
   const zipPath = path.join(cwd, `deployment-${projectName}.zip`);
   const formData = new FormData();
   formData.append('deployment', fs.readFileSync(zipPath), `${projectName}.zip`);
   formData.append('appName', projectName);
-  formData.append('email', email);
 
   try {
     const res = await axios({
@@ -134,8 +149,9 @@ const pushZipToServer = async (projectName) => {
       log(chalk.greenBright('App files successfully uploaded to server'))
     else throw new Error('Could not upload your files to the server');
   } catch (err) {
+    // console.log(err)
     throw new Error('Could not upload your files to the server');
   }
 }
 
-module.exports = { registerSubdomain, registerUser, createDeploymentZip, removeDeploymentZip, pushZipToServer }
+module.exports = { checkSubdomain, registerSubdomain, registerUser, createDeploymentZip, removeDeploymentZip, pushZipToServer }

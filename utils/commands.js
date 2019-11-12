@@ -8,7 +8,7 @@ const rimraf = promisify(require('rimraf'));
 const boxen = require('boxen');
 
 const { readDotRemake, writeDotRemake, generateDotRemakeContent } = require('./dot-remake');
-const { registerUser, registerSubdomain, createDeploymentZip, removeDeploymentZip, pushZipToServer } = require('./helpers');
+const { registerUser, checkSubdomain, registerSubdomain, createDeploymentZip, removeDeploymentZip, pushZipToServer } = require('./helpers');
 const { questions } = require('./inquirer-questions');
 const { getSuccessMessage } = require('./get-success-message');
 
@@ -99,16 +99,16 @@ const deploy = async () => {
   await registerUser();
 
   if (!dotRemakeObj.projectName) {
-    const subdomainAnswer = await inquirer.prompt([questions.INPUT_SUBDOMAIN])
-    log(`Checking if ${subdomainAnswer.subdomain}.remakeapps.com is available`)
+    const subdomainAnswer = await inquirer.prompt([questions.INPUT_SUBDOMAIN]);
+    log(`Checking if ${subdomainAnswer.subdomain}.remakeapps.com is available`);
 
     // check if name is available
-    const isSubdomainAvailable = await registerSubdomain(subdomainAnswer.subdomain);
+    const isSubdomainAvailable = await checkSubdomain(subdomainAnswer.subdomain);
     if (!isSubdomainAvailable) {
-      log(chalk.red(`${subdomainAnswer.subdomain}.remakeapps.com is not available`))
+      log(chalk.red(`${subdomainAnswer.subdomain}.remakeapps.com is not available`));
       return;
     }
-    log(chalk.greenBright(`${subdomainAnswer.subdomain}.remakeapps.com is available`))
+    log(chalk.greenBright(`${subdomainAnswer.subdomain}.remakeapps.com is available`));
     
     // prompt yes to confirm
     const confirmSubdomainAnswer = await inquirer.prompt([questions.CONFIRM_SUBDOMAIN]);
@@ -116,6 +116,14 @@ const deploy = async () => {
       log(chalk.yellow('Stopped deployment.'))
       return;
     }
+
+    const subdomainRegistered = await registerSubdomain(subdomainAnswer.subdomain);
+    if (!subdomainRegistered) {
+      log(chalk.red(`${subdomainAnswer.subdomain}.remakeapps.com could not be registered.
+This may be a server related error. Please try again.`))
+      return;
+    }
+    log(chalk.greenBright(`${subdomainAnswer.subdomain}.remakeapps.com is belonging to your app.`))
     
     dotRemakeObj.projectName = subdomainAnswer.subdomain
     const writtenDotRemake = writeDotRemake(dotRemakeObj)
@@ -129,7 +137,7 @@ const deploy = async () => {
     await createDeploymentZip(dotRemakeObj.projectName);
     await pushZipToServer(dotRemakeObj.projectName);
     removeDeploymentZip(dotRemakeObj.projectName);
-    log(chalk.greenBright(`The app is accessible at this URL: https://${dotRemakeObj.projectName}.remakeapps.com`))
+    log(chalk.greenBright(`The app is accessible at the URL: https://${dotRemakeObj.projectName}.remakeapps.com`))
   } catch (err) {
     log(chalk.red(err.message));
     return;
