@@ -6,6 +6,8 @@ const inquirer = require('inquirer');
 const { promisify } = require('es6-promisify');
 const rimraf = promisify(require('rimraf'));
 const boxen = require('boxen');
+const ora = require('ora');
+const process = require('process');
 
 const { readDotRemake, writeDotRemake, generateDotRemakeContent } = require('./dot-remake');
 const { registerUser, checkSubdomain, registerSubdomain, createDeploymentZip, removeDeploymentZip, pushZipToServer } = require('./helpers');
@@ -13,6 +15,7 @@ const { questions } = require('./inquirer-questions');
 const { getSuccessMessage } = require('./get-success-message');
 
 const boxenOptions = {padding: 3, margin: 1, borderStyle: 'double', borderColor: 'green'};
+let spinner = null;
 
 const create = async (projectDir, options) => {
   const cwd = process.cwd();
@@ -21,40 +24,40 @@ const create = async (projectDir, options) => {
 
   if (fs.existsSync(newProjectDirPath)) {
     log(chalk.bgRed("Error: Cannot write to a directory that already exists."));
-    return;
+    process.exit();
   }
 
   // STEP 1
-  log("Creating new project.");
+  spinner = ora("Creating new project.").start();
   shell.exec(`git clone --depth 1 https://github.com/panphora/remake-framework.git ${projectDir}`, { silent: true });
-  log(chalk.greenBright("Done."));
+  spinner.succeed();
 
   // STEP 2a & 2b
-  log("Tidy up new project directory.");
+  spinner = ora("Tidy up new project directory.").start();
   rimrafError = await rimraf(path.join(newProjectDirPath, ".git"));
 
   if (rimrafError) {
-    log(chalk.bgRed("Error: Couldn't remove old .git directory from new project."));
-    return;
+    spinner.fail(chalk.bgRed("Error: Couldn't remove old .git directory from new project."));
+    process.exit();
   }
-  log(chalk.greenBright("Done."));
+  spinner.succeed();
 
   // put project README in the right place
   shell.mv(path.join(newProjectDirPath, "README-FOR-BUNDLE.md"), path.join(newProjectDirPath, "README.md"));
 
   // STEP 3
-  log("Installing npm dependencies.");
+  spinner = ora("Installing npm dependencies.").start();
   shell.cd(newProjectDirPath);
   shell.exec("npm install", { silent: true });
-  log(chalk.greenBright("Done."));
+  spinner.succeed();
 
   // STEP 4
   // write project name and env variables to .remake file
-  log("Setting up .remake");
+  spinner = ora("Setting up .remake").start();
   const dotRemakeObj = {
     ...generateDotRemakeContent(options.multitenant)
   }
-  log(chalk.greenBright("Done."));
+  spinner.succeed();
 
   const dotRemakeReady = writeDotRemake(dotRemakeObj);
 
@@ -67,12 +70,12 @@ const clean = () => {
   let dotRemakeObj = readDotRemake();
   if (!dotRemakeObj) {
     log(chalk.bgRed('You are not in the root directory of a remake project.'));
-    return;
+    process.exit();
   }
-  log('Cleaning project.');
+  spinner = ora('Cleaning project.').start();
   shell.rm('-rf', '.cache/');
   shell.rm('-rf', '_remake/dist');
-  log(chalk.greenBright('Done.'));
+  spinner.succeed();
   // TODO - replace above statement with bellow statement once the framework is 
   // updated with the clean script
   // shell.exec('npm run clean');
@@ -82,11 +85,11 @@ const build = () => {
   let dotRemakeObj = readDotRemake();
   if (!dotRemakeObj) {
     log(chalk.bgRed('You are not in the root directory of a remake project.'));
-    return;
+    process.exit();
   }
-  log('Building project.');
+  spinner = ora('Building project.').start();
   shell.exec('npm run build', { silent: true });
-  log(chalk.greenBright('Done.'));
+  spinner.succeed();
 }
 
 const serve = () => {
@@ -100,53 +103,57 @@ const deploy = async () => {
   let dotRemakeObj = readDotRemake();
   if (!dotRemakeObj) {
     log(chalk.bgRed('You are not in the root directory of a remake project.'));
-    return;
+    process.exit();
   }
   await registerUser();
 
   if (!dotRemakeObj.projectName) {
     const subdomainAnswer = await inquirer.prompt([questions.INPUT_SUBDOMAIN]);
-    log(`Checking if ${subdomainAnswer.subdomain}.remakeapps.com is available`);
-
+    spinner = ora(`Checking if ${subdomainAnswer.subdomain}.remakeapps.com is available`).start();
+    
     // check if name is available
     const isSubdomainAvailable = await checkSubdomain(subdomainAnswer.subdomain);
     if (!isSubdomainAvailable) {
-      log(chalk.bgRed(`${subdomainAnswer.subdomain}.remakeapps.com is not available`));
-      return;
+      spinner.fail(`${subdomainAnswer.subdomain}.remakeapps.com is not available`);
+      process.exit();
     }
-    log(chalk.greenBright(`${subdomainAnswer.subdomain}.remakeapps.com is available`));
+    spinner.succeed(`${subdomainAnswer.subdomain}.remakeapps.com is available`);
     
     // prompt yes to confirm
     const confirmSubdomainAnswer = await inquirer.prompt([questions.CONFIRM_SUBDOMAIN]);
     if (confirmSubdomainAnswer.deployOk === false) {
-      log(chalk.bgRed('Stopped deployment.'))
-      return;
+      log(chalk.bgRed('Stopped deployment.'));
+      process.exit();
     }
 
+    spinner = ora(`Registering ${subdomainAnswer.subdomain}`).start();
     const subdomainRegistered = await registerSubdomain(subdomainAnswer.subdomain);
     if (!subdomainRegistered) {
-      log(chalk.bgRed(`${subdomainAnswer.subdomain}.remakeapps.com could not be registered.
-This may be a server related error. Please try again.`))
-      return;
+      spinner.fail(`${subdomainAnswer.subdomain}.remakeapps.com could not be registered.
+This may be a server related error. Please try again.`)
+      process.exit();
     }
-    log(chalk.greenBright(`${subdomainAnswer.subdomain}.remakeapps.com is belonging to your app.`))
+    spinner.succeed(`${subdomainAnswer.subdomain}.remakeapps.com is belonging to your app.`);
     
+    spinner = ora(`Writing .remake file.`).start();
     dotRemakeObj.projectName = subdomainAnswer.subdomain
     const writtenDotRemake = writeDotRemake(dotRemakeObj)
     if (!writtenDotRemake) {
-      log(chalk.bgRed('Could not write subdomain to .remake'));
-      return;
+      spinner.fail('Could not write subdomain to .remake');
+      process.exit();
     }
+    spinner.succeed();
   }
 
   try {
     await createDeploymentZip(dotRemakeObj.projectName);
     await pushZipToServer(dotRemakeObj.projectName);
-    // removeDeploymentZip(dotRemakeObj.projectName);
+    removeDeploymentZip(dotRemakeObj.projectName);
     log(chalk.greenBright(`The app is accessible at the URL: https://${dotRemakeObj.projectName}.remakeapps.com`))
+    process.exit();
   } catch (err) {
     log(chalk.bgRed(err.message));
-    return;
+    process.exit();
   }
 }
 
@@ -163,17 +170,17 @@ const updateFramework = async () => {
   }
 
   // 2. REMOVE OLD _remake DIRECTORY
-  log("Removing old _remake directory.");
+  spinner = ora("Removing old _remake directory.").start();
   rimrafError = await rimraf(remakeFrameworkPathInApplicationDirectory); // HERE
 
   if (rimrafError) {
-    log(chalk.bgRed("Error: Couldn't remove old _remake directory."));
+    spinner.fail("Error: Couldn't remove old _remake directory.");
     return;
   }
-  log(chalk.greenBright("Done."));
+  spinner.succeed();
 
   // 3. GIT CLONE THE ENTIRE FULL STACK STARTER PROJECT INTO THE CURRENT DIRECTORY
-  log("Copying latest framework into _remake directory.");
+  spinner = ora("Copying latest framework into _remake directory.").start();
   shell.exec("git clone --depth 1 https://github.com/panphora/remake-framework.git", { silent: true });
 
   // 4. MOVE THE _remake DIRECTORY TO WHERE THE OLD _remake DIRECTORY WAS
@@ -182,10 +189,10 @@ const updateFramework = async () => {
   rimrafError = await rimraf(path.join(cwd, "remake-framework"))
 
   if (rimrafError) {
-    log(chalk.bgRed("Error cleaning up: Couldn't remove the ./remake-framework directory."));
+    spinner.fail("Error cleaning up: Couldn't remove the ./remake-framework directory.");
     return;
   }
-  log(chalk.greenBright("Done."));
+  spinner.succeed();
 
   log(chalk.greenBright('Framework successfully updated.'))
 }

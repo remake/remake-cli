@@ -9,6 +9,9 @@ const shell = require('shelljs');
 const FormData = require('form-data');
 
 const { questions } = require('./inquirer-questions');
+const ora = require('ora');
+
+let spinner = null;
 
 const registerUser = async () => {
   const userEmail = remakeCliConfig.get('user.email');
@@ -20,7 +23,7 @@ const registerUser = async () => {
     let loginAnswers = await inquirer.prompt([questions.NEW_USER, questions.INPUT_EMAIL, questions.INPUT_PASSWORD]);
     if (loginAnswers.existingUser.startsWith('Yes')) {
       try {
-        log('Logging you in.');
+        spinner = ora('Logging you in.').start();
         let res = await axios({
           method: 'post',
           url: `${remakeServiceHost}/service/login`, 
@@ -31,14 +34,14 @@ const registerUser = async () => {
         });
         remakeCliConfig.set('user.email', loginAnswers.email);
         remakeCliConfig.set('user.authToken', res.data.token);
-        log(chalk.greenBright('You are successfuly logged in.'));
+        spinner.succeed('You are successfuly logged in.');
       } catch (err) {
-        log(chalk.bgRed('Could not log you in. Please try again.'));
-        return;
+        spinner.fail('Could not log you in. Please try again.');
+        process.exit();
       }
     } else {
       try{
-        log('Creating your account');
+        spinner = ora('Creating your account').start();
         let res = await axios({
           method: 'post',
           url: `${remakeServiceHost}/service/signup`, 
@@ -49,10 +52,10 @@ const registerUser = async () => {
         });
         remakeCliConfig.set('user.email', loginAnswers.email);
         remakeCliConfig.set('user.authToken', res.data.token);
-        log(chalk.greenBright('Created your account and logged you in.'));
+        spinner.succeed('Created your account and logged you in.');
       } catch (err) {
-        log(chalk.bgRed('Could not create your account. Please try again.'));
-        return;
+        spinner.fail('Could not create your account. Please try again.');
+        process.exit();
       }
     }
   }
@@ -73,7 +76,6 @@ const checkSubdomain = async (subdomain) => {
     if (availabilityRes.status === 200) return true;
     else return false;
   } catch (err) {
-    console.log(err);
     return false;
   }
 }
@@ -98,22 +100,24 @@ const registerSubdomain = async (subdomain) => {
 }
 
 const createDeploymentZip = (projectName) => {
-  log('Archiving files for upload.');
+  const spinner = ora('Archiving files for upload.').start();
   return new Promise((resolve, reject) => {
     const cwd = process.cwd();
     const output = fs.createWriteStream(path.join(cwd, `deployment-${projectName}.zip`), { encoding: 'base64' });
     const archive = archiver('zip', { zlib: { level: 9 } });
 
     output.on('warning', (err) => {
+      spinner.fail();
       reject(err);
     });
 
     output.on('error', (err) => {
+      spinner.fail();
       reject(err);
     });
 
     output.on('close', () => {
-      log(chalk.greenBright('Done archiving: ' + archive.pointer() + ' bytes.'));
+      spinner.succeed('Done archiving: ' + archive.pointer() + ' bytes.');
       resolve();
     })
 
@@ -125,13 +129,14 @@ const createDeploymentZip = (projectName) => {
 }
 
 const removeDeploymentZip = (projectName) => {
-  log('Cleaning up project directory.');
+  spinner = ora('Cleaning up project directory.').start();
   const cwd = process.cwd();
   shell.rm(path.join(cwd, `deployment-${projectName}.zip`))
+  spinner.succeed();
 }
 
 const pushZipToServer = async (projectName) => {
-  log('Pushing your files to the deployment server.');
+  spinner = ora('Pushing your files to the deployment server.').start();
   const cwd = process.cwd();
   const zipPath = path.join(cwd, `deployment-${projectName}.zip`);
   const formData = new FormData();
@@ -149,11 +154,14 @@ const pushZipToServer = async (projectName) => {
       data: formData.getBuffer()
     });
     if (res.status === 200)
-      log(chalk.greenBright('Files successfully uploaded to server.'))
-    else throw new Error('Could not upload your files to the server.');
+      spinner.succeed('Files successfully uploaded to server.')
+    else {
+      spinner.fail('Could not upload your files to the server.');
+      throw new Error('Could not upload your files to the server.')
+    }
   } catch (err) {
-    // console.log(err)
-    throw new Error('Could not upload your files to the server.');
+    spinner.fail('Could not upload your files to the server.');
+    throw new Error(err)
   }
 }
 
