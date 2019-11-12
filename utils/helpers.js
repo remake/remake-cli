@@ -33,7 +33,7 @@ const registerUser = async () => {
         remakeCliConfig.set('user.authToken', res.data.token);
         log(chalk.greenBright('You are successfuly logged in.'));
       } catch (err) {
-        log(chalk.red('Could not log you in. Please try again.'));
+        log(chalk.bgRed('Could not log you in. Please try again.'));
         return;
       }
     } else {
@@ -51,7 +51,7 @@ const registerUser = async () => {
         remakeCliConfig.set('user.authToken', res.data.token);
         log(chalk.greenBright('Created your account and logged you in.'));
       } catch (err) {
-        log(chalk.red('Could not create your account. Please try again.'));
+        log(chalk.bgRed('Could not create your account. Please try again.'));
         return;
       }
     }
@@ -98,6 +98,7 @@ const registerSubdomain = async (subdomain) => {
 }
 
 const createDeploymentZip = (projectName) => {
+  log('Archiving files for upload.');
   return new Promise((resolve, reject) => {
     const cwd = process.cwd();
     const output = fs.createWriteStream(path.join(cwd, `deployment-${projectName}.zip`), { encoding: 'base64' });
@@ -112,23 +113,25 @@ const createDeploymentZip = (projectName) => {
     });
 
     output.on('close', () => {
-      log(chalk.greenBright('Done archiving! ' + archive.pointer() + ' total bytes.'));
+      log(chalk.greenBright('Done archiving: ' + archive.pointer() + ' bytes.'));
       resolve();
     })
 
     archive.pipe(output);
-    archive.glob('project-files/[a-z]*/**/*');
+    archive.glob('app/[a-z]*/**/*');
     archive.glob('_remake-data/*/*.json');
     archive.finalize();
   })
 }
 
 const removeDeploymentZip = (projectName) => {
+  log('Cleaning up project directory.');
   const cwd = process.cwd();
   shell.rm(path.join(cwd, `deployment-${projectName}.zip`))
 }
 
 const pushZipToServer = async (projectName) => {
+  log('Pushing your files to the deployment server.');
   const cwd = process.cwd();
   const zipPath = path.join(cwd, `deployment-${projectName}.zip`);
   const formData = new FormData();
@@ -146,11 +149,11 @@ const pushZipToServer = async (projectName) => {
       data: formData.getBuffer()
     });
     if (res.status === 200)
-      log(chalk.greenBright('App files successfully uploaded to server'))
-    else throw new Error('Could not upload your files to the server');
+      log(chalk.greenBright('Files successfully uploaded to server.'))
+    else throw new Error('Could not upload your files to the server.');
   } catch (err) {
     // console.log(err)
-    throw new Error('Could not upload your files to the server');
+    throw new Error('Could not upload your files to the server.');
   }
 }
 
