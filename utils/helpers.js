@@ -92,10 +92,9 @@ const registerSubdomain = async (subdomain) => {
         subdomain,
       }
     });
-    if (domainRegistered.status === 200) return true;
-    else return false;
+    if (domainRegistered.status === 200) return { success: true };
   } catch (err) {
-    return false;
+    return { success: false, message: err.response.data.message };
   }
 }
 

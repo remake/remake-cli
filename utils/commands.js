@@ -128,9 +128,8 @@ const deploy = async () => {
 
     spinner = ora(`Registering ${subdomainAnswer.subdomain}`).start();
     const subdomainRegistered = await registerSubdomain(subdomainAnswer.subdomain);
-    if (!subdomainRegistered) {
-      spinner.fail(`${subdomainAnswer.subdomain}.remakeapps.com could not be registered.
-This may be a server related error. Please try again.`)
+    if (!subdomainRegistered.success) {
+      spinner.fail(subdomainRegistered.message)
       process.exit();
     }
     spinner.succeed(`${subdomainAnswer.subdomain}.remakeapps.com is belonging to your app.`);
