@@ -121,7 +121,7 @@ const createDeploymentZip = (projectName) => {
     })
 
     archive.pipe(output);
-    archive.glob('app/[a-z]*/**/*');
+    archive.glob('app/**/*');
     archive.glob('_remake-data/*/*.json');
     archive.finalize();
   })

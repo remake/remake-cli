@@ -88,12 +88,14 @@ const build = () => {
     process.exit();
   }
   spinner = ora('Building project.').start();
-  shell.exec('npm run build', { silent: true });
-  spinner.succeed();
-}
-
-const serve = () => {
-  log('TODO');
+  shell.exec('npm run build', { silent: true }, (code, out, err) => {
+    if (code === 1) {
+      spinner.fail();
+    } else {
+      spinner.succeed();
+    }
+    process.exit();
+  });
 }
 
 const deploy = async () => {
@@ -196,4 +198,4 @@ const updateFramework = async () => {
   log(chalk.greenBright('Framework successfully updated.'))
 }
 
-module.exports =  { create, deploy, serve, clean, build, updateFramework }
+module.exports =  { create, deploy, clean, build, updateFramework }

@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require('path');
+const crypto = require('crypto');
 const process = require('process');
 const nanoidGenerate = require('nanoid/generate');
 
@@ -16,7 +17,7 @@ function generateDotRemakeContent (multitenant) {
   }
   if (multitenant) {
     dotRemakeContent.remakeMultiTenant = true;
-    dotRemakeContent.jwtSecret = nanoidGenerate("1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 30);
+    dotRemakeContent.jwtSecret = crypto.randomBytes(30).toString('base64');
   }
   return dotRemakeContent;
 }
