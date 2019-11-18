@@ -1,3 +1,15 @@
+# 1.7.0 (November 18, 2019)
+
+- Add support for handling deploys to a multi-tenant app
+  - Uploading app assets
+  - Authorizing users
+  - Sub-domain registration
+  - Limit deployments per user
+  - New `remake deploy` command
+  - New `--multitenant` flag for `remake create` command
+  - Better logging and user feedback from CLI
+
+
 # 1.6.0 (October 31, 2019)
 
 - Added support for sortable items. Instructions for how to enable: https://www.notion.so/hellounicorns/Docs-Sortable-Plugin-3cdd44ece76745faa1a6e043ef0c3a76
