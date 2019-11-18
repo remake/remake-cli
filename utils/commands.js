@@ -88,14 +88,12 @@ const build = () => {
     process.exit();
   }
   spinner = ora('Building project.').start();
-  shell.exec('npm run build', { silent: true }, (code, out, err) => {
-    if (code === 1) {
-      spinner.fail();
-    } else {
-      spinner.succeed();
-    }
-    process.exit();
-  });
+  const result = shell.exec('npm run build', { silent: true });
+  if (result.code === 0) {
+    spinner.succeed();
+  } else {
+    spinner.fail();
+  }
 }
 
 const deploy = async () => {
