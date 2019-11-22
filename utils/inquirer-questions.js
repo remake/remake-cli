@@ -43,9 +43,8 @@ const questions = {
     validate: validatePass
   },
   INPUT_SUBDOMAIN: {
-    message: `Type a project name which will be used as a subdomain.
-The project name should start with a lowercase letter and should contain only lowercase letters, numbers and dashes.
-Your app will be accessible at <subdomain>.remakeapps.com
+    message: `Choose a project name:
+(only lowercase characters, numbers, and dashes allowed)
 > `,
     name: 'subdomain',
     type: 'input',

@@ -148,7 +148,7 @@ const deploy = async () => {
     await createDeploymentZip(dotRemakeObj.projectName);
     await pushZipToServer(dotRemakeObj.projectName);
     removeDeploymentZip(dotRemakeObj.projectName);
-    log(chalk.greenBright(`The app is accessible at the URL: https://${dotRemakeObj.projectName}.remakeapps.com`))
+    log(chalk.greenBright(`Success, your app will be accessible at https://${dotRemakeObj.projectName}.remakeapps.com`))
     process.exit();
   } catch (err) {
     log(chalk.bgRed(err.message));
