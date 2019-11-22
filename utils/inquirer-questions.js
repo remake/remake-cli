@@ -16,7 +16,7 @@ const validateEmail = (email) => {
 
 const validatePass = (pass) => {
   // at least one digit and one letter + at least 8 chars long
-  const passRegex = /^(?=.*\d)(?=.*[a-z])[a-zA-Z0-9]{8,}$/
+  const passRegex = /.{8,}/
   if (!passRegex.test(pass))
     return 'The password should be at least 8 characters long and it should contain at least one digit and a letter.';
   else return true;
