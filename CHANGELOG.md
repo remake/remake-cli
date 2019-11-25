@@ -1,3 +1,18 @@
+# 1.8.0 (November 24, 2019)
+
+- Added a separate `remake.sass` helper styles file for: 
+  - hiding `data-i-new` elements
+  - preserving multi-lines in multi-line editable elements
+  - show a dashed border around editable elements that have no content in them
+- Fix bug with `getWatchElements()` to support location keys
+- Make location keys look for a target before defaulting to the `innerText` of the current element
+- Allow any user to reset their password
+- Add app data to the top-level of template data, so you don't have to look inside a `data` object in a template
+- Fix sessions from expiring after 1 hour (now 30 days)
+- Change all user account routes (e.g. `/signup`, `/login`, `/forgot`) to be prepended with `/user` and move templates
+- Add a new `{{generateIdIfNone}}` Handlebars.js helper that will generate a random id for an element if it has none (this makes it possible to not create a JSON file in the `/data` directory for adding default data to new items and create the new template entirely inline on the page)
+- Made the nicely-designed Kanban app as the default starter application
+
 # 1.7.0 (November 18, 2019)
 
 - Add support for handling deploys to a multi-tenant app
