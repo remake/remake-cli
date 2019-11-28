@@ -10,7 +10,15 @@ const ora = require('ora');
 const process = require('process');
 
 const { readDotRemake, writeDotRemake, generateDotRemakeContent } = require('./dot-remake');
-const { registerUser, checkSubdomain, registerSubdomain, createDeploymentZip, removeDeploymentZip, pushZipToServer } = require('./helpers');
+const {
+  registerUser,
+  checkSubdomain,
+  registerSubdomain,
+  createDeploymentZip,
+  removeDeploymentZip,
+  pushZipToServer,
+  getAppsList,
+  backupApp } = require('./helpers');
 const { questions } = require('./inquirer-questions');
 const { getSuccessMessage } = require('./get-success-message');
 
@@ -196,4 +204,14 @@ const updateFramework = async () => {
   log(chalk.greenBright('Framework successfully updated.'))
 }
 
-module.exports =  { create, deploy, clean, build, updateFramework }
+const backup = async () => {
+  await registerUser();
+  let appsList = await getAppsList();
+  const question = questions.APP_BACKUP;
+  question.choices = appsList.map((app) => ({ name: app.name, value: app.id }));
+  const backupAnswer = await inquirer.prompt([question]);
+  await backupApp(backupAnswer.appId);
+  process.exit();
+}
+
+module.exports =  { create, deploy, clean, build, updateFramework, backup }

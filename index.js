@@ -1,7 +1,7 @@
 const program = require('commander');
 const Configstore = require('configstore');
 
-const { clean, build, deploy, serve, updateFramework, create } = require('./utils/commands');
+const { clean, build, deploy, backup, updateFramework, create } = require('./utils/commands');
 const { version, name } = require('./package.json');
 
 log = console.log;
@@ -39,6 +39,11 @@ program
   .command('clean')
   .description('Wipe the local Remake environment including caches and build assets')
   .action(() => clean());
+
+program
+  .command('backup')
+  .description('Backup the deployed version of your app')
+  .action(() => backup());
 
 module.exports = async () => {
   program.parse(process.argv)

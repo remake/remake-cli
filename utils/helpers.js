@@ -165,4 +165,70 @@ const pushZipToServer = async (projectName) => {
   }
 }
 
-module.exports = { checkSubdomain, registerSubdomain, registerUser, createDeploymentZip, removeDeploymentZip, pushZipToServer }
+const getAppsList = async () => {
+  const spinner = ora('Getting your apps list.').start();
+  try {
+    const appListResponse = await axios({
+      method: 'get',
+      url: `${remakeServiceHost}/service/apps`, 
+      headers: {
+        'Authorization': `Bearer ${remakeCliConfig.get('user.authToken')}`
+      },
+    });
+    if (appListResponse.status === 200) {
+      spinner.succeed();
+      return appListResponse.data;
+    } else {
+      spinner.fail();
+      return null;
+    }
+  } catch (err) {
+    console.log(err)
+    spinner.fail();
+    return null;
+  }
+}
+
+const backupApp = async (appId) => {
+  const spinner = ora('Generating and downlading zip.').start();
+  try {
+    const backupResponse = await axios({
+      method: 'get',
+      url: `${remakeServiceHost}/service/backup`,
+      responseType: 'stream',
+      headers: {
+        'Authorization': `Bearer ${remakeCliConfig.get('user.authToken')}`
+      },
+      params: {
+        appId,
+      }
+    })
+    if (backupResponse.status === 200) {
+      const fileName = backupResponse.headers['content-disposition'].split('=')[1].replace(/\"/g, '');
+      const writer = fs.createWriteStream(fileName);
+      backupResponse.data.pipe(writer);
+      return new Promise((resolve, reject) => {
+        writer.on('finish', () => { spinner.succeed(); resolve(); });
+        writer.on('error', () => { spinner.fail(); reject(); });
+      });
+    } else {
+      spinner.fail();
+      return null;
+    }
+  } catch (err) {
+    console.log(err)
+    spinner.fail();
+    return null;
+  }
+}
+
+module.exports = {
+  checkSubdomain,
+  registerSubdomain,
+  registerUser,
+  createDeploymentZip,
+  removeDeploymentZip,
+  pushZipToServer,
+  getAppsList,
+  backupApp,
+}

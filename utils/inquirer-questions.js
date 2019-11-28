@@ -55,6 +55,12 @@ Your app will be accessible at <subdomain>.remakeapps.com
     name: 'deployOk',
     message: 'Subdomain is available. Do you want to proceed?',
     type: 'confirm'
+  },
+  APP_BACKUP: {
+    message: 'Which app do you want to back up?',
+    name: 'appId',
+    type: 'list',
+    choices: []
   }
 }
 
