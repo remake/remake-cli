@@ -207,11 +207,16 @@ const updateFramework = async () => {
 const backup = async () => {
   await registerUser();
   let appsList = await getAppsList();
-  const question = questions.APP_BACKUP;
-  question.choices = appsList.map((app) => ({ name: app.name, value: app.id }));
-  const backupAnswer = await inquirer.prompt([question]);
-  await backupApp(backupAnswer.appId);
-  process.exit();
+  if (appsList.length === 0) {
+    log(chalk.yellow('No apps deployed yet.'));
+    process.exit();
+  } else {
+    const question = questions.APP_BACKUP;
+    question.choices = appsList.map((app) => ({ name: app.name, value: app.id }));
+    const backupAnswer = await inquirer.prompt([question]);
+    await backupApp(backupAnswer.appId);
+    process.exit();
+  }
 }
 
 module.exports =  { create, deploy, clean, build, updateFramework, backup }
