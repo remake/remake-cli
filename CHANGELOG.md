@@ -1,3 +1,8 @@
+# 1.9.0 (December 1, 2019)
+
+- Added the `remake backup` command to backup a deployed app's data
+- BUG FIX: the `/user/reset/{username}/{token}` route now works in multi-tenant mode
+
 # 1.8.0 (November 24, 2019)
 
 - Added a separate `remake.sass` helper styles file for: 
