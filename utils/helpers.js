@@ -183,7 +183,6 @@ const getAppsList = async () => {
       return null;
     }
   } catch (err) {
-    console.log(err)
     spinner.fail();
     return null;
   }
@@ -216,7 +215,6 @@ const backupApp = async (appId) => {
       return null;
     }
   } catch (err) {
-    console.log(err)
     spinner.fail();
     return null;
   }
