@@ -2,6 +2,8 @@
 layout: layout.hbs
 ---
 
+<img class="image--small image--center" src="https://remake.s3.amazonaws.com/smartsharp/03.svg">
+
 ## Install & Setup
 
 1. Install the Remake command line tool

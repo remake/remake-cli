@@ -328,6 +328,11 @@ img {
   max-width: 420px;
 }
 
+.image--center {
+  display: block;
+  margin: 0 auto;
+}
+
 .rounded {
   overflow: hidden;
   border-radius: 7px;
