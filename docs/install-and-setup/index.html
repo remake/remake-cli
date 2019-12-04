@@ -27,6 +27,7 @@
           <div class="sidebar__list">
             <a class="sidebar__list-item " href="/">What is Remake?</a>
             <a class="sidebar__list-item sidebar__list-item--selected" href="/install-and-setup">Install &amp; Setup</a>
+            <a class="sidebar__list-item " href="/high-level-overview">High-level Overview</a>
           </div>
         </div>
         <div class="sidebar__list-container">
@@ -72,7 +73,37 @@
       </div>
       <div class="main">
         <a class="github-link github-link--top" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
-        
+        <h2>Install &amp; Setup</h2>
+<ol>
+<li>Install the Remake command line tool</li>
+</ol>
+<pre><code class="language-bash">npm install remake -g
+</code></pre>
+<ol start="2">
+<li>Use the command line to to generate the starter project</li>
+</ol>
+<pre><code class="language-bash">remake create &lt;project-dir&gt;
+</code></pre>
+<ol start="3">
+<li>Change into your new project's directory</li>
+</ol>
+<pre><code class="language-bash">cd projectName
+</code></pre>
+<ol start="4">
+<li>Run the local server for your Remake app!</li>
+</ol>
+<pre><code class="language-bash">npm run dev
+</code></pre>
+<ol start="5">
+<li>Go to <code>http://localhost:3000</code> in your browser to view your new Remake app!</li>
+</ol>
+<img class="border rounded" src="/static/kanban-screenshot.png">
+<ol start="6">
+<li>(Optional) Deploy your new app!</li>
+</ol>
+<pre><code class="language-bash">remake deploy
+</code></pre>
+
         <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
       </div>
     </div>

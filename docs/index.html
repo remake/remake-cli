@@ -27,6 +27,7 @@
           <div class="sidebar__list">
             <a class="sidebar__list-item sidebar__list-item--selected" href="/">What is Remake?</a>
             <a class="sidebar__list-item " href="/install-and-setup">Install &amp; Setup</a>
+            <a class="sidebar__list-item " href="/high-level-overview">High-level Overview</a>
           </div>
         </div>
         <div class="sidebar__list-container">
@@ -73,125 +74,21 @@
       <div class="main">
         <a class="github-link github-link--top" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
         <h1 class="logo"><img class="logo__image" src="/static/logo.svg" alt="Remake.js"></h1>
-<h2>Build <a href="/what-is-crud">CRUD</a> web apps quickly</h2>
+<h2>Build web apps. Fast.</h2>
+<p><b>Super-powered HTML for quickly building fast-loading, dynamic, server-rendered web apps that feel modern and are easy to use.</b></p>
 <ul>
 <li>Feels like prototyping</li>
 <li>Easy-to-learn syntax</li>
-<li>No need to worry about the back-end</li>
+<li>Develop exclusively on the front-end</li>
+<li>Server-rendered &amp; SEO friendly</li>
+<li>Perfect for small teams and solo developers</li>
 </ul>
+<div class="spacer--8"></div>
 <p><a class="slanted-link" href="https://mailchi.mp/59def7603a0f/remake"><span>→ Sign up for updates</span></a></p>
-<h3>Getting Started</h3>
-<ol>
-<li>Install Remake globally</li>
-</ol>
-<pre><code class="language-bash">npm install remake -g
-</code></pre>
-<ol start="2">
-<li>Generate a starter project</li>
-</ol>
-<pre><code class="language-bash">remake create &lt;project-dir&gt;
-</code></pre>
-<ol start="3">
-<li>Run the project locally</li>
-</ol>
-<pre><code class="language-bash">cd projectName &amp;&amp; npm run dev
-</code></pre>
-<h3>Quick Start</h3>
+<h3>How it works</h3>
 <p><strong>Creating a web application is hard.</strong> You need to install packages, configure your build process, create API endpoints, set up a database, and load in some demo data, <em>and that's all before even getting started!</em></p>
 <p><strong>It can be easier!</strong></p>
-<div class="spacer--8"></div>
-<p><a class="slanted-link" href="https://www.youtube.com/watch?v=la5uhrYSzy8"><span>→ Watch 15 minute tutorial</span></a></p>
-<h3>How Remake is Different</h3>
-<ul>
-<li>Remake is server-rendered &amp; uses Handlebars.js for templating</li>
-<li>Remake uses custom data attributes to attach data and behavior to HTML elements</li>
-<li>Remake will automatically save the data on the page for you</li>
-</ul>
-<h4>1. Handling state is simple</h4>
-<p>Given this HTML:</p>
-<pre><code class="language-html">&lt;div data-o-type=&quot;object&quot; data-o-key-name=&quot;John&quot; data-o-key-age=&quot;24&quot;&gt;&lt;/div&gt;
-</code></pre>
-<p>Remake will produce this object:</p>
-<pre><code class="language-json">{&quot;name&quot;: &quot;John&quot;, &quot;age&quot;: &quot;24&quot;}
-</code></pre>
-<p>Whenever this data changes, Remake will automatically saves it to the current user's data.</p>
-<h4>2. Multiple items are converted into an array</h4>
-<p>Remake uses the natural structure of this HTML:</p>
-<pre><code class="language-html">&lt;div data-o-type=&quot;list&quot;&gt;
-  &lt;div data-o-type=&quot;object&quot; data-o-key-name=&quot;John&quot; data-o-key-age=&quot;24&quot;&gt;&lt;/div&gt;
-  &lt;div data-o-type=&quot;object&quot; data-o-key-name=&quot;Mary&quot; data-o-key-age=&quot;26&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<p>To create an arrays of objects:</p>
-<pre><code class="language-json">[
-  {&quot;name&quot;: &quot;John&quot;, &quot;age&quot;: &quot;24&quot;},
-  {&quot;name&quot;: &quot;Mary&quot;, &quot;age&quot;: &quot;26&quot;}
-]
-</code></pre>
-<p>Let's skip a few steps ahead to:</p>
-<h4>3. A working Remake web app:</h4>
-<div class="line-numbers">
-<pre><code class="language-html">&lt;ul data-o-key=&quot;todos&quot; data-o-type=&quot;list&quot;&gt;
-  {{#for todo in data.todos}}
-    &lt;li 
-      data-o-type=&quot;object&quot; 
-      data-l-key-text
-      data-i-editable
-    &gt;{{ todo.text }}&lt;/li&gt;
-  {{/for}}
-&lt;/ul&gt;
-&lt;button data-i-new=&quot;todo&quot;&gt;Add Todo&lt;/button&gt;
-</code></pre>
-</div>
-<p><strong>Line by line:</strong></p>
-<ol>
-<li>
-<p>The data on this page will be under the key <code>todos</code> and inside an array</p>
-</li>
-<li>
-<p>Start a <code>#for</code> loop to render all the existing todos</p>
-</li>
-<li>
-<p>Start an <code>li</code> list item element</p>
-</li>
-<li>
-<p>Each todo will be an object</p>
-</li>
-<li>
-<p>The key <code>&quot;text&quot;</code> that this element exports will be set to the current text of this element</p>
-</li>
-<li>
-<p>Clicking on this element will trigger an editable popover</p>
-</li>
-<li>
-<p>Render the current todo's <code>text</code> key</p>
-</li>
-<li>
-<p>End the <code>#for</code> loop</p>
-</li>
-<li>
-<p>Close the <code>ul</code></p>
-</li>
-<li>
-<p>Click the button to render a new todo at the end of the list</p>
-</li>
-</ol>
-<h3>Step-By-Step Tutorial</h3>
-<p>Follow along as we create a <strong>Choose Your Own Ending Game</strong>!</p>
-<p>Along the way, we'll explain what Remake is all about, how it gets its powers, and why it's the fastest way to build a web application.</p>
-<div class="spacer--8"></div>
-<p><a class="slanted-link" href="/not-available"><span>→ Start the Tutorial</span></a></p>
-<h3>Full Documentation</h3>
-<ul>
-<li><strong><a href="/not-available">Best Practices</a></strong></li>
-<li><strong><a href="/data-attributes-api">Data Attributes API</a></strong></li>
-</ul>
-<h3>Why We Made Remake</h3>
-<p>Remake allows anyone to turn a static website into a dynamic web application in a matter of minutes.</p>
-<p>Remake's authors believe <strong>there should be more startups in the world</strong> — it should be easier to create them!</p>
-<p>The web is a relatively new technology, with a lot of room for growth. What if your neighbor could create a web app in an afternoon? That would mean you could too. Then, the web would suddenly become a less dangerous, much more interesting, and much more exciting place.</p>
-<p><strong>Our goal is to foster a more approachable and friendly internet</strong>, so more companies and individuals can contributes to the whole ecosystem, connect, and learn from each other.</p>
-<p>❤️</p>
+<img src="/static/remake-how-it-works.png">
 
         <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
       </div>

@@ -140,6 +140,10 @@ blockquote {
   border-left: 5px solid #ced4da;
 }
 
+img {
+  max-width: 100%;
+}
+
 
 /* PAGE LAYOUT */
 
@@ -236,7 +240,7 @@ blockquote {
 
 .logo {
   margin-top: 0;
-  margin-bottom: 1.5em;
+  margin-bottom: 2.5em;
   font-size: 1rem;
 }
 
@@ -318,6 +322,19 @@ blockquote {
 
 .spacer--32 {
   height: 32px;
+}
+
+.image--small {
+  max-width: 420px;
+}
+
+.rounded {
+  overflow: hidden;
+  border-radius: 7px;
+}
+
+.border {
+  border: 1px solid #8a9db7;
 }
 
 #ph-upcoming-widget, #ph-upcoming-widget * {
