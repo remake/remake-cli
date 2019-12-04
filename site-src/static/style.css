@@ -158,7 +158,7 @@ blockquote {
 
 .main {
   position: relative;
-  width: 691px;
+  width: 900px;
   padding: 45px 46px 48px;
   border-right: 1px solid #212529;
   border-left: 1px solid #212529;
@@ -171,10 +171,8 @@ blockquote {
 /* SIDEBAR */
 
 .sidebar {
-  visibility: hidden;
   width: 280px;
   padding-top: 36px;
-  background-color: #4d81ed
 }
 
 .sidebar__list {
@@ -184,8 +182,9 @@ blockquote {
 .sidebar__list-heading {
   margin-bottom: 6px;
   padding: 10px 20px 12px 30px;
-  font-weight: 500;
-  color: #ffc767;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #fbbad0;
   text-transform: uppercase
 }
 
