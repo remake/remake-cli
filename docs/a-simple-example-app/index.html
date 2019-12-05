@@ -28,7 +28,7 @@
             <a class="sidebar__list-item " href="/">What is Remake?</a>
             <a class="sidebar__list-item " href="/install-and-setup">Install &amp; Setup</a>
             <a class="sidebar__list-item " href="/high-level-overview">High-level Overview</a>
-            <a class="sidebar__list-item " href="/a-simple-example-app">A Simple Example App</a>
+            <a class="sidebar__list-item sidebar__list-item--selected" href="/a-simple-example-app">A Simple Example App</a>
           </div>
         </div>
         <div class="sidebar__list-container">
@@ -60,7 +60,7 @@
           <div class="sidebar__list-heading">DATA ATTRIBUTES API</div>
           <div class="sidebar__list">
             <a class="sidebar__list-item " href="/output-attributes">Output attributes</a>
-            <a class="sidebar__list-item sidebar__list-item--selected" href="/input-attributes">Input attributes</a>
+            <a class="sidebar__list-item " href="/input-attributes">Input attributes</a>
             <a class="sidebar__list-item " href="/watcher-attributes">Watcher attributes</a>
           </div>
         </div>
@@ -74,7 +74,62 @@
       </div>
       <div class="main">
         <a class="github-link github-link--top" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
-        
+        <h2>A simple todo list in Remake:</h2>
+<div class="line-numbers">
+<pre><code class="language-html">&lt;ul data-o-key=&quot;todos&quot; data-o-type=&quot;list&quot;&gt;
+  {{#for todo in data.todos}}
+    &lt;li 
+      data-o-type=&quot;object&quot; 
+      data-l-key-text
+      data-i-editable
+    &gt;{{ todo.text }}&lt;/li&gt;
+  {{/for}}
+&lt;/ul&gt;
+&lt;button data-i-new=&quot;todo&quot;&gt;Add Todo&lt;/button&gt;
+</code></pre>
+</div>
+<p>This is a fully-functional application, with support for:</p>
+<ul>
+<li>Adding new items to a list</li>
+<li>Editing the text of each item</li>
+<li>Removing an item</li>
+<li>Sharing your todo list with a friend (by sharing its url)</li>
+</ul>
+<p><strong>Explanation:</strong></p>
+<p>Line by line, this is what this code does:</p>
+<ol>
+<li>
+<p>The data on this page will be under the key <code>todos</code> and inside an array</p>
+</li>
+<li>
+<p>Start a <code>#for</code> loop to render all the existing todos</p>
+</li>
+<li>
+<p>Start an <code>li</code> list item element</p>
+</li>
+<li>
+<p>Each todo will be an object</p>
+</li>
+<li>
+<p>The key <code>&quot;text&quot;</code> that this element exports will be set to the current text of this element</p>
+</li>
+<li>
+<p>Clicking on this element will trigger an editable popover</p>
+</li>
+<li>
+<p>Render the current todo's <code>text</code> key</p>
+</li>
+<li>
+<p>End the <code>#for</code> loop</p>
+</li>
+<li>
+<p>Close the <code>ul</code></p>
+</li>
+<li>
+<p>Click the button to render a new todo at the end of the list</p>
+</li>
+</ol>
+
         <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
       </div>
     </div>
