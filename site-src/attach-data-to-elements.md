@@ -18,5 +18,24 @@ Also, make sure you signed up and are logged in to an account!
 
 If you're following along with the video and you want your data to auto-save on page load (not a great idea in production, but fine in development), then comment out the last line in the `remake-init.js` file in `app/assets/js/remake-init.js`
 
+### Only a few attributes to learn!
+
+Most of the work in remake is done by just 7-8 attributes.
+
+Here are all of the special (and powerful) custom data attributes we use in this Trello clone to add ALL of its functionality:
+
+* data-o-type
+* data-l-key-*
+* data-o-key
+* data-i-editable
+* data-i-new
+* data-i-sortable
+* data-l-target-*
+* data-o-default-*
+
+To learn more about these, read the [Data Attributes API](http://localhost:8080/data-attributes-api/) page!
+
+
+
 #### ⭐️ More documentation coming within a few hours! 
 

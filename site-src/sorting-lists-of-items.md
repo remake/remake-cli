@@ -6,5 +6,11 @@ layout: layout.hbs
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/5TNDjNbjsFA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+### Sorting enabled by default
+
+Be default, all Remake requires is a `data-i-sortable` attribute with a unique value to make all the items in a list sortable.
+
+If the value of your `data-i-sortable` attribute isn't unique, it will be able to be sorted with other list items that have the same value.
+
 #### ⭐️ More documentation coming within a few hours! 
 
