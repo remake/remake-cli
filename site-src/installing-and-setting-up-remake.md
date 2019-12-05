@@ -64,6 +64,10 @@ For most applications, you'll never have to edit any files that are outside of t
 
 Before moving on to the next step, make sure you sign up for a user account on your local server!
 
+<div class="spacer--8"></div>
+
+<a class="slanted-link" href="/attach-data-to-elements/"><span>&rarr; Attach Data to Elements</span></a>
+
 
 
 
