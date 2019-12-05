@@ -6,11 +6,11 @@ layout: layout.hbs
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/WxYUYSQBE4A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Welcome to Remake!
+Welcome to the first step in the Remake tutorial!
 
-Remake helps you create web apps really fast.
+We'll learn how to build a fully-featured Kanban application in about 30 minutes.
 
-And its getting better every day.
+**Follow along in the videos to get started!**
 
 ### What makes Remake Different
 
@@ -22,24 +22,8 @@ It takes a much different approach than most modern frameworks.
 
 Also, because it's built on top a traditional, server-rendered architecture, the front-end Remake library that handles editing and saving data isn't required if the page isn't editable — leaving your pages lightweight for most users!
 
-### What you need to know
-
-If you want to learn Remake, you only need to know:
-
-* HTML
-* Handlebars (a simple HTML templating library)
-* 6-8 custom Remake data attributes
-
-Even if you're a beginner to web app development, you can learn Remake in a week or two and start building powerful apps!
-
-### How to get started
-
-Follow along as we create a **Trello Clone** in the tutorial!
-
-Along the way, we'll explain what Remake is all about, how it gets its powers, and why it's the fastest way to build a web application.
-
 <div class="spacer--8"></div>
 
-<a class="slanted-link" href="/not-available"><span>&rarr; Start the Tutorial</span></a>
+<a class="slanted-link" href="/installing-and-setting-up-remake/"><span>&rarr; Start the Tutorial</span></a>
 
 
