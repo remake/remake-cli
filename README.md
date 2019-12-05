@@ -60,9 +60,8 @@ If you know how to build a website with HTML and CSS — and know the basics of 
 
 ## Quickstart resources
 
-* [Annotated source code for a simple todos app](https://gist.github.com/panphora/5f5657e8bb3b418d55eb68d7e17f1ed8)
-* [Remake data attribute quick reference sheet](https://gist.github.com/panphora/0a71e6394d96ee9efd9d5711702bfc1c)
-* [30 minute tutorial on how to build a Trello clone](https://www.youtube.com/watch?v=H_FvfswKufo)
+* [A simple todo list app in 12 lines of HTML](https://docs.remaketheweb.com/a-simple-example-app/)
+* [30 minute tutorial on how to build a Trello clone](https://tutorials.remaketheweb.com/)
 
 
 ## How does it work?
@@ -178,7 +177,7 @@ Sign up for [the newsletter](https://mailchi.mp/59def7603a0f/remake) to get upda
 
 * [Contact the author on Twitter](https://twitter.com/panphora)
 * [View the public roadmap](https://trello.com/b/BXvugSjT/remake)
-* [View a live product app: RequestCreative](https://requestcreative.com)
+* [View a live production app: RequestCreative](https://requestcreative.com)
 
 ## Contributors
 
