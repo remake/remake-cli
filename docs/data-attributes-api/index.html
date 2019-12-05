@@ -62,9 +62,9 @@
         <div class="sidebar__list-container">
           <div class="sidebar__list-heading">DATA ATTRIBUTES API</div>
           <div class="sidebar__list">
-            <a class="sidebar__list-item " href="/output-attributes">Output attributes</a>
-            <a class="sidebar__list-item " href="/input-attributes">Input attributes</a>
-            <a class="sidebar__list-item " href="/watcher-attributes">Watcher attributes</a>
+            <a class="sidebar__list-item sidebar__list-item--selected" href="/data-attributes-api">Output attributes</a>
+            <a class="sidebar__list-item " href="/data-attributes-api#data-i">Input attributes</a>
+            <a class="sidebar__list-item " href="/data-attributes-api#data-w">Watcher attributes</a>
           </div>
         </div>
         <div class="sidebar__list-container" style="margin-bottom: 100px;">
@@ -116,9 +116,9 @@
           <div class="sidebar__list-container">
             <div class="sidebar__list-heading">DATA ATTRIBUTES API</div>
             <div class="sidebar__list">
-              <a class="sidebar__list-item " href="/output-attributes">Output attributes</a>
-              <a class="sidebar__list-item " href="/input-attributes">Input attributes</a>
-              <a class="sidebar__list-item " href="/watcher-attributes">Watcher attributes</a>
+              <a class="sidebar__list-item sidebar__list-item--selected" href="/data-attributes-api">Output attributes</a>
+              <a class="sidebar__list-item " href="/data-attributes-api#data-i">Input attributes</a>
+              <a class="sidebar__list-item " href="/data-attributes-api#data-w">Watcher attributes</a>
             </div>
           </div>
           <div class="sidebar__list-container">
@@ -134,7 +134,7 @@
           <h1>Data Attributes API</h1>
 <p>Remake relies on data attributes for storing data inside of elements and defining an application's behavior.</p>
 <p>In fact, you can create a fully working web application in Remake by just using data attributes.</p>
-<h2 class="api">Attaching Data to Elements</h2>
+<h2 class="api" id="data-o">Attaching Data to Elements</h2>
 <h3><code>data-o-type</code></h3>
 <p>By adding this attribute to an HTML element, you're telling Remake that there's data on (and possibly inside) the element. Remake scans the page for all elements with a <code>data-o-type</code> attribute and converts them into data.</p>
 <p>Remake can convert an element into one of two data structures: an <strong>object</strong> or <strong>array</strong>.</p>
@@ -215,7 +215,7 @@
 <ul>
 <li>This attribute is useful for using data from an element's properties (e.g. <code>innerText</code>, <code>src</code>, <code>innerHTML</code>, <code>style</code>).</li>
 </ul>
-<h2 class="api">Reacting To Data Changes</h2>
+<h2 class="api" id="data-w">Reacting To Data Changes</h2>
 <h3><code>data-w-key-[some-key-name]</code></h3>
 <p>Use this attribute to react to changes in another key's value.</p>
 <p>If the key name you use to define this attribute matches the key name of either a <code>data-o-key-*</code> or <code>data-l-key-*</code> attribute, then this attribute will be triggered when their data changes.</p>
@@ -243,7 +243,7 @@
 &lt;/div&gt;
 </code></pre>
 <p>With this setup, if the value of <code>buttonText</code> ever changes on the parent element, all of the buttons will get the new value inserted into their <code>innerText</code>.</p>
-<h2 class="api">Modifying Data</h2>
+<h2 class="api" id="data-i">Modifying Data</h2>
 <h3><code>data-i-editable</code></h3>
 <p>Add this attribute to an element if you want to make clicking on it trigger an inline edit popover.</p>
 <p>This is the primary way of making data on a page editable.</p>

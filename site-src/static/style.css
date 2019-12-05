@@ -61,6 +61,8 @@ h2.api {
 }
 
 h3 {
+  position: relative;
+  z-index: 2;
   margin-top: 1.5em;
   margin-left: -60px;
   margin-bottom: 1em;

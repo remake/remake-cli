@@ -8,7 +8,7 @@ Remake relies on data attributes for storing data inside of elements and definin
 
 In fact, you can create a fully working web application in Remake by just using data attributes.
 
-<h2 class="api">Attaching Data to Elements</h2>
+<h2 class="api" id="data-o">Attaching Data to Elements</h2>
 
 ### `data-o-type`
 
@@ -142,7 +142,7 @@ Is converted into: `{text: "Hello, world!"}`.
 
 * This attribute is useful for using data from an element's properties (e.g. `innerText`, `src`, `innerHTML`, `style`).
 
-<h2 class="api">Reacting To Data Changes</h2>
+<h2 class="api" id="data-w">Reacting To Data Changes</h2>
 
 ### `data-w-key-[some-key-name]`
 
@@ -182,7 +182,7 @@ For example, let's say you wanted to have a button on a landing page that had th
 
 With this setup, if the value of `buttonText` ever changes on the parent element, all of the buttons will get the new value inserted into their `innerText`.
 
-<h2 class="api">Modifying Data</h2>
+<h2 class="api" id="data-i">Modifying Data</h2>
 
 ### `data-i-editable`
 

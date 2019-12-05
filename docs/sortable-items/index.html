@@ -62,9 +62,9 @@
         <div class="sidebar__list-container">
           <div class="sidebar__list-heading">DATA ATTRIBUTES API</div>
           <div class="sidebar__list">
-            <a class="sidebar__list-item " href="/output-attributes">Output attributes</a>
-            <a class="sidebar__list-item " href="/input-attributes">Input attributes</a>
-            <a class="sidebar__list-item " href="/watcher-attributes">Watcher attributes</a>
+            <a class="sidebar__list-item " href="/data-attributes-api">Output attributes</a>
+            <a class="sidebar__list-item " href="/data-attributes-api#data-i">Input attributes</a>
+            <a class="sidebar__list-item " href="/data-attributes-api#data-w">Watcher attributes</a>
           </div>
         </div>
         <div class="sidebar__list-container" style="margin-bottom: 100px;">
@@ -116,9 +116,9 @@
           <div class="sidebar__list-container">
             <div class="sidebar__list-heading">DATA ATTRIBUTES API</div>
             <div class="sidebar__list">
-              <a class="sidebar__list-item " href="/output-attributes">Output attributes</a>
-              <a class="sidebar__list-item " href="/input-attributes">Input attributes</a>
-              <a class="sidebar__list-item " href="/watcher-attributes">Watcher attributes</a>
+              <a class="sidebar__list-item " href="/data-attributes-api">Output attributes</a>
+              <a class="sidebar__list-item " href="/data-attributes-api#data-i">Input attributes</a>
+              <a class="sidebar__list-item " href="/data-attributes-api#data-w">Watcher attributes</a>
             </div>
           </div>
           <div class="sidebar__list-container">
@@ -131,7 +131,18 @@
         </div>
         <div class="main">
           <a class="github-link github-link--top" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
-          
+          <h2>Sortable Items</h2>
+<p>Simply add a <code>data-i-sortable</code> attribute to any element that <strong>contains</strong> elements you want to sort.</p>
+<p>Set the value of the <code>data-i-sortable</code> attribute to the group name you want to assign to the elements.</p>
+<p>For example:</p>
+<pre><code class="language-html">&lt;div data-i-sortable=&quot;todos&quot;&gt;
+  &lt;div&gt;Get milk&lt;/div&gt;
+  &lt;div&gt;Go to the store&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>If there's another <code>data-i-sortable</code> attribute on the page with the same value, then items from each element will be able to be moved between each other!</p>
+<h4>⭐️ More documentation coming within a few hours!</h4>
+
           <div class="spacer--16"></div>
           <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
         </div>
