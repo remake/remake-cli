@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700" rel="stylesheet">
     <link rel="stylesheet" href="/static/normalize-min.css">
     <link rel="stylesheet" href="/static/prism.css">
+    <link rel="stylesheet" href="/static/slideout.css">
     <link rel="stylesheet" href="/static/style.css?v=5">
     <!-- favicon: -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -20,8 +21,9 @@
     <meta name="theme-color" content="#ffffff">
   </head>
   <body>
-    <div class="page">
+    <div id="menu">
       <div class="sidebar">
+        <div class="spacer--32"></div>
         <div class="sidebar__list-container">
           <div class="sidebar__list-heading">INTRO</div>
           <div class="sidebar__list">
@@ -72,9 +74,63 @@
           </div>
         </div>
       </div>
-      <div class="main">
-        <a class="github-link github-link--top" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
-        <h1 class="logo"><img class="logo__image" src="/static/logo.svg" alt="Remake.js"></h1>
+    </div>
+    <div id="panel">
+      <div class="page">
+        <div class="sidebar hide-on-mobile">
+          <div class="sidebar__list-container">
+            <div class="sidebar__list-heading">INTRO</div>
+            <div class="sidebar__list">
+              <a class="sidebar__list-item sidebar__list-item--selected" href="/">What is Remake?</a>
+              <a class="sidebar__list-item " href="/install-and-setup">Install &amp; Setup</a>
+              <a class="sidebar__list-item " href="/high-level-overview">High-level Overview</a>
+              <a class="sidebar__list-item " href="/a-simple-example-app">A Simple Example App</a>
+            </div>
+          </div>
+          <div class="sidebar__list-container">
+            <div class="sidebar__list-heading">TUTORIAL</div>
+            <div class="sidebar__list">
+              <a class="sidebar__list-item " href="/introducing-remake">Introducing Remake</a>
+              <a class="sidebar__list-item " href="/installing-and-setting-up-remake">Installing & Setting Up Remake</a>
+              <a class="sidebar__list-item " href="/attach-data-to-elements">Attach Data to Elements</a>
+              <a class="sidebar__list-item " href="/rendering-data">Rendering Data</a>
+              <a class="sidebar__list-item " href="/making-data-editable">Making Data Editable</a>
+              <a class="sidebar__list-item " href="/adding-new-items">Adding New Items</a>
+              <a class="sidebar__list-item " href="/sorting-lists-of-items">Sorting Lists of Items</a>
+              <a class="sidebar__list-item " href="/deploy-a-remake-web-app">Deploy a Remake Web App</a>
+            </div>
+          </div>
+          <div class="sidebar__list-container">
+            <div class="sidebar__list-heading">HOW REMAKE WORKS</div>
+            <div class="sidebar__list">
+              <a class="sidebar__list-item " href="/command-line-tool">Command Line Tool</a>
+              <a class="sidebar__list-item " href="/data">Data</a>
+              <a class="sidebar__list-item " href="/saving">Saving</a>
+              <a class="sidebar__list-item " href="/routing">Routing</a>
+              <a class="sidebar__list-item " href="/templating">Templating</a>
+              <a class="sidebar__list-item " href="/sortable-items">Sortable items</a>
+              <a class="sidebar__list-item " href="/user-accounts">User accounts</a>
+            </div>
+          </div>
+          <div class="sidebar__list-container">
+            <div class="sidebar__list-heading">DATA ATTRIBUTES API</div>
+            <div class="sidebar__list">
+              <a class="sidebar__list-item " href="/output-attributes">Output attributes</a>
+              <a class="sidebar__list-item " href="/input-attributes">Input attributes</a>
+              <a class="sidebar__list-item " href="/watcher-attributes">Watcher attributes</a>
+            </div>
+          </div>
+          <div class="sidebar__list-container">
+            <div class="sidebar__list-heading">ABOUT</div>
+            <div class="sidebar__list">
+              <a class="sidebar__list-item " href="/why-remake">Why Remake</a>
+              <a class="sidebar__list-item " href="/contributors">Contributors</a>
+            </div>
+          </div>
+        </div>
+        <div class="main">
+          <a class="github-link github-link--top" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
+          <h1 class="logo"><img class="logo__image" src="/static/logo.svg" alt="Remake.js"></h1>
 <h2>Build web apps. Fast.</h2>
 <p><b>Super-powered HTML for quickly building fast-loading, dynamic, server-rendered web apps that feel modern and are easy to use.</b></p>
 <ul>
@@ -91,9 +147,12 @@
 <p><strong>It can be easier!</strong></p>
 <img src="/static/remake-how-it-works.png">
 
-        <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
+          <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
+        </div>
       </div>
     </div>
+    <a class="toggle-button" href="#">☰ Menu</a>
+    <script src="/static/slideout.min.js"></script>
     <script src="/static/prism.js"></script>
     <script src="/static/main.js"></script>
   </body>
