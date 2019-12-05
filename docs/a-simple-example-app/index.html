@@ -131,20 +131,23 @@
         </div>
         <div class="main">
           <a class="github-link github-link--top" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
-          <h2>A simple todo list in Remake:</h2>
+          <h2>A Simple, Working Todo List App:</h2>
 <div class="line-numbers">
-<pre><code class="language-html">&lt;ul data-o-key=&quot;todos&quot; data-o-type=&quot;list&quot;&gt;
-  {{#for todo in data.todos}}
-    &lt;li 
-      data-o-type=&quot;object&quot; 
-      data-l-key-text
-      data-i-editable
-    &gt;{{ todo.text }}&lt;/li&gt;
-  {{/for}}
-&lt;/ul&gt;
-&lt;button data-i-new=&quot;todo&quot;&gt;Add Todo&lt;/button&gt;
+<pre><code class="language-html">&lt;div data-o-type=&quot;object&quot;&gt;
+  &lt;ul data-o-key=&quot;todos&quot; data-o-type=&quot;list&quot;&gt;
+    {{#for todo in todos}}
+      &lt;li 
+        data-o-type=&quot;object&quot; 
+        data-l-key-text
+        data-i-editable
+      &gt;{{default todo.text &quot;New todo item&quot;}}&lt;/li&gt;
+    {{/for}}
+  &lt;/ul&gt;
+  &lt;button data-i-new=&quot;todo&quot;&gt;Add Todo&lt;/button&gt;
+&lt;/div&gt;
 </code></pre>
 </div>
+<img class="image--small" src="/static/todo-app.gif">
 <p>This is a fully-functional application, with support for:</p>
 <ul>
 <li>Adding new items to a list</li>
@@ -152,6 +155,8 @@
 <li>Removing an item</li>
 <li>Sharing your todo list with a friend (by sharing its url)</li>
 </ul>
+<p>It's possible because Remake treats HTML elements like dynamic items that are full of data and behaviors — and not just like static elements.</p>
+<div class="spacer--16"></div>
 <p><strong>Explanation:</strong></p>
 <p>Line by line, this is what this code does:</p>
 <ol>

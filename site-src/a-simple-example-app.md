@@ -2,24 +2,28 @@
 layout: layout.hbs
 ---
 
-## A simple todo list in Remake:
+## A Simple, Working Todo List App:
 
 <div class="line-numbers">
 {% raw %}
 ```html
-<ul data-o-key="todos" data-o-type="list">
-  {{#for todo in data.todos}}
-    <li 
-      data-o-type="object" 
-      data-l-key-text
-      data-i-editable
-    >{{ todo.text }}</li>
-  {{/for}}
-</ul>
-<button data-i-new="todo">Add Todo</button>
+<div data-o-type="object">
+  <ul data-o-key="todos" data-o-type="list">
+    {{#for todo in todos}}
+      <li 
+        data-o-type="object" 
+        data-l-key-text
+        data-i-editable
+      >{{default todo.text "New todo item"}}</li>
+    {{/for}}
+  </ul>
+  <button data-i-new="todo">Add Todo</button>
+</div>
 ```
 {% endraw %}
 </div>
+
+<img class="image--small" src="/static/todo-app.gif">
 
 This is a fully-functional application, with support for:
 
@@ -27,6 +31,10 @@ This is a fully-functional application, with support for:
 * Editing the text of each item
 * Removing an item
 * Sharing your todo list with a friend (by sharing its url)
+
+It's possible because Remake treats HTML elements like dynamic items that are full of data and behaviors — and not just like static elements.
+
+<div class="spacer--16"></div>
 
 **Explanation:**
 
