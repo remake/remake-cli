@@ -6,7 +6,7 @@ layout: layout.hbs
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/QwAvNr6brqU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-### Rendering templates based the structure of HTML
+### Rendering new items
 
 Remake is different from most frameworks in that it mixes the state of your web app with the presentation.
 
