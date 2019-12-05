@@ -9,3 +9,10 @@ var slideout = new Slideout({
 document.querySelector('.toggle-button').addEventListener('click', function() {
   slideout.toggle();
 });
+
+Array.from(document.querySelectorAll("iframe")).forEach(el => {
+  var wrapper = document.createElement('div');
+  wrapper.classList.add("video-container");
+  el.parentNode.insertBefore(wrapper, el);
+  wrapper.appendChild(el);
+});

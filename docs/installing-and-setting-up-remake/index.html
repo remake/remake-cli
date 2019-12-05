@@ -6,10 +6,10 @@
     <meta name="description" content="Remake is a web app framework that makes it possible to ship a product faster than ever.">
     <title>Remake - A framework for building CRUD web apps quickly</title>
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700" rel="stylesheet">
-    <link rel="stylesheet" href="/static/normalize-min.css?v=8">
-    <link rel="stylesheet" href="/static/prism.css?v=8">
-    <link rel="stylesheet" href="/static/slideout.css?v=8">
-    <link rel="stylesheet" href="/static/style.css?v=8">
+    <link rel="stylesheet" href="/static/normalize-min.css?v=9">
+    <link rel="stylesheet" href="/static/prism.css?v=9">
+    <link rel="stylesheet" href="/static/slideout.css?v=9">
+    <link rel="stylesheet" href="/static/style.css?v=9">
     <!-- favicon: -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -133,7 +133,35 @@
           <a class="github-link github-link--top" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
           <h2>Installing &amp; Setting Up Remake</h2>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/jvBXoTKRHWY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<h4>⭐️ More documentation coming within a few hours!</h4>
+<h3>Install Node.js</h3>
+<p>Go to the main website, download the installer, and run it.</p>
+<p>👉 <a href="https://nodejs.org/en/">Node.js Website</a></p>
+<h3>Install Remake</h3>
+<p>Node comes with a command line program called <code>npm</code>, which allows you to install packages through your terminal.</p>
+<p>Open your terminal and run this command to install Remake:</p>
+<pre><code class="language-bash">npm install remake -g
+</code></pre>
+<p>Once, it's done installing, you'll have access to the <code>remake</code> command in your terminal.</p>
+<h3>Create the starter project</h3>
+<p>Remake comes with a demo project for you to play around with.</p>
+<p>Install it by running:</p>
+<pre><code class="language-bash">remake create example-app
+</code></pre>
+<p>Where <code>example-app</code> is the name of the directory you want your Remake app to live in.</p>
+<p>Then, change into that directory after it's created:</p>
+<pre><code class="language-bash">cd example-app
+</code></pre>
+<h3>Run the dev server</h3>
+<p>In order to use and build a Remake application on your local computer, you need to run Remake's local servier.</p>
+<p>To get the local server started, simply run the following from your project's directory:</p>
+<pre><code class="language-bash">npm run dev
+</code></pre>
+<p><strong>Great, now you have a local Remake server running on your computer!</strong></p>
+<h3>Check out the starter application!</h3>
+<p>In a web browser, go to <a href="http://localhost:3000">http://localhost:3000</a> to see the Kanban starter application.</p>
+<p><strong>All of the files for this app live in the <code>app/</code> directory.</strong></p>
+<p>For most applications, you'll never have to edit any files that are outside of the <code>app/</code> directory.</p>
+<p>Before moving on to the next step, make sure you sign up for a user account on your local server!</p>
 
           <div class="spacer--16"></div>
           <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
@@ -141,8 +169,8 @@
       </div>
     </div>
     <a class="toggle-button" href="#">☰ Menu</a>
-    <script src="/static/slideout.min.js?v=8"></script>
-    <script src="/static/prism.js?v=8"></script>
-    <script src="/static/main.js?v=8"></script>
+    <script src="/static/slideout.min.js?v=9"></script>
+    <script src="/static/prism.js?v=9"></script>
+    <script src="/static/main.js?v=9"></script>
   </body>
 </html>
