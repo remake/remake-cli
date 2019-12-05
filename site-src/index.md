@@ -14,10 +14,6 @@ layout: layout.hbs
 * Server-rendered & SEO friendly
 * Perfect for small teams and solo developers
 
-<div class="spacer--8"></div>
-
-<a class="slanted-link" href="https://mailchi.mp/59def7603a0f/remake"><span>&rarr; Sign up for updates</span></a>
-
 ### How it works
 
 **Creating a web application is hard.** You need to install packages, configure your build process, create API endpoints, set up a database, and load in some demo data, *and that's all before even getting started!*
@@ -25,6 +21,45 @@ layout: layout.hbs
 **It can be easier!**
 
 <img src="/static/remake-how-it-works.png">
+
+Remake makes it possible to build a web app entirely in your front-end code.
+
+It does this by converting your page into a database, so when you move elements around on the page, their data is also moved!
+
+This makes it possible to handle all of these complicated actions automatically, without any extra hookup or configuration:
+
+* Editing data
+* Moving data
+* Removing data
+* Adding and rendering data
+* Viewing a single piece of data
+
+And there's much more to come!
+
+### Roadmap
+
+In the near future, Remake will have support for:
+
+* Automatic form handling
+* Image uploads
+* Image cropping and manipulation
+* Sharing data between users
+* Real-time updates
+
+### Build Something Great
+
+Join in to learn how to:
+
+* Spend more time talking with customers
+* Commit to constantly improving your ideas
+* Build something people love
+
+<div class="spacer--8"></div>
+
+<a class="slanted-link" href="https://mailchi.mp/59def7603a0f/remake"><span>&rarr; Subscribe for updates</span></a>
+
+
+
 
 
 
