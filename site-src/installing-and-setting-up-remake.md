@@ -66,7 +66,7 @@ Before moving on to the next step, make sure you sign up for a user account on y
 
 <div class="spacer--8"></div>
 
-<a class="slanted-link" href="/attach-data-to-elements/"><span>&rarr; Attach Data to Elements</span></a>
+<a class="slanted-link" href="/attach-data-to-elements/"><span>&rarr; Next: Attach Data to Elements</span></a>
 
 
 

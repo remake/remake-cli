@@ -12,5 +12,9 @@ Remake uses [Handlebars.js](https://handlebarsjs.com/) to render every page.
 
 All pages in Remake are server-rendered.
 
+<div class="spacer--8"></div>
+
+<a class="slanted-link" href="/making-data-editable/"><span>&rarr; Next: Making Data Editable</span></a>
+
 #### ⭐️ More documentation coming within a few hours! 
 

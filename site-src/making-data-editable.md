@@ -12,5 +12,9 @@ In most cases, adding a single `data-i-editable` attribute to an element with da
 
 Remake handles the rest, including creating the inline edit popover and syncing data with the back-end.
 
+<div class="spacer--8"></div>
+
+<a class="slanted-link" href="/adding-new-items/"><span>&rarr; Next: Adding New Items</span></a>
+
 #### ⭐️ More documentation coming within a few hours! 
 

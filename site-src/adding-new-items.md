@@ -16,5 +16,9 @@ Another thing it makes easier is adding new items. Because Remake understands wh
 
 So, usually a simple `data-i-new` attribute with a value set to a template name (or an item referenced in a #for loop) is enough to render and add a new item to the page.
 
+<div class="spacer--8"></div>
+
+<a class="slanted-link" href="/sorting-lists-of-items/"><span>&rarr; Sorting Lists of Items</span></a>
+
 #### ⭐️ More documentation coming within a few hours! 
 
