@@ -179,6 +179,10 @@ img {
   padding-top: 36px;
 }
 
+.sidebar.mobile {
+  width: 100%;
+}
+
 .sidebar__list {
   margin-bottom: 40px
 }
