@@ -328,6 +328,10 @@ img {
   height: 32px;
 }
 
+.spacer--48 {
+  height: 48px;
+}
+
 .image--small {
   max-width: 420px;
 }
