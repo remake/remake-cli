@@ -35,7 +35,13 @@ In practice, this is how data usually flows in Remake:
 
 #### Customizing Remake with plugins
 
-There are lower-level Remake data attributes that underly some of these steps. For example, you could implement a custom editable popover yourself by combining 3-4 lower-level attributes. Check out [a production app](https://requestcreative.com/) built in Remake for an example of an image upload popover, for example and [contact me](https://remaketheweb.com/contact-us/) if you'd be interested in learning more about this.
+There are many low-level Remake data attributes that aren't documented thoroughly yet. A few of them are responsible for making the `data-i-editable` attribute work, under the hood, for example.
+
+These low-level attributes can be used to create custom editable components. See [this production web app](https://requestcreative.com/), built in Remake, to see an example of what's possible when developers can build your own editable areas.
+
+In the near future, Remake will ship with many more types of editable areas (for file uploads, image cropping, calendar input, etc.), as well as a plugin architecture that will let developers expand this further.
+
+In the meantime, however, if you want to learn more about the low-level Remake attributes that make all of this possible, please [contact me](https://remaketheweb.com/contact-us/) and I'll send you some tutorial videos.
 
 
 
