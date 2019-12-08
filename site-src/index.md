@@ -16,7 +16,7 @@ layout: layout.hbs
 
 ### How it works
 
-**Creating a web application is hard.** You need to install packages, configure your build process, create API endpoints, set up a database, and load in some demo data, *and that's all before even getting started!*
+**Creating web applications is hard.** You need to install packages, configure your build process, create API endpoints, set up a database, and load in some demo data, *and that's all before even getting started!*
 
 **It can be easier!**
 
@@ -24,21 +24,22 @@ layout: layout.hbs
 
 Remake makes it possible to build a web app entirely in your front-end code.
 
-It does this by converting your page into a database, so when you move elements around on the page, their data is also moved!
+It does this by basically converting your page into a database, so when you move elements around on the page, their data is also moved!
 
-This makes it possible to handle all of these complicated actions automatically, without any extra hookup or configuration:
+Remake also comes with a built in inline edit popover for editing data at the click of a button.
 
-* Editing data
-* Moving data
-* Removing data
-* Adding and rendering data
-* Viewing a single piece of data
+This makes it possible to handle a lot of complicated CRUD operations automatically by adding a single data-* attribute:
 
-And there's much more to come!
+* Attaching data to elements
+* Editing & removing data from the page
+* Moving data around the page
+* Rendering new data into the page
+
+And there's much more!
 
 ### Roadmap
 
-In the near future, Remake will have support for:
+In the near future, Remake will also have support for:
 
 * Automatic form handling
 * Image uploads
@@ -50,8 +51,7 @@ In the near future, Remake will have support for:
 
 Join in to learn how to:
 
-* Spend more time talking with customers
-* Commit to constantly improving your ideas
+* Build CRUD web apps incredibly quickly
 * Build something people love
 
 <div class="spacer--8"></div>
