@@ -34,7 +34,7 @@ npm run dev
 
 <img class="border rounded" src="/static/kanban-screenshot.png">
 
-6. (Optional) Deploy your new app!
+6. (Optional) Deploy your new app using Remake's hosting service!
 
 ```bash
 remake deploy

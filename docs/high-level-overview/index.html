@@ -82,25 +82,39 @@
           <h2>A High Level Overview</h2>
 <h4>In Remake, data is embedded directly in HTML.</h4>
 <ul>
-<li>In Remake, <code>data-o</code>-prefixed attributes (and also the single <code>data-l</code> attribute) are responsible for attach data to HTML elements
+<li>Attributes prefixed with <code>data-o</code> or <code>data-l</code> are responsible for attaching data to HTML elements
 <ul>
-<li>Remake sees HTML all elements as representing either an <code>object</code>, with keys and values <em>or</em> an <code>array</code> that contains a list of objects</li>
+<li>The <code>o</code> in <code>data-o</code> attributes stands for &quot;output&quot; because this data is outputted from the page</li>
+<li>The <code>l</code> in the single <code>data-l</code> attribute stands for &quot;location&quot; because it tells Remake to look for the data in a specific location, <em>not</em> inside the attribute's value</li>
 </ul>
 </li>
-<li><code>data-i</code>-prefixed attributes are responsible for changing the data in the <code>data-o</code> prefixed attributes</li>
+<li>Remake sees HTML elements with <code>data-o-type</code> attributes on them as representing either an <code>object</code> or an <code>array</code>. These are the two types of data structures that Remake exports from the page</li>
+<li>Attributes prefixed with <code>data-i</code> are responsible for changing the data on the page.
+<ul>
+<li>The <code>i</code> stands for &quot;input&quot; because these attributes input data into the page, but don't output it</li>
+</ul>
+</li>
 </ul>
 <img class="image--small" src="/static/data-mockup.png">
 <p><em>Remake's ultimate goal is to make HTML feel like it was designed for building web apps.</em></p>
-<p><strong>Note:</strong> Remake is not required (or even loaded) when a user can't edit the page. Its only use is making sure the data on the page stays in sync with the backend. Everything is rendered by <a href="https://handlebarsjs.com/">Handlebars.js</a>.</p>
-<p><strong>In practice, this usually works like this:</strong></p>
+<p><strong>Note:</strong> Remake is not required (or even loaded) when a user can't edit the page.</p>
+<p>Remake's primary use is to make make sure the data on a dynamic page stays in sync with a backend. If the user is a viewer and not an editor, <a href="https://handlebarsjs.com/">Handlebars.js</a> simply renders the page.</p>
+<h4>Data flow through a Remake web app</h4>
+<p>In practice, this is how data usually flows in Remake:</p>
 <ol>
 <li>The user clicks an element with a <code>data-i-editable</code> attribute</li>
-<li>An popover will appear that to edit the data on the <code>closest</code> element with data (<code>closest</code> is highlighted here because it refers to the <code>Element.closest()</code> method)</li>
+<li>A popover will appear directly on top of the clicked element, by default editing all of the data on the <code>closest</code> element with data (&quot;closest&quot; is highlighted here because it refers to the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/closest">Element.closest()</a> method)</li>
 <li>The user edits the information inside the popover</li>
 <li>The user clicks a button to save the information inside the popover</li>
-<li>Data from the popover is automatically synced back into the original element</li>
-<li>All the data on the page will be saved (unless an element with a <code>data-o-key-id</code> is found, in which case the data will be saved to that object id)</li>
+<li>Data from the popover is automatically synced back into the originally clicked on element</li>
+<li>All of the data on the page will be extracted as a nested object and saved to the current user's data
+<ul>
+<li>It's possible to get around this and only save the current element by attaching a unique id the page. See the <a href="/saving/">Saving</a> for more info.</li>
+</ul>
+</li>
 </ol>
+<h4>Customizing Remake with plugins</h4>
+<p>There are lower-level Remake data attributes that underly some of these steps. For example, you could implement a custom editable popover yourself by combining 3-4 lower-level attributes. Check out <a href="https://requestcreative.com/">a production app</a> built in Remake for an example of an image upload popover, for example and <a href="https://remaketheweb.com/contact-us/">contact me</a> if you'd be interested in learning more about this.</p>
 
           <div class="spacer--16"></div>
           <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
