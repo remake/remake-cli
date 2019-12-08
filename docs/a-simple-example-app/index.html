@@ -95,36 +95,40 @@
 &lt;/div&gt;
 </code></pre>
 </div>
-<img class="image--small" src="/static/todo-app.gif">
-<p>This is a fully-functional application, with support for:</p>
+<img class="image--small image--border" src="/static/todo-app.gif">
+<p>This is a fully-functional application in Remake, with support for:</p>
 <ul>
 <li>Adding new items to a list</li>
 <li>Editing the text of each item</li>
 <li>Removing an item</li>
 <li>Sharing your todo list with a friend (by sharing its url)</li>
+<li>Signing up for your own account to create your own todos</li>
 </ul>
-<p>It's possible because Remake treats HTML elements like dynamic items that are full of data and behaviors — and not just like static elements.</p>
+<p>It's possible to create a fully-functional app like this, with so little code, because Remake treats each HTML element like an interactive and dynamic box of data — and not just a static element responsible for layout.</p>
 <div class="spacer--16"></div>
 <p><strong>Explanation:</strong></p>
 <p>Line by line, this is what this code does:</p>
 <ol>
 <li>
-<p>The data on this page will be under the key <code>todos</code> and inside an array</p>
+<p>All of the data on this page will be wrapped in an <code>object</code></p>
 </li>
 <li>
-<p>Start a <code>#for</code> loop to render all the existing todos</p>
+<p>The list of todos will be inside of a list (i.e. <code>array</code>) under a key named <code>todos</code></p>
+</li>
+<li>
+<p>Render all the existing todos using a <code>#for</code> loop (when the page first loads, no todos will be rendered because none have been created yet)</p>
 </li>
 <li>
 <p>Start an <code>li</code> list item element</p>
 </li>
 <li>
-<p>Each todo will be an object</p>
+<p>Each todo element will represent an <code>object</code></p>
 </li>
 <li>
 <p>The key <code>&quot;text&quot;</code> that this element exports will be set to the current text of this element</p>
 </li>
 <li>
-<p>Clicking on this element will trigger an editable popover</p>
+<p>Clicking on this todo element will trigger an editable popover</p>
 </li>
 <li>
 <p>Render the current todo's <code>text</code> key</p>
@@ -136,7 +140,10 @@
 <p>Close the <code>ul</code></p>
 </li>
 <li>
-<p>Click the button to render a new todo at the end of the list</p>
+<p>Clicking this &quot;Add Todo&quot; button will render a new &quot;todo&quot; item at the end of the list. Remake knows what a todo template looks like based on the <code>#for</code> loop, which references &quot;todo&quot; in its <code>for ... in</code> statement. Remake will, by default, render this template into the nearest <code>data-o-type=&quot;list&quot;</code></p>
+</li>
+<li>
+<p>Close the parent <code>div</code></p>
 </li>
 </ol>
 

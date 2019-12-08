@@ -359,6 +359,10 @@ img {
   margin: 0 auto;
 }
 
+.image--border {
+  border: 7px solid #e6effa;
+}
+
 .rounded {
   overflow: hidden;
   border-radius: 7px;
