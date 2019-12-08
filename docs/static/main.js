@@ -16,3 +16,26 @@ Array.from(document.querySelectorAll("iframe")).forEach(el => {
   el.parentNode.insertBefore(wrapper, el);
   wrapper.appendChild(el);
 });
+
+
+// add mobile menu
+
+let sidebarElem = document.querySelector(".sidebar");
+let sidebarElemCopy = sidebarElem.cloneNode(true);
+let mobileMenuElem = document.getElementById("menu");
+
+sidebarElemCopy.classList.remove("hide-on-mobile");
+sidebarElemCopy.classList.add("mobile");
+
+mobileMenuElem.insertBefore(sidebarElemCopy, mobileMenuElem.firstChild);
+
+
+
+
+
+
+
+
+
+
+
