@@ -79,7 +79,37 @@
         </div>
         <div class="main">
           <a class="github-link github-link--top" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
-          <h4>⭐️ More documentation coming within a few hours!</h4>
+          <h3>Routing basics</h3>
+<p>Currently, in order to get the <code>data</code> from a user loaded into a template, you need to be on a route like this: <code>/{username}/{pageName}?/{id}?</code>, where <code>username</code> matches a user's username.</p>
+<p>Here, <code>pageName</code> and <code>id</code> are optional. For example, if <code>username</code> is the only param, then <code>pages/username.hbs</code> is rendered. However, if <code>pageName</code> is there, then <code>pages/pageName.hbs</code> is rendered.</p>
+<p>And, finally, if <code>id</code> is also provided in the route, then <code>pages/pageName.hbs</code> is rendered and the <code>id</code> is looked up in the current username's data and loaded in under a template variable called <code>currentItem</code>.</p>
+<h3>Three routes defined by one template</h3>
+<p>A single page template in Remake, for example <code>pages/tasks.hbs</code>, will automatically defines 3 different types of routes.</p>
+<p>These routes are:</p>
+<ul>
+<li><strong>/{templateName}</strong> (e.g. <code>/tasks</code> for <code>tasks.hbs</code>)
+<ul>
+<li>This kind of route is useful for defining static pages. For example, if you want to tell your users about your web app's &quot;tasks&quot; feature, this would be the perfect place to put it. This type of page can display data from the current user, but no user can't modify data on this page.</li>
+</ul>
+</li>
+<li><strong>/{username}/{templateName}</strong> (e.g. <code>/john/tasks</code> for <code>tasks.hbs</code>)
+<ul>
+<li>This kind of route will include a user's data. If the user that matches this username happens to be logged in and viewing this page, then they can modify the data on this page. This type of page is great for loading a particular type of data and displaying it in a list or on some kind of dashboard (e.g. a list of &quot;tasks&quot;).</li>
+</ul>
+</li>
+<li><strong>/{username}/{templateName}/{id}</strong> (e.g. <code>/john/tasks/3456</code> for <code>tasks.hbs</code>)
+<ul>
+<li>Everything on this type of route works the same as for the last type (i.e. <code>/{username}/{templateName}</code>), except the final param is a unique id that wants to match an item in the page author's data. Since every nested object in your data automatically gets a unique id assigned to it by Remake, this route is able to look up that data and load into the current template under a variable called <code>currentItem</code>. This route is perfect for displaying an individual item or nested list of data (e.g. a single task and its sub-tasks).</li>
+</ul>
+</li>
+</ul>
+<p>These are all the routes you'll define by creating a single template file (e.g. <code>/pages/tasks.hbs</code>). They're pretty flexible, so you don't have to worry about setting up your own routing at all!</p>
+<h3>Two other special routes</h3>
+<p>Remake also has two other special routes that only render specific templates.</p>
+<p>The first, is the base path of your app: <strong>your homepage.</strong></p>
+<p>Remake expects to find an <code>index.hbs</code> template in your page templates and it will render that index file whenever a user goes to your home page.</p>
+<p>The other special route is &quot;username&quot; route, like <code>/eric</code> or <code>/kate</code> or <code>/paul</code>. It's the base path for a particular user — and it's the page that will be loaded right after a user signs up or logs in.</p>
+<p>For this case, Remake expects to find a <code>username.hbs</code> template in your page templates and it will render that file whenever a user goes to <code>/{username}</code>.</p>
 
           <div class="spacer--16"></div>
           <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
