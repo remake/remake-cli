@@ -79,7 +79,91 @@
         </div>
         <div class="main">
           <a class="github-link github-link--top" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
-          <h4>⭐️ More documentation coming within a few hours!</h4>
+          <h3>Handlebars.js</h3>
+<p>Remake uses <a href="https://handlebarsjs.com/">Handlebars.js</a> to render every template. All templates are server-rendered.</p>
+<h3>Template Variables</h3>
+<p>These are all the possible template variables you'll have access to in a Handlebars template:</p>
+<ul>
+<li><strong>appName</strong>
+<ul>
+<li>This is only relevant if you're deploying using Remake's deploy service. It's your unique app name.</li>
+</ul>
+</li>
+<li><strong>data</strong>
+<ul>
+<li>This is only loaded on a page that's preceded by a username. so <code>/john</code> or <code>/john/tasks</code> or <code>/john/tasks/3456</code>. It will contain all the data that's in the database for the user that matches the username in the current route.</li>
+</ul>
+</li>
+<li><strong>globalData</strong>
+<ul>
+<li>This is static data shared by all templates and all users (loaded from the file <code>app/data/global-app-data.json</code>). It's useful for defining page names for global navigation items or static page titles you want to use for everyone.</li>
+</ul>
+</li>
+<li><strong>params</strong>
+<ul>
+<li>These are the url parameters. For example, you can get the username, the pageName, the itemId from here.</li>
+</ul>
+</li>
+<li><strong>query</strong>
+<ul>
+<li>This is an object with the all the query parameters in the url.</li>
+</ul>
+</li>
+<li><strong>pathname</strong>
+<ul>
+<li>This is the current url's pathname.</li>
+</ul>
+</li>
+<li><strong>currentItem</strong>
+<ul>
+<li>If you're at a route like <code>/john/tasks/3456</code>, this will be the item in john's data that matches the id <code>3456</code>. If no item matching this id is found or you're not at that type of route, this variable will be <code>undefined</code>.</li>
+</ul>
+</li>
+<li><strong>parentItem</strong>
+<ul>
+<li>This is the object that's above <code>currentItem</code> in the data. This is useful if you are letting the user browse their data hierarchically and you need to go up a level to the previous item.</li>
+</ul>
+</li>
+<li><strong>flashErrors</strong>
+<ul>
+<li>If there are any errors from the previous interaction (e.g. wrong password when signing in), they'll be stored in this array so they can be displayed on the page.</li>
+</ul>
+</li>
+<li><strong>flashSuccesses</strong>
+<ul>
+<li>If there are any success messages from the previous interaction, they'll be stored in this array so they can be displayed on the page.</li>
+</ul>
+</li>
+<li><strong>currentUser</strong>
+<ul>
+<li>This is an object with the current user's details in it. You can find their username like this: <code>currentUser.details.username</code> and their app data like this: <code>currentUser.appData</code>.</li>
+</ul>
+</li>
+<li><strong>pageAuthor</strong>
+<ul>
+<li>This is available only if you're at route like <code>/john</code> or <code>/kate</code>, with a username in it. If you are, this variable will contain the data of user that matches this username. It may be equal to the currentUser.</li>
+</ul>
+</li>
+<li><strong>isPageAuthor</strong>
+<ul>
+<li>This is true if the currentUser is also the pageAuthor.</li>
+</ul>
+</li>
+<li><strong>pageHasAppData</strong>
+<ul>
+<li>This is true if you're on a page like <code>/john</code> or <code>/kate</code>. Data is loaded from their JSON file database, so it's available on this page. If there's a <code>pageAuthor</code> variable, this will be set to <code>true</code>.</li>
+</ul>
+</li>
+</ul>
+<h3>Extra helpers</h3>
+<p>Remake also ships with all <a href="https://github.com/helpers/handlebars-helpers">188 Handlebars Helpers</a>, so you can have lots of flexibility with how you render your data.</p>
+<h3>Custom #for loop</h3>
+<p>You may have noticed that the <code>#for</code> loop we use in the tutorial video doesn't use a standard Handlebars <a href="https://handlebarsjs.com/guide/block-helpers.html">block helpers</a> syntax.</p>
+<p>We did this for two reasons:</p>
+<ol>
+<li>We hook into this custom <code>#for</code> loop in order to make the <code>data-i-new</code> attribute work with it</li>
+<li>We prefer <code>#for todo in todos</code> over something like <code>#for todos item=&quot;todo&quot;</code> (which would've been more standard).</li>
+</ol>
 
           <div class="spacer--16"></div>
           <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>

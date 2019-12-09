@@ -2,7 +2,7 @@
 layout: layout.hbs
 ---
 
-## User Accounts
+### User Accounts
 
 * User accounts are built in to Remake.
 * User passwords are stored very securely, using the best modern practices.
