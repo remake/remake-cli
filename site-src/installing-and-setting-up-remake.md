@@ -8,35 +8,37 @@ layout: layout.hbs
 
 ### Install Node.js
 
-Go to the main website, download the installer, and run it.
+Go to the main website for Node.js, download the installer, and run it.
 
 👉 <a href="https://nodejs.org/en/">Node.js Website</a>
 
 ### Install Remake
 
+After you're done installing Node, you'll be able to install Remake.
+
 Node comes with a command line program called `npm`, which allows you to install packages through your terminal.
 
-Open your terminal and run this command to install Remake:
+Open your terminal and run this command to install Remake globally:
 
 ```bash
 npm install remake -g
 ```
 
-Once, it's done installing, you'll have access to the `remake` command in your terminal.
+Once it's done installing, you'll have access to the `remake` command in your terminal.
 
 ### Create the starter project
 
-Remake comes with a demo project for you to play around with.
+Remake comes with a working Kanban app project that you can play around with.
 
-Install it by running:
+You can generate this starter project with the following command:
 
 ```bash
 remake create example-app
 ```
 
-Where `example-app` is the name of the directory you want your Remake app to live in.
+Here, `example-app` is the name of the directory you want your new Remake app to live in.
 
-Then, change into that directory after it's created:
+Change into that directory after the starter app is finished being created:
 
 ```bash
 cd example-app
@@ -46,23 +48,25 @@ cd example-app
 
 In order to use and build a Remake application on your local computer, you need to run Remake's local servier.
 
-To get the local server started, simply run the following from your project's directory:
+To get the local server started, run the following command from inside your project's directory:
 
 ```bash
 npm run dev
 ```
 
-**Great, now you have a local Remake server running on your computer!**
+***Great!*** Now you have a local Remake server running on your computer!
 
-### Check out the starter application!
+### Check out in a browser!
 
-In a web browser, go to [http://localhost:3000](http://localhost:3000) to see the Kanban starter application.
+In a web browser, go to [http://localhost:3000](http://localhost:3000) to see your new Kanban starter application.
 
-**All of the files for this app live in the `app/` directory.**
+**Important:** 
+* All of the application files are in the `app/` directory. 
+* When you're building a Remake app, you'll rarely have to edit a file that's outside the `app/` directory.
 
-For most applications, you'll never have to edit any files that are outside of the `app/` directory.
-
-Before moving on to the next step, make sure you sign up for a user account on your local server!
+Before moving on to the next step, 
+1. Load your app in a web browser 
+2. Sign up for a user account in your app
 
 <div class="spacer--8"></div>
 
