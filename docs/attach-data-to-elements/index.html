@@ -81,29 +81,68 @@
           <a class="github-link github-link--top" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
           <h2>Attach Data to Elements</h2>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/-ihDFiLa0Pc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<h3>A single file app!</h3>
-<p>The entire app we're building is inside of only one file: <code>app/username.hbs</code>.</p>
-<p>If you want to start with a blank slate (with no Remake attributes on the page), like we do in the video, replace your <code>username.hbs</code> template with this one: <a href="https://gist.github.com/panphora/a1f39772ebc837b29173c5fb18887a8d">starter-username.hbs</a>.</p>
-<p>Also, make sure you signed up and are logged in to an account!</p>
+<h3>An app in a single file</h3>
+<p>The entire app we're building in these tutorial videos fits inside of only one file, <code>app/username.hbs</code>, and is 73 lines long.</p>
+<p>If you want to start with a blank slate, with only an HTML file, like we do in the video, you can replace your current <code>username.hbs</code> template with this one: <a href="https://gist.github.com/panphora/a1f39772ebc837b29173c5fb18887a8d">starter-username.hbs</a>.</p>
+<p>Also, make sure you're logged in to the app.</p>
 <h3>A quick note on saving</h3>
-<p>If you're following along with the video and you want your data to auto-save on page load (not a great idea in production, but fine in development), then comment out the last line in the <code>remake-init.js</code> file in <code>app/assets/js/remake-init.js</code></p>
+<p>If you're following along with the video and you want your data to auto-save whenever the page loads (not a great idea in production, but fine in development), then comment out the last line in your <code>remake-init.js</code> file:</p>
+<pre><code class="language-js">Remake.callSaveFunction({targetElement: document.body});
+</code></pre>
 <h3>Only a few attributes to learn!</h3>
-<p>Most of the work in remake is done by just 7-8 attributes.</p>
-<p>Here are all of the special (and powerful) custom data attributes we use in this Trello clone to add ALL of its functionality:</p>
+<p>All of the work in this Remake app is done by 8 powerful custom attributes.</p>
+<p>Here's a list of all the attributes and what they do:</p>
 <ul>
-<li>data-o-type</li>
-<li>data-l-key-*</li>
-<li>data-o-key</li>
-<li>data-i-editable</li>
-<li>data-i-new</li>
-<li>data-i-sortable</li>
-<li>data-l-target-*</li>
-<li>data-o-default-*</li>
+<li><strong>data-o-type</strong>
+<ul>
+<li>This can mark an element as representating either an <code>&quot;object&quot;</code> or a <code>&quot;list&quot;</code>.</li>
+<li>Elements with this attribute can be nested inside of each other and Remake will do its best to also nest the data that's extracted from them.
+<ul>
+<li>For example, multiple elements representing <code>object</code>s can be nested inside of an element representing a <code>list</code>, and a <code>list</code> of <code>object</code>s will be extracted.</li>
+<li>If an <code>object</code> is nested inside another <code>object</code>, it will be merged with the parent object unless it belong to a key inside the parent object.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>data-o-key</strong>
+<ul>
+<li>Attaching this attribute to an <code>object</code> or <code>list</code> marks it as belonging a key inside the parent object.</li>
+</ul>
+</li>
+<li><strong>data-o-key-</strong>*
+<ul>
+<li>For an element marked as an <code>&quot;object&quot;</code>, this attribute defines a key/value pair.
+<ul>
+<li>The key name is whatever dash-case value follows <code>&quot;data-o-key-&quot;</code> and, when extracted, will be converted to camelCase</li>
+<li>The value is whatever <code>string</code> value the attribute is set to</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>data-l-key-</strong>*
+<ul>
+<li>For an element marked as an <code>&quot;object&quot;</code>, this attribute defines a key/value pair.
+<ul>
+<li>The key name is whatever dash-case value follows <code>&quot;data-l-key-&quot;</code> and, when extracted, will be converted to camelCase</li>
+<li>The value is, by default, either:
+<ul>
+<li>The <code>innerText</code> of a child element with a matching <code>data-target-key-</code> attribute</li>
+<li>Or, if that's not found, it's the <code>innerText</code> of the current element</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>data-i-editable</strong></li>
+<li><strong>data-i-new</strong></li>
+<li><strong>data-i-sortable</strong></li>
+<li><strong>data-l-target-</strong>*</li>
+<li><strong>data-o-default-</strong>*</li>
 </ul>
 <p>To learn more about these, read the <a href="http://localhost:8080/data-attributes-api/">Data Attributes API</a> page!</p>
 <div class="spacer--8"></div>
 <p><a class="slanted-link" href="/rendering-data/"><span>→ Next: Rendering Data</span></a></p>
-<h4>⭐️ More documentation coming within a few hours!</h4>
 
           <div class="spacer--16"></div>
           <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
