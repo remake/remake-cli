@@ -82,10 +82,9 @@
           <h2>How Saving Data Works in Remake</h2>
 <ol>
 <li>Data is always <a href="https://davidwalsh.name/javascript-deep-merge">deep extended</a>, so overwriting data unnecessarily is always avoided</li>
-<li>If you attach the <code>data-o-key-id</code> attribute to an element (with the attribute value set to a unique id), then when that element's data is modified, it's data will be saved directly to the unique id</li>
-<li>When data is deep extended, Remake always extends arrays by matching the unique ids of its child objects, so the data in arrays is preserved and never overwritten completely</li>
+<li>If you attach the <code>data-o-key-id</code> attribute to an element (with the attribute value set to a unique id that's auto-generated for every nested object in your database), then, when that element's data is modified, it's data will be saved directly to the unique id specified in that attribute</li>
+<li>When data is deep extended, Remake always extends arrays by matching the unique ids of its child objects, so the data in deeply-nested arrays is preserved and never overwritten completely</li>
 </ol>
-<h4>⭐️ More documentation coming within a few hours!</h4>
 
           <div class="spacer--16"></div>
           <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>

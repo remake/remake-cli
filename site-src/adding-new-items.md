@@ -19,6 +19,3 @@ So, usually a simple `data-i-new` attribute with a value set to a template name 
 <div class="spacer--8"></div>
 
 <a class="slanted-link" href="/sorting-lists-of-items/"><span>&rarr; Sorting Lists of Items</span></a>
-
-#### ⭐️ More documentation coming within a few hours! 
-

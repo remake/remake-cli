@@ -19,4 +19,3 @@ For example:
 
 If there's another `data-i-sortable` attribute on the page with the same value, then items from each element will be able to be moved between each other!
 
-#### ⭐️ More documentation coming within a few hours! 

@@ -14,7 +14,8 @@ Run this in your app directory:
 remake deploy
 ```
 
+You may need to create an account if this is your first deploy.
+
 **Now you have a web app!**
 
-#### ⭐️ More documentation coming within a few hours! 
 

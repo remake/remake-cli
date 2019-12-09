@@ -16,5 +16,3 @@ Remake handles the rest, including creating the inline edit popover and syncing 
 
 <a class="slanted-link" href="/adding-new-items/"><span>&rarr; Next: Adding New Items</span></a>
 
-#### ⭐️ More documentation coming within a few hours! 
-
