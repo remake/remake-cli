@@ -81,12 +81,22 @@
           <a class="github-link github-link--top" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
           <h2>Rendering Data</h2>
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Mi4cB2Hsafc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<h3>How to render data</h3>
+<p>After you bootstrap the data for your application, inside a JSON file in <code>_remake-data/user-app-data/{username}.json</code>, you can render it to the page using Handlebars.</p>
+<p>Remake uses <a href="https://handlebarsjs.com/">Handlebars.js</a> to render every template. All templates are server-rendered.</p>
 <h3>Handlebars.js</h3>
-<p>Remake uses <a href="https://handlebarsjs.com/">Handlebars.js</a> to render every page.</p>
-<p>All pages in Remake are server-rendered.</p>
+<p>Read the <a href="https://handlebarsjs.com/">official Handlebars.js documentation</a> to learn more about how render data in templates.</p>
+<h3>Extra helpers</h3>
+<p>Remake also ships with all <a href="https://github.com/helpers/handlebars-helpers">188 Handlebars Helpers</a>, so you can have lots of flexibility with how you render your data.</p>
+<h3>Custom #for loop</h3>
+<p>You may have noticed that the <code>#for</code> loop we use in the tutorial video doesn't use a standard Handlebars <a href="https://handlebarsjs.com/guide/block-helpers.html">block helpers</a> syntax.</p>
+<p>We did this for two reasons:</p>
+<ol>
+<li>We hook into this custom <code>#for</code> loop in order to make the <code>data-i-new</code> attribute work with it</li>
+<li>We prefer <code>#for todo in todos</code> over something like <code>#for todos item=&quot;todo&quot;</code> (which would've been more standard).</li>
+</ol>
 <div class="spacer--8"></div>
 <p><a class="slanted-link" href="/making-data-editable/"><span>→ Next: Making Data Editable</span></a></p>
-<h4>⭐️ More documentation coming within a few hours!</h4>
 
           <div class="spacer--16"></div>
           <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>

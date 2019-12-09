@@ -46,6 +46,9 @@ All of the work Remake allows us to do — creating a complete Kanban app from s
       * The `innerText` of a child element with a matching `data-target-key-` attribute
       * Or, if that's not found, it's the `innerText` of the current element
       * It can also be customized to look at different properties if necessary
+* **data-l-target-***
+  * If an element with this attribute is included inside an element with a matching `data-l-key-` attribute, then Remake will assume this element has the key's value
+    * An example of matching attributes: `data-l-key-blog-post-header` matches `data-target-key-blog-post-header` because the part after `-key-` matches
 * **data-i-editable**
   * This marks an element as able to trigger an editable popover.
   * By default, when an element with this attribute is clicked, Remake will look for data on the current element — inside `data-o-key-` and `data-l-key-` attributes. If it finds some keys with data in them, it will trigger editable areas for each of them.
@@ -61,10 +64,17 @@ All of the work Remake allows us to do — creating a complete Kanban app from s
     2. Render the template it found into the nearest element with a `data-o-type="list"` attribute ("nearest" is defined as inside the same parent, or grandparent, or great grandparent, etc., until a match is found)
   * It's possible to use a custom syntax for the value of this attribute to define exactly which element the template will be rendered into and where (i.e. "top" or "bottom")
 * **data-i-sortable**
-* **data-l-target-***
+  * Attach this attribute to an element to mark it as a sortable list. All the elements inside of the current element will be draggable and sortable.
+  * This attribute requires a value. 
+    * If the value matches the value of other `data-i-sortable` elements on the page, then the sortable elements will be able to be shared and dragged between them
+    * If the value of this attribute is unique across the page, elements inside the current element will only be sortable within the current element
 * **data-o-default-***
+  * This attribute lets you set a default value for a `data-o-key-` or `data-l-key-` attribute if one of those attributes value is set to an empty string
+    * Use case: sometimes you don't want editable elements to have empty values
+  * To use this, attach it to the same element that a `data-o-key-` or `data-l-key-` attribute is on and match its key to their key
+    * Example of matching key names: `data-o-key-favorite-color` and `data-o-default-favorite-color` match
 
-To learn more about these, read the [Data Attributes API](http://localhost:8080/data-attributes-api/) page!
+To learn more, check out the [Data Attributes API](http://localhost:8080/data-attributes-api/) page!
 
 <div class="spacer--8"></div>
 

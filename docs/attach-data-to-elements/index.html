@@ -135,6 +135,15 @@
 </li>
 </ul>
 </li>
+<li><strong>data-l-target-</strong>*
+<ul>
+<li>If an element with this attribute is included inside an element with a matching <code>data-l-key-</code> attribute, then Remake will assume this element has the key's value
+<ul>
+<li>An example of matching attributes: <code>data-l-key-blog-post-header</code> matches <code>data-target-key-blog-post-header</code> because the part after <code>-key-</code> matches</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><strong>data-i-editable</strong>
 <ul>
 <li>This marks an element as able to trigger an editable popover.</li>
@@ -164,11 +173,33 @@
 <li>It's possible to use a custom syntax for the value of this attribute to define exactly which element the template will be rendered into and where (i.e. &quot;top&quot; or &quot;bottom&quot;)</li>
 </ul>
 </li>
-<li><strong>data-i-sortable</strong></li>
-<li><strong>data-l-target-</strong>*</li>
-<li><strong>data-o-default-</strong>*</li>
+<li><strong>data-i-sortable</strong>
+<ul>
+<li>Attach this attribute to an element to mark it as a sortable list. All the elements inside of the current element will be draggable and sortable.</li>
+<li>This attribute requires a value.
+<ul>
+<li>If the value matches the value of other <code>data-i-sortable</code> elements on the page, then the sortable elements will be able to be shared and dragged between them</li>
+<li>If the value of this attribute is unique across the page, elements inside the current element will only be sortable within the current element</li>
 </ul>
-<p>To learn more about these, read the <a href="http://localhost:8080/data-attributes-api/">Data Attributes API</a> page!</p>
+</li>
+</ul>
+</li>
+<li><strong>data-o-default-</strong>*
+<ul>
+<li>This attribute lets you set a default value for a <code>data-o-key-</code> or <code>data-l-key-</code> attribute if one of those attributes value is set to an empty string
+<ul>
+<li>Use case: sometimes you don't want editable elements to have empty values</li>
+</ul>
+</li>
+<li>To use this, attach it to the same element that a <code>data-o-key-</code> or <code>data-l-key-</code> attribute is on and match its key to their key
+<ul>
+<li>Example of matching key names: <code>data-o-key-favorite-color</code> and <code>data-o-default-favorite-color</code> match</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>To learn more, check out the <a href="http://localhost:8080/data-attributes-api/">Data Attributes API</a> page!</p>
 <div class="spacer--8"></div>
 <p><a class="slanted-link" href="/rendering-data/"><span>→ Next: Rendering Data</span></a></p>
 
