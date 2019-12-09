@@ -89,9 +89,9 @@
 <p>If you're following along with the video and you want your data to auto-save whenever the page loads (not a great idea in production, but fine in development), then comment out the last line in your <code>remake-init.js</code> file:</p>
 <pre><code class="language-js">Remake.callSaveFunction({targetElement: document.body});
 </code></pre>
-<h3>Only a few attributes to learn!</h3>
-<p>All of the work in this Remake app is done by 8 powerful custom attributes.</p>
-<p>Here's a list of all the attributes and what they do:</p>
+<h3>Remake's Custom Data Attributes</h3>
+<p>All of the work Remake allows us to do — creating a complete Kanban app from scratch in record time — is done by only 8 custom attributes (used a total of 22 times).</p>
+<p><strong>Learning what the following custom attributes do is the single most important thing you can do to learn Remake.</strong></p>
 <ul>
 <li><strong>data-o-type</strong>
 <ul>
@@ -128,14 +128,42 @@
 <ul>
 <li>The <code>innerText</code> of a child element with a matching <code>data-target-key-</code> attribute</li>
 <li>Or, if that's not found, it's the <code>innerText</code> of the current element</li>
+<li>It can also be customized to look at different properties if necessary</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li><strong>data-i-editable</strong></li>
-<li><strong>data-i-new</strong></li>
+<li><strong>data-i-editable</strong>
+<ul>
+<li>This marks an element as able to trigger an editable popover.</li>
+<li>By default, when an element with this attribute is clicked, Remake will look for data on the current element — inside <code>data-o-key-</code> and <code>data-l-key-</code> attributes. If it finds some keys with data in them, it will trigger editable areas for each of them.
+<ul>
+<li>If no data is found on the current element (i.e. it doesn't have a <code>data-o-type=&quot;object&quot;</code> attribute), the parent element will be examined for data — and then its parent... on and on until an element with editable data is found.</li>
+<li>Using a custom syntax for the value of this attribute, you can control which keys are edited and which types of editable areas are triggered.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>data-i-new</strong>
+<ul>
+<li>This marks an element as able to render new data onto the page.</li>
+<li>At minimum, this attribute needs its value to be set to <strong>either</strong>:
+<ul>
+<li>The name of a partial template</li>
+<li>The name of an item that was iterated over with a <code>#for</code> loop</li>
+</ul>
+</li>
+<li>By default, this attribute will:
+<ol>
+<li>Find a template whose name matches the name of the attribute's value</li>
+<li>Render the template it found into the nearest element with a <code>data-o-type=&quot;list&quot;</code> attribute (&quot;nearest&quot; is defined as inside the same parent, or grandparent, or great grandparent, etc., until a match is found)</li>
+</ol>
+</li>
+<li>It's possible to use a custom syntax for the value of this attribute to define exactly which element the template will be rendered into and where (i.e. &quot;top&quot; or &quot;bottom&quot;)</li>
+</ul>
+</li>
 <li><strong>data-i-sortable</strong></li>
 <li><strong>data-l-target-</strong>*</li>
 <li><strong>data-o-default-</strong>*</li>

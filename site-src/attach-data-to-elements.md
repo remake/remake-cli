@@ -22,11 +22,11 @@ If you're following along with the video and you want your data to auto-save whe
 Remake.callSaveFunction({targetElement: document.body});
 ```
 
-### Only a few attributes to learn!
+### Remake's Custom Data Attributes
 
-All of the work in this Remake app is done by 8 powerful custom attributes.
+All of the work Remake allows us to do — creating a complete Kanban app from scratch in record time — is done by only 8 custom attributes (used a total of 22 times).
 
-Here's a list of all the attributes and what they do:
+**Learning what the following custom attributes do is the single most important thing you can do to learn Remake.**
 
 * **data-o-type**
   * This can mark an element as representating either an `"object"` or a `"list"`.
@@ -45,8 +45,21 @@ Here's a list of all the attributes and what they do:
     * The value is, by default, either:
       * The `innerText` of a child element with a matching `data-target-key-` attribute
       * Or, if that's not found, it's the `innerText` of the current element
+      * It can also be customized to look at different properties if necessary
 * **data-i-editable**
+  * This marks an element as able to trigger an editable popover.
+  * By default, when an element with this attribute is clicked, Remake will look for data on the current element — inside `data-o-key-` and `data-l-key-` attributes. If it finds some keys with data in them, it will trigger editable areas for each of them.
+    * If no data is found on the current element (i.e. it doesn't have a `data-o-type="object"` attribute), the parent element will be examined for data — and then its parent... on and on until an element with editable data is found.
+    * Using a custom syntax for the value of this attribute, you can control which keys are edited and which types of editable areas are triggered.
 * **data-i-new**
+  * This marks an element as able to render new data onto the page.
+  * At minimum, this attribute needs its value to be set to **either**:
+    * The name of a partial template
+    * The name of an item that was iterated over with a `#for` loop
+  * By default, this attribute will:
+    1. Find a template whose name matches the name of the attribute's value
+    2. Render the template it found into the nearest element with a `data-o-type="list"` attribute ("nearest" is defined as inside the same parent, or grandparent, or great grandparent, etc., until a match is found)
+  * It's possible to use a custom syntax for the value of this attribute to define exactly which element the template will be rendered into and where (i.e. "top" or "bottom")
 * **data-i-sortable**
 * **data-l-target-***
 * **data-o-default-***
