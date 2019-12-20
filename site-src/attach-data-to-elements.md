@@ -1,5 +1,6 @@
 ---
 layout: layout.hbs
+title: Attach Data to Elements - Remake Framework Docs
 ---
 
 ## Attach Data to Elements

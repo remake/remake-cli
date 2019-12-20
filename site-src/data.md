@@ -1,5 +1,6 @@
 ---
 layout: layout.hbs
+title: How Data Works - Remake Framework Docs
 ---
 
 ## How Data Works in Remake

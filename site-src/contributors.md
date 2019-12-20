@@ -1,5 +1,6 @@
 ---
 layout: layout.hbs
+title: Contributors - Remake Framework Docs
 ---
 
 ## Contributors

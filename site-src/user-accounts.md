@@ -1,5 +1,6 @@
 ---
 layout: layout.hbs
+title: User Accounts - Remake Framework Docs
 ---
 
 ### User Accounts

@@ -1,5 +1,6 @@
 ---
 layout: layout.hbs
+title: Adding New Items - Remake Framework Docs
 ---
 
 ## Adding New Items

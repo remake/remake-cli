@@ -1,5 +1,6 @@
 ---
 layout: layout.hbs
+title: Sortable Items - Remake Framework Docs
 ---
 
 ## Sortable Items

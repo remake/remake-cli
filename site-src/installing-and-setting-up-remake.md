@@ -1,5 +1,6 @@
 ---
 layout: layout.hbs
+title: Installing & Setting Up Remake - Remake Framework Docs
 ---
 
 ## Installing & Setting Up Remake

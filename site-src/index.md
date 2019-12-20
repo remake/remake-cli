@@ -1,5 +1,6 @@
 ---
 layout: layout.hbs
+title: Remake Docs - A framework for building CRUD web apps quickly
 ---
 
 <h1 class="logo"><img class="logo__image" src="/static/logo.svg" alt="Remake.js"></h1>

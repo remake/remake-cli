@@ -1,5 +1,6 @@
 ---
 layout: layout.hbs
+title: How Saving Data Works - Remake Framework Docs
 ---
 
 ## How Saving Data Works in Remake

@@ -1,5 +1,6 @@
 ---
 layout: layout.hbs
+title: Install & Setup - Remake Framework Docs
 ---
 
 <img class="image--small image--center" src="https://remake.s3.amazonaws.com/smartsharp/03.svg">

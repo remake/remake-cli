@@ -1,5 +1,6 @@
 ---
 layout: layout.hbs
+title: Rendering Data - Remake Framework Docs
 ---
 
 ## Rendering Data

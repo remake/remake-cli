@@ -1,5 +1,6 @@
 ---
 layout: layout.hbs
+title: Making Data Editable - Remake Framework Docs
 ---
 
 ## Making Data Editable
