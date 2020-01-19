@@ -48,6 +48,8 @@ In the near future, Remake will also have support for:
 * Sharing data between users
 * Real-time updates
 
+To see a fully-customized, production Remake application with image uploading, form submissions, and custom edit popovers, check out [RequestCreative](https://www.requestcreative.com/).
+
 ### Build Something Great
 
 Join in to learn how to:
