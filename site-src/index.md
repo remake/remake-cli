@@ -59,7 +59,7 @@ Join in to learn how to:
 
 <div class="spacer--8"></div>
 
-<a class="slanted-link" href="https://mailchi.mp/59def7603a0f/remake"><span>&rarr; Subscribe for updates</span></a>
+<a class="slanted-link" href="https://form.remaketheweb.com/"><span>&rarr; Subscribe for updates</span></a>
 
 
 
