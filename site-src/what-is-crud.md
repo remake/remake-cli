@@ -2,14 +2,7 @@
 layout: layout.hbs
 ---
 
-# CRUD Means
-
-* Create
-* Read
-* Update
-* Delete
-
-### CRUD Web App
+### What is a CRUD Web App?
 
 A CRUD web app will let you:
 
