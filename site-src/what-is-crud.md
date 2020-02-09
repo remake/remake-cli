@@ -23,7 +23,7 @@ A CRUD web app will let you:
 
 CRUD web apps are usually simpler than other types of web apps. They usually have several different list of items &mdash; each of which you can delete, view, or update.
 
-### Example
+### Example of a CRUD Web App
 
 A good example: **A Blog**.
 
