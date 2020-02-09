@@ -21,7 +21,7 @@ A CRUD web app lets you:
 
 ![crud web app](/static/crud.png)
 
-CRUD web apps are usually simpler than other types of web apps.
+CRUD web apps are usually simpler than other types of web apps. They usually have several different list of items &mdash; each of which you can delete, view, or update.
 
 ### Example
 
