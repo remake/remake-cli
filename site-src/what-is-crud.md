@@ -13,7 +13,8 @@ layout: layout.hbs
 
 A CRUD web app lets you:
 
-* **Create** things (e.g. posts, comments, tasks, stories)
+* **Create** things 
+  * For example: posts / articles / tasks
 * **Read**/view things
 * **Update** things
 * And **delete** things
