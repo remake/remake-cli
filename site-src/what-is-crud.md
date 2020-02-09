@@ -6,17 +6,20 @@ layout: layout.hbs
 
 A CRUD web app will let you:
 
-* **Create** things 
-  * For example: posts, articles, tasks, and/or images
-* **Read**/view things
-* **Update** things
-* **Delete** things
+<div style="margin-bottom: 8px; margin-left: 2px;"><b><span style="display: inline-block; line-height: 1em; padding: 2px 4px 4px; background-color: #1971c2; color: #e7f5ff; border-radius: 2px;">C</span> &nbsp;Create</b> items (for example: posts, articles, tasks, and/or images)</div>
+<div style="margin-bottom: 8px; margin-left: 2px;"><b><span style="display: inline-block; line-height: 1em; padding: 2px 4px 4px; background-color: #1971c2; color: #e7f5ff; border-radius: 2px;">R</span> &nbsp;Read</b>/view items</div>
+<div style="margin-bottom: 8px; margin-left: 2px;"><b><span style="display: inline-block; line-height: 1em; padding: 2px 4px 4px; background-color: #1971c2; color: #e7f5ff; border-radius: 2px;">U</span> &nbsp;Update</b> items</div>
+<div style="margin-bottom: 8px; margin-left: 2px;"><b><span style="display: inline-block; line-height: 1em; padding: 2px 4px 4px; background-color: #1971c2; color: #e7f5ff; border-radius: 2px;">D</span> &nbsp;Delete</b> items</div>
+
+<div class="spacer--16"></div>
 
 ![crud web app](/static/crud.png)
 
 CRUD web apps are usually simpler than other types of web apps. 
 
-They usually have a list of items &mdash; and you can click each item to view it on a separate page. Or you can use a button in the interface to edit or delete it.
+* They usually have a list of items
+* You can click each item to view it on a separate page
+* Or you can use a button in the interface to edit or delete an item
 
 ### Example of a CRUD Web App
 
@@ -47,11 +50,6 @@ Remake keeps things simple by focusing on only CRUD applications instead of more
 
 This simplicity makes Remake easy to understand, easy get started with, and easy to build working applications with.
 
-Simple === Awesome 
-
-🤘
-
-
-
+Simple === Awesome 🤘
 
 
