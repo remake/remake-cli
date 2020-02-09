@@ -14,20 +14,20 @@ A CRUD web app will let you:
 
 ![crud web app](/static/crud.png)
 
-CRUD web apps are usually simpler than other types of web apps. They usually have a list of items &mdash; and they let you click each one to view it on its own page, or you could use a special button to edit or delete it.
+CRUD web apps are usually simpler than other types of web apps. 
+
+They usually have a list of items &mdash; and you can click each item to view it on a separate page. Or you can use a button in the interface to edit or delete it.
 
 ### Example of a CRUD Web App
 
-A good example: **A Blog**.
+A good example: **A Blog**. You can:
 
-With a blog, you can:
+* Create blog posts
+* Read blog posts
+* Update blog posts
+* Delete blog posts
 
-* Create posts
-* Read posts
-* Update posts
-* Delete posts
-
-#### Some more examples:
+#### Some more CRUD examples:
 
 * **Wordpress** lets you create, update, and delete blog posts and pages
 * **Wikipedia** lets you create, update, and delete articles
