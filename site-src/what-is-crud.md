@@ -9,9 +9,14 @@ layout: layout.hbs
 * Update
 * Delete
 
-### CRUD Web Apps
+### CRUD Web App
 
-A CRUD web app is any web app that lets you **create** things, **read**/view them, **update** them, and **delete** them.
+A CRUD web app lets you:
+
+* **Create** things (e.g. posts, comments, tasks, stories)
+* **Read**/view things
+* **Update** things
+* And **delete** things
 
 ![crud web app](/static/crud.png)
 
@@ -19,7 +24,7 @@ CRUD web apps are usually simpler than other types of web apps.
 
 ### Example
 
-A good example is **a blog**.
+A good example: **A Blog**.
 
 With a blog, you can:
 
@@ -36,11 +41,11 @@ With a blog, you can:
 
 ### Beyond CRUD
 
-Social networks (e.g Twitter / Instagram / TikTok) let you like posts and follow people. 
+**Social networks** (e.g Twitter / Instagram / TikTok) let you like posts and follow people. 
 
-Analytics platforms (e.g. Google Analytics / Hubspot) let you connect users and actions and see advanced graphs. 
+**Analytics platforms** (e.g. Google Analytics / Hubspot) let you connect users and actions and see advanced graphs. 
 
-These both go beyond basic CRUD.
+These go beyond basic CRUD.
 
 ### Why CRUD? Why Remake?
 
