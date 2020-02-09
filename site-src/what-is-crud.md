@@ -17,6 +17,8 @@ A CRUD web app is any web app that lets you **create** things, **read**/view the
 
 CRUD web apps are usually simpler than other types of web apps.
 
+### Example
+
 A good example is **a blog**.
 
 With a blog, you can:
@@ -26,7 +28,8 @@ With a blog, you can:
 * Update posts
 * Delete posts
 
-### Example CRUD Web Applications
+#### Other examples
+
 * **Wordpress** lets you create, update, and delete blog posts and pages
 * **Wikipedia** lets you create, update, and delete articles
 * **Craigslist** lets you create, update, and delete postings
