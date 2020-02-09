@@ -11,7 +11,7 @@ layout: layout.hbs
 
 ### CRUD Web Apps
 
-A CRUD web app is any web app that lets you **create** things, **read** (i.e. view) them, **update** them, and **delete** them.
+A CRUD web app is any web app that lets you **create** things, **read**/view them, **update** them, and **delete** them.
 
 ![crud web app](/static/crud.png)
 
