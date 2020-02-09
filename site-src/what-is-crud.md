@@ -34,7 +34,7 @@ With a blog, you can:
 * Update posts
 * Delete posts
 
-#### Other examples
+#### Some more examples:
 
 * **Wordpress** lets you create, update, and delete blog posts and pages
 * **Wikipedia** lets you create, update, and delete articles
