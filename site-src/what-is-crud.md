@@ -33,8 +33,8 @@ A good example: **A Blog**. You can:
 #### Some more CRUD examples:
 
 * **Wordpress** lets you create, update, and delete blog posts and pages
-* **Wikipedia** lets you create, update, and delete articles
-* **Craigslist** lets you create, update, and delete postings
+* **SquareSpace** lets you create, update, and delete pages and components
+* **Craigslist** lets you create, update, and delete posts
 
 ### Beyond CRUD
 
