@@ -170,7 +170,7 @@ When Remake looks at this, all it sees is:
 
 ## Stay in the loop
 
-Sign up for [the newsletter](https://mailchi.mp/59def7603a0f/remake) to get updates as this framework develops
+Sign up for [the newsletter](https://form.remaketheweb.com/) to get updates as this framework develops
 
 
 ## Find out more
