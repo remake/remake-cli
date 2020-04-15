@@ -1,3 +1,22 @@
+# 1.10.0 (April 15, 2020)
+
+- Implemented file upload, which only requires a few lines of code to get working! (max file size 50MB by default)
+```
+<div data-o-type="object" data-l-key-uploaded-image>
+  <input data-i type="file" name="uploadedImage">
+  <img data-l-target-uploaded-image src="{{uploadedImage}}">
+</div>
+```
+- Added a few helper file upload features: 
+  • Upload progress notification 
+  • Callbacks for file upload events
+- Changed the way the `data-i` attribute works
+  - By default it triggers a save unless its value is set to `dontTriggerSaveOnChange`
+  - For `input[type="text"]` and `textarea` elements, the save is debounced by 800ms, so it doesn't trigger too often
+- IMPROVEMENT: `data-l-key-` (i.e. location key) attributes are now smarter about how they set data. They'll set the `innerText` of most elements (as usual), but default to setting the `src` attribute on `<img>`, `<audio>`, `<video>`, `<iframe>`, and `<script>` elements, and the `href` attribute on `<link>` elements
+- BUG FIX: elements with a `data-i` attribute now sets data on both `data-o-key-` and `data-l-key-` attributes and not just `data-o-key-` attributes
+- Re-architected front-end Remake library, separating out data manipulation methods into `_remake/client-side/data-utilities/`. As part of this rearchitecture, we created two very useful low-level methods: `getValueFromClosestKey` and `setValueOfClosestKey`
+
 # 1.9.0 (December 1, 2019)
 
 - Added the `remake backup` command to backup a deployed app's data
