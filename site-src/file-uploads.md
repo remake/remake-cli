@@ -5,7 +5,7 @@ meta:
   <meta name="description" content="Upload files instantly with a few lines of HTML">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="File Uploads in Remake">
-  <meta name="twitter:description" content="Upload files instantly with a few lines of HTML using Remake">
+  <meta name="twitter:description" content="Upload files instantly with a few lines of HTML">
   <meta name="twitter:site" content="@remaketheweb">
   <meta name="twitter:creator" content="@panphora">
   <meta name="twitter:image" content="https://docs.remaketheweb.com/static/og/og-twitter-uploading-mockup.png?v=1">
