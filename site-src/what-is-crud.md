@@ -1,5 +1,6 @@
 ---
 layout: layout.hbs
+title: What is CRUD? - Remake Framework Docs
 ---
 
 ## What is a CRUD web app?
