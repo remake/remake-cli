@@ -5,31 +5,57 @@ title: File Uploads - Remake Framework Docs
 
 ## File Uploads
 
-Remake comes with the ability to trigger file uploads.
-
-<div style="max-width: 480px; margin-bottom: 2rem;">
+<div style="max-width: 520px; margin-bottom: 2rem;">
   <img src="/static/images/uploading-mockup-final.png">
 </div>
 
-All you need is an `<input type="file">` element and a few attributes.
+Remake can trigger a file upload using a single line of HTML.
 
-Remake takes care of:
+```html
+<input data-i type="file">
+```
 
-1. Uploading the file to a user directory
-2. Showing the file's upload progress
-3. Sending the file's final path back to you
+To display the file after it's uploaded, you just need to add a couple more lines:
 
-<div style="max-width: 320px;">
-  <img src="/static/images/file-upload-progress.png">
+```html
+<div data-o-type="object" data-l-key-uploaded-image>
+  <input data-i type="file" name="uploadedImage">
+  <img data-l-target-uploaded-image src="{{uploadedImage}}">
+</div>
+```
+
+**Remake takes care of:**
+
+<div class="side-by-side">
+  <div class="three-fifths">
+    <ol>
+      <li>Uploading the file to a user directory</li>
+      <li>Showing the file's upload progress</li>
+      <li>Sending the file's final path back to you</li>
+    </ol>
+  </div>
+  <div class="two-fifths">
+    <img src="/static/images/file-upload-progress.png">
+  </div>
 </div>
 
-Then you just have one step:
+**You just have to do two steps:**
 
+1. Create the file `<input>` element
 1. Tell Remake where to insert the file after it's done uploading
 
-### How to Upload Files
+<div class="spacer--8"></div>
 
-You get all the features listed above in just a few lines of HTML:
+**That's it! 🎉**
+
+### How file uploading works
+
+With a minimal amount of code, you get:
+
+1. File uploading
+2. A progress bar notification
+3. The file is inserted into the page
+4. All your data is saved
 
 ```html
 <div data-o-type="object" data-l-key-uploaded-image>
@@ -44,8 +70,8 @@ You get all the features listed above in just a few lines of HTML:
 2. They choose a file to upload
 3. Remake automatically shows the progress of the file upload
 4. Remake returns the path of the uploaded file back to your front-end
-5. Remake inserts the uploaded file's path into the closest `data-o-key-` or `data-l-key-` attribute that matches the `name` attribute on the `<input>` element
+5. Remake will insert the path of the uploaded file into the closest `data-o-key-*` or `data-l-key-*` attribute, as long as it matches the `name` attribute that's on the `<input>` element 
 6. If the file can be displayed on the page, for example as an image or video, then it'll be displayed immediately
 
-That's all there is to file uploads in Remake!
+That's all there is to file uploads in Remake! 🌈
 

@@ -93,7 +93,7 @@ h1 + h2, h2 + h3, h3 + h4, h1 + h3, h1 + h4, h2 + h4 {
 }
 
 p {
-  margin-bottom: 1.5em;
+  margin-bottom: 1em;
   line-height: 1.65em;
 }
 
@@ -108,6 +108,7 @@ li {
 }
 
 code {
+  white-space: nowrap;
   line-height: 1em;
   padding: 2px 5px 3px;
   font-size: 14px;
@@ -127,6 +128,11 @@ pre, pre[class*="language-"] {
 pre code, pre[class*="language-"] code {
   padding: 0;
   border-radius: 0px;
+  white-space: pre;
+}
+
+ul + pre, ul + pre[class*="language-"], ol + pre, ol + pre[class*="language-"] {
+  margin-top: 1.5rem;
 }
 
 hr {
@@ -307,6 +313,18 @@ img {
 }
 
 /* UTILS */
+
+.side-by-side {
+  display: flex;
+}
+
+.side-by-side .three-fifths {
+  width: 60%;
+}
+
+.side-by-side .two-fifths {
+  width: 40%;
+}
 
 .slanted-link {
   display: inline-block;

@@ -87,26 +87,46 @@
         <div class="main">
           <a class="github-link github-link--top" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
           <h2>File Uploads</h2>
-<p>Remake comes with the ability to trigger file uploads.</p>
-<div style="max-width: 480px; margin-bottom: 2rem;">
+<div style="max-width: 520px; margin-bottom: 2rem;">
   <img src="/static/images/uploading-mockup-final.png">
 </div>
-<p>All you need is an <code>&lt;input type=&quot;file&quot;&gt;</code> element and a few attributes.</p>
-<p>Remake takes care of:</p>
-<ol>
-<li>Uploading the file to a user directory</li>
-<li>Showing the file's upload progress</li>
-<li>Sending the file's final path back to you</li>
-</ol>
-<div style="max-width: 320px;">
-  <img src="/static/images/file-upload-progress.png">
+<p>Remake can trigger a file upload using a single line of HTML.</p>
+<pre><code class="language-html">&lt;input data-i type=&quot;file&quot;&gt;
+</code></pre>
+<p>To display the file after it's uploaded, you just need to add a couple more lines:</p>
+<pre><code class="language-html">&lt;div data-o-type=&quot;object&quot; data-l-key-uploaded-image&gt;
+  &lt;input data-i type=&quot;file&quot; name=&quot;uploadedImage&quot;&gt;
+  &lt;img data-l-target-uploaded-image src=&quot;&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+<p><strong>Remake takes care of:</strong></p>
+<div class="side-by-side">
+  <div class="three-fifths">
+    <ol>
+      <li>Uploading the file to a user directory</li>
+      <li>Showing the file's upload progress</li>
+      <li>Sending the file's final path back to you</li>
+    </ol>
+  </div>
+  <div class="two-fifths">
+    <img src="/static/images/file-upload-progress.png">
+  </div>
 </div>
-<p>Then you just have one step:</p>
+<p><strong>You just have to do two steps:</strong></p>
 <ol>
+<li>Create the file <code>&lt;input&gt;</code> element</li>
 <li>Tell Remake where to insert the file after it's done uploading</li>
 </ol>
-<h3>How to Upload Files</h3>
-<p>You get all the features listed above in just a few lines of HTML:</p>
+<div class="spacer--8"></div>
+<p><strong>That's it! 🎉</strong></p>
+<h3>How file uploading works</h3>
+<p>With a minimal amount of code, you get:</p>
+<ol>
+<li>File uploading</li>
+<li>A progress bar notification</li>
+<li>The file is inserted into the page</li>
+<li>All your data is saved</li>
+</ol>
 <pre><code class="language-html">&lt;div data-o-type=&quot;object&quot; data-l-key-uploaded-image&gt;
   &lt;input data-i type=&quot;file&quot; name=&quot;uploadedImage&quot;&gt;
   &lt;img data-l-target-uploaded-image src=&quot;&quot;&gt;
@@ -118,10 +138,10 @@
 <li>They choose a file to upload</li>
 <li>Remake automatically shows the progress of the file upload</li>
 <li>Remake returns the path of the uploaded file back to your front-end</li>
-<li>Remake inserts the uploaded file's path into the closest <code>data-o-key-</code> or <code>data-l-key-</code> attribute that matches the <code>name</code> attribute on the <code>&lt;input&gt;</code> element</li>
+<li>Remake will insert the path of the uploaded file into the closest <code>data-o-key-*</code> or <code>data-l-key-*</code> attribute, as long as it matches the <code>name</code> attribute that's on the <code>&lt;input&gt;</code> element</li>
 <li>If the file can be displayed on the page, for example as an image or video, then it'll be displayed immediately</li>
 </ol>
-<p>That's all there is to file uploads in Remake!</p>
+<p>That's all there is to file uploads in Remake! 🌈</p>
 
           <div class="spacer--16"></div>
           <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
