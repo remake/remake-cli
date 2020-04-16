@@ -110,6 +110,7 @@ li {
 code {
   line-height: 1em;
   padding: 2px 5px 3px;
+  font-size: 14px;
   background-color: #e9ecef;
   border-radius: 2px;
 }

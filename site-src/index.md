@@ -43,12 +43,13 @@ And there's much more!
 In the near future, Remake will also have support for:
 
 * Automatic form handling
-* Image uploads
 * Image cropping and manipulation
 * Sharing data between users
 * Real-time updates
 
 To see a fully-customized, production Remake application with image uploading, form submissions, and custom edit popovers, check out [RequestCreative](https://www.requestcreative.com/).
+
+**[View the full Remake roadmap](https://roadmap.remaketheweb.com/roadmaps)**
 
 ### Build Something Great
 
