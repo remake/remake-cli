@@ -8,8 +8,8 @@
 </div>
 ```
 - Added a few helper file upload features: 
-  • Upload progress notification 
-  • Callbacks for file upload events
+  - Upload progress notification 
+  - Callbacks for file upload events
 - Changed the way the `data-i` attribute works
   - By default it triggers a save unless its value is set to `dontTriggerSaveOnChange`
   - For `input[type="text"]` and `textarea` elements, the save is debounced by 800ms, so it doesn't trigger too often
