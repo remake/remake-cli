@@ -1,34 +1,43 @@
-<h1>Remake</h1>
+# Remake
+An HTML-centric and easy-to-use web app framework 
 
-### An easy-to-use web app framework
+## Why Remake?
+Remake allows **building sophisticated apps** while focusing on the essence of the *web*: **structured HTML**.
 
-* **Create editable pages using only HTML templates**
-* **Easy to learn, powerful data attribute syntax**
-* **Perfect for rapidly prototyping ideas**
+* **editable content** with **only HTML** templates
+* **easy, intuitive and powerful syntax** for data handling
+* **ideal for rapid prototyping**, as it's quick to set up
 
+To know more about **what sets Remake apart** from other libraries, check our [Creating with Remake Guide](#todo-add-link)
 
-## Get started 
+## Get started
+Step-by-step instructions on how to **set up a new project** with Remake. 
 
-1. Install the command line tool
+### 0 - Prerequisites
+To use Remake, you need to install:
 
+1. **Node.js LTS 12.16.2+**(with npm 6). Both are available in the [official node.js package](https://nodejs.org/en/)
+2. **Remake CLI**, installable via terminal, with npm:
 ```
 npm install remake -g
 ```
 
-2. Create a new project
-
+### 1 - Create a project
+Use Remake CLI's **create** command to create a new Remake-powered project: 
 ```
 remake create <project-dir>
 ```
-
-3. Run the development server
-
+### 2 - Run a development server
+A newly-created Remake project has a **custom npm script** to run the development server: **dev**.
+Thus, to run the development server, you can **access the project folder** (through the command line) and run: 
 ```
-cd <project-dir>
 npm run dev
 ```
+<!-- TODO: ask for the default port -->
+### 3 - Learn Remake and start developing
+With your project set up, you can start implementing your project, or **learn about Remake** with one of our tutorials
 
-4. Start building a web app with Remake!
+## Practical Guides
 
 
 ## Example
