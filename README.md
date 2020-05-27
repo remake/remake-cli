@@ -8,7 +8,9 @@ With Remake, you can **build sophisticated apps** while focusing on the core of 
 * providing an **easy, intuitive and powerful syntax** for data handling
 * being **quick to set up**, making an ideal option for **prototyping** and **rapid development** 
 
-To know more about **what sets Remake apart** from other libraries, check our [Creating with Remake Guide](#todo-add-link). And to **see Remake in action**, check out [RequestCreative, our live demo](https://requestcreative.com). 
+To know more about **what sets Remake apart** from other libraries, check our [Creating with Remake Guide](#todo-add-link). 
+
+You can also **see Remake in action** at [RequestCreative, our live demo](https://requestcreative.com). 
 
 ## Get started
 Step-by-step instructions on how to **set up a new project** with Remake. 
