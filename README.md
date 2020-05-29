@@ -84,7 +84,7 @@ HTML is formatted like a tree 🌳: it has a root (the parent element) and child
 
 <!-- TODO: we could make a simple diagram to examplify, with "page" at the bottom and html elements on top", inheriting from each other -->
 
-And with Remake, we apply this branching model to **objects** tagged to HTML elemens, as well. It's by looking at an element's position in the page's "tree-like structure" that **Remake determines what to save** automatically.
+And with Remake, we apply this branching model to **objects** tagged to HTML elements, as well. It's by looking at an element's position in the page's "tree-like structure" that **Remake determines what to save** automatically.
 
 Here's an example:
 
