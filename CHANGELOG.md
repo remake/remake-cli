@@ -1,4 +1,4 @@
-# 1.11.0 (June 24, 2020)
+# 1.10.1 (June 24, 2020)
 
 - Massively improved the onboarding for new users by adding README files to each directory of the Remake starter app
 - Added a nice getting started message showing users where to access the app after it starts up
