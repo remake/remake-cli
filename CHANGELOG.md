@@ -1,3 +1,11 @@
+# 1.11.0 (June 24, 2020)
+
+- Massively improved the onboarding for new users by adding README files to each directory of the Remake starter app
+- Added a nice getting started message showing users where to access the app after it starts up
+- Updated npm dependencies to get rid of console warnings: both `caniuse-lite` and `shelljs` were causing issues
+- Breaking change: Renamed the `asset-bundler/` directory to `_remake-asset-bundler` to differentiate it from files that are modifiable by the user
+- Fixed: The `remake backup` command now works for file uploads
+
 # 1.10.0 (April 15, 2020)
 
 - Implemented file upload, which only requires a few lines of code to get working! (max file size 50MB by default)
