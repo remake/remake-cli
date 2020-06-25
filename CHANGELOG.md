@@ -6,6 +6,8 @@
 - Breaking change: Renamed the `asset-bundler/` directory to `_remake-asset-bundler` to differentiate it from files that are modifiable by the user
 - Fixed: The `remake backup` command now works for file uploads
 
+*Important:* If you're updating from an older version of Remake with `remake update-framework`, there are a couple other things you need to do manually. 1) run `remake update-framework`. 2) make sure all the dependencies from `https://github.com/panphora/remake-framework/blob/master/package.json` are in your own `package.json`. 3) rename the `asset-bundler` directory to `_remake-asset-bundler`. Sorry about this. It'll be easier to update in the future.
+
 # 1.10.0 (April 15, 2020)
 
 - Implemented file upload, which only requires a few lines of code to get working! (max file size 50MB by default)
