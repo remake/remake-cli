@@ -7,7 +7,7 @@ title: Routing - Remake Framework Docs
 
 Currently, in order to get the `data` from a user loaded into a template, you need to be on a route like this: `/{username}/{pageName}?/{id}?`, where `username` matches a user's username.
 
-Here, `pageName` and `id` are optional. For example, if `username` is the only param, then `pages/username.hbs` is rendered. However, if `pageName` is there, then `pages/pageName.hbs` is rendered. 
+Here, `pageName` and `id` are optional. For example, if `username` is the only param, then `pages/app-index.hbs` (called <code>username.hbs</code> before <code>v1.11</code>) is rendered. However, if `pageName` is there, then `pages/pageName.hbs` is rendered. 
 
 And, finally, if `id` is also provided in the route, then `pages/pageName.hbs` is rendered and the `id` is looked up in the current username's data and loaded in under a template variable called `currentItem`.
 
@@ -36,6 +36,6 @@ Remake expects to find an `index.hbs` template in your page templates and it wil
 
 The other special route is "username" route, like `/eric` or `/kate` or `/paul`. It's the base path for a particular user — and it's the page that will be loaded right after a user signs up or logs in. 
 
-For this case, Remake expects to find a `username.hbs` template in your page templates and it will render that file whenever a user goes to `/{username}`.
+For this case, Remake expects to find a `app-index.hbs` (called <code>username.hbs</code> before <code>v1.11</code>) template in your page templates and it will render that file whenever a user goes to `/{username}`.
 
 

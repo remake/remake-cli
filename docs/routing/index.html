@@ -92,7 +92,7 @@
           <a class="github-link github-link--top" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>
           <h3>Routing basics</h3>
 <p>Currently, in order to get the <code>data</code> from a user loaded into a template, you need to be on a route like this: <code>/{username}/{pageName}?/{id}?</code>, where <code>username</code> matches a user's username.</p>
-<p>Here, <code>pageName</code> and <code>id</code> are optional. For example, if <code>username</code> is the only param, then <code>pages/username.hbs</code> is rendered. However, if <code>pageName</code> is there, then <code>pages/pageName.hbs</code> is rendered.</p>
+<p>Here, <code>pageName</code> and <code>id</code> are optional. For example, if <code>username</code> is the only param, then <code>pages/app-index.hbs</code> (called <code>username.hbs</code> before <code>v1.11</code>) is rendered. However, if <code>pageName</code> is there, then <code>pages/pageName.hbs</code> is rendered.</p>
 <p>And, finally, if <code>id</code> is also provided in the route, then <code>pages/pageName.hbs</code> is rendered and the <code>id</code> is looked up in the current username's data and loaded in under a template variable called <code>currentItem</code>.</p>
 <h3>Three routes defined by one template</h3>
 <p>A single page template in Remake, for example <code>pages/tasks.hbs</code>, will automatically defines 3 different types of routes.</p>
@@ -120,7 +120,7 @@
 <p>The first, is the base path of your app: <strong>your homepage.</strong></p>
 <p>Remake expects to find an <code>index.hbs</code> template in your page templates and it will render that index file whenever a user goes to your home page.</p>
 <p>The other special route is &quot;username&quot; route, like <code>/eric</code> or <code>/kate</code> or <code>/paul</code>. It's the base path for a particular user — and it's the page that will be loaded right after a user signs up or logs in.</p>
-<p>For this case, Remake expects to find a <code>username.hbs</code> template in your page templates and it will render that file whenever a user goes to <code>/{username}</code>.</p>
+<p>For this case, Remake expects to find a <code>app-index.hbs</code> (called <code>username.hbs</code> before <code>v1.11</code>) template in your page templates and it will render that file whenever a user goes to <code>/{username}</code>.</p>
 
           <div class="spacer--16"></div>
           <a class="github-link github-link--footer" href="https://github.com/panphora/remake" target="_blank"><img src="/static/github.svg"> View on GitHub</a>

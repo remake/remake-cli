@@ -9,9 +9,9 @@ title: Attach Data to Elements - Remake Framework Docs
 
 ### An app in a single file
 
-The entire app we're building in these tutorial videos fits inside of only one file, `app/username.hbs`, and is 73 lines long.
+The entire app we're building in these tutorial videos fits inside of only one file, `app/app-index.hbs` (called <code>username.hbs</code> before <code>v1.11</code>), and is 73 lines long.
 
-If you want to start with a blank slate, with only an HTML file, like we do in the video, you can replace your current `username.hbs` template with this one: [starter-username.hbs](https://gist.github.com/panphora/a1f39772ebc837b29173c5fb18887a8d).
+If you want to start with a blank slate, with only an HTML file, like we do in the video, you can replace your current `app-index.hbs` template with this one: [starter-app-index.hbs](https://gist.github.com/panphora/a1f39772ebc837b29173c5fb18887a8d).
 
 Also, make sure you're logged in to the app.
 
