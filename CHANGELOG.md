@@ -1,3 +1,11 @@
+# 1.11.0 (July 6, 2020)
+
+- Breaking change: Renamed `username.hbs` to `app-index.hbs` (so it's clearer that it's supposed to be the dynamic home page of the app)
+* Added ability to include an `{{else}}` clause in a `{{for}}` loop for when there are no items to iterate over
+* Small change: Made adding a layout to a page have more forgiving syntax (no longer requires spaces between braces)
+* Added an empty Remake app to `/_remake/empty-project` so users can get started more quickly with their own projects
+* Added better README files to every directory of both the starter Remake app and the blank Remake app 🤩
+
 # 1.10.1 (June 24, 2020)
 
 - Massively improved the onboarding for new users by adding README files to each directory of the Remake starter app
