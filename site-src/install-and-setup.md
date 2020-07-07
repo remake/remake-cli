@@ -7,26 +7,26 @@ title: Install & Setup - Remake Framework Docs
 
 # Install & Setup
 
-**🛠 Install the Remake command line tool**
+**🛠 1. Install the Remake command line tool**
 
 ```bash
 npm install remake -g
 ```
 
-**⚡️ Generate a Remake project**
+**⚡️ 2. Generate a Remake project**
 
 ```bash
 remake create <project-dir>
 ```
 
-**🚜 Start the local server**
+**🚜 3. Start the local server**
 
 ```bash
 cd projectName
 npm run dev
 ```
 
-**📺 View your Remake app**
+**📺 4. View your Remake app**
 
 <br>
 <a href="http://localhost:3000" target="_blank"><img class="border rounded image--small image--center" src="/static/kanban-screenshot.png"></a>
@@ -34,19 +34,19 @@ npm run dev
 
 Go to [http://localhost:3000](http://localhost:3000) in your browser to view the example app.
 
-**🎨 Make your own app**
+**🎨 5. Make your own app**
 
 The HTML & CSS used to create a Remake app is in the `app/` directory.
 
 To start from scratch with an blank slate, simply replace the files in `app/` with the files in `_remake/empty-project/`.
 
-**👩‍🎓 Learn Remake**
+**👩‍🎓 6. Learn Remake**
 
 Learn how to create an app from [the official step-by-step tutorial](https://docs.remaketheweb.com/introducing-remake/).
 
 In no time, you'll be making web apps faster than ever!
 
-**🌏 Deploy your app**
+**🌏 7. Deploy your app**
 
 After you're done creating your own app, share it with the world:
 
