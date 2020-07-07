@@ -5,41 +5,56 @@ title: Install & Setup - Remake Framework Docs
 
 <img class="image--small image--center" src="https://remake.s3.amazonaws.com/smartsharp/03.svg">
 
-## Install & Setup
+# Install & Setup
 
-1. Install the Remake command line tool
+**🛠 Install the Remake command line tool**
 
 ```bash
 npm install remake -g
 ```
 
-2. Use the command line to to generate the starter project
+**⚡️ Generate a Remake project**
 
 ```bash
 remake create <project-dir>
 ```
 
-3. Change into your new project's directory
+**🚜 Start the local server**
 
 ```bash
 cd projectName
-```
-
-4. Run the local server for your Remake app!
-
-```bash
 npm run dev
 ```
 
-5. Go to `http://localhost:3000` in your browser to view your new Remake app!
+**📺 View your Remake app**
 
-<img class="border rounded" src="/static/kanban-screenshot.png">
+<br>
+<a href="http://localhost:3000" target="_blank"><img class="border rounded image--small image--center" src="/static/kanban-screenshot.png"></a>
+<br>
 
-6. (Optional) Deploy your new app using Remake's hosting service!
+Go to [http://localhost:3000](http://localhost:3000) in your browser to view the example app.
+
+**🎨 Make your own app**
+
+The HTML & CSS used to create a Remake app is in the `app/` directory.
+
+To start from scratch with an blank slate, simply replace the files in `app/` with the files in `_remake/empty-project/`.
+
+**👩‍🎓 Learn Remake**
+
+Learn how to create an app from [the official step-by-step tutorial](https://docs.remaketheweb.com/introducing-remake/).
+
+In no time, you'll be making web apps faster than ever!
+
+**🌏 Deploy your app**
+
+After you're done creating your own app, share it with the world:
 
 ```bash
 remake deploy
 ```
 
+This will publish your app to **https://YOUR-APP-NAME.remakeapps.com** and you can share it with anyone!
 
+See an example: [https://kanban.remakeapps.com/](https://kanban.remakeapps.com/)
 
