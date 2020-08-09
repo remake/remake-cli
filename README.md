@@ -55,7 +55,7 @@ Out of the box, Remake comes with:
 * **Flat file database:** No need to install, configure, or host a database
 * **Simple data handling:** Accessing and saving nested objects is easy
 
-If you know how to build a website with HTML and CSS — and know the basics of [Handlebars](https://handlebarsjs.com/) templating — you can build a web app with Remake!
+If you know how to build a website with HTML and CSS — and know the basics of [Handlebars](https://handlebarsjs.com/) templating — you can build a full web app with Remake!
 
 
 ## Quickstart resources

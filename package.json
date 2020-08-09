@@ -24,10 +24,6 @@
     "site-serve": "eleventy --serve",
     "site-build": "eleventy"
   },
-  "devDependencies": {
-    "@11ty/eleventy": "^0.9.0",
-    "handlebars": "^4.5.3"
-  },
   "dependencies": {
     "archiver": "^3.1.1",
     "axios": "^0.19.0",
