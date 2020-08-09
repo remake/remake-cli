@@ -1,3 +1,7 @@
+# 1.11.1 (August 9, 2020)
+
+- Deprecated old repositories (https://github.com/panphora/remake & https://github.com/panphora/remake-framework) and switched them to the new official "remake" organization (https://github.com/remake/remake & https://github.com/remake/remake-framework)
+
 # 1.11.0 (July 6, 2020)
 
 - Breaking change: Renamed `username.hbs` to `app-index.hbs` (so it's clearer that it's supposed to be the dynamic home page of the app)
