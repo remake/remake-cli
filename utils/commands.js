@@ -37,7 +37,7 @@ const create = async (projectDir, options) => {
 
   // STEP 1
   spinner = ora("Creating new project.").start();
-  shell.exec(`git clone --depth 1 https://github.com/panphora/remake-framework.git ${projectDir}`, { silent: true });
+  shell.exec(`git clone --depth 1 https://github.com/remake/remake-framework.git ${projectDir}`, { silent: true });
   spinner.succeed();
 
   // STEP 2a & 2b
@@ -188,7 +188,7 @@ const updateFramework = async () => {
 
   // 3. GIT CLONE THE ENTIRE FULL STACK STARTER PROJECT INTO THE CURRENT DIRECTORY
   spinner = ora("Copying latest framework into _remake directory.").start();
-  shell.exec("git clone --depth 1 https://github.com/panphora/remake-framework.git", { silent: true });
+  shell.exec("git clone --depth 1 https://github.com/remake/remake-framework.git", { silent: true });
 
   // 4. MOVE THE _remake DIRECTORY TO WHERE THE OLD _remake DIRECTORY WAS
   shell.mv(path.join(cwd, "remake-framework/_remake"), remakeFrameworkPathInApplicationDirectory);

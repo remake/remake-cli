@@ -17,7 +17,7 @@
 *Important:* If you're updating from an older version of Remake using the `remake update-framework` command, do this:
 
 1. Run `remake update-framework`
-2. Make sure all the dependencies from `https://github.com/panphora/remake-framework/blob/master/package.json` are in your own `package.json` 
+2. Make sure all the dependencies from `https://github.com/remake/remake-framework/blob/master/package.json` are in your own `package.json` 
 3. Rename the `asset-bundler` directory to `_remake-asset-bundler`
 
 You may also need to run `npm rebuild` if you get an error like `"Error: Could not locate the bindings file."`.
