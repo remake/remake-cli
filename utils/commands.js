@@ -79,12 +79,8 @@ const clean = () => {
     process.exit();
   }
   spinner = ora('Cleaning project.').start();
-  shell.rm('-rf', '.cache/');
-  shell.rm('-rf', '_remake/dist');
+  shell.exec('npm run clean', { silent:true });
   spinner.succeed();
-  // TODO - replace above statement with bellow statement once the framework is 
-  // updated with the clean script
-  // shell.exec('npm run clean');
 }
 
 const build = () => {
