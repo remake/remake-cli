@@ -5,7 +5,6 @@ const shell = require('shelljs');
 const inquirer = require('inquirer');
 const { promisify } = require('es6-promisify');
 const rimraf = promisify(require('rimraf'));
-const boxen = require('boxen');
 const ora = require('ora');
 const process = require('process');
 
@@ -20,9 +19,8 @@ const {
   getAppsList,
   backupApp } = require('./helpers');
 const { questions } = require('./inquirer-questions');
-const { getSuccessMessage } = require('./get-success-message');
+const { showSuccessfulCreationMessage } = require('./messages');
 
-const boxenOptions = {padding: 3, margin: 1, borderStyle: 'double', borderColor: 'green'};
 let spinner = null;
 
 const create = async (projectDir, options) => {
@@ -70,7 +68,7 @@ const create = async (projectDir, options) => {
   const dotRemakeReady = writeDotRemake(dotRemakeObj);
 
   if (dotRemakeReady) {
-    log(boxen(getSuccessMessage(projectDir), boxenOptions));
+    showSuccessfulCreationMessage(projectDir);
   }
 }
 
