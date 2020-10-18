@@ -35,7 +35,7 @@ const create = async (projectDir, options) => {
 
   // STEP 1
   spinner = ora("Creating new project.").start();
-  shell.exec(`git clone --depth 1 https://github.com/remake/remake-framework.git ${projectDir}`, { silent: true });
+  shell.exec(`git clone --branch feature/add-support-for-starters https://github.com/remake/remake-framework.git ${projectDir}`, { silent: true });
   spinner.succeed();
 
   // STEP 2a & 2b
@@ -51,13 +51,24 @@ const create = async (projectDir, options) => {
   // put project README in the right place
   shell.mv(path.join(newProjectDirPath, "README-FOR-BUNDLE.md"), path.join(newProjectDirPath, "README.md"));
 
-  // STEP 3
-  spinner = ora("Installing npm dependencies.").start();
+  // STEP 3 - setup template
+  const { starter } = await inquirer.prompt([questions.CHOOSE_STARTER]);
+  spinner = ora(`Cloning ${starter}`).start();
   shell.cd(newProjectDirPath);
-  shell.exec("npm install", { silent: true });
+  shell.mkdir('starter-tmp');
+  shell.exec(`git clone ${starter} starter-tmp`, { silent: true });
+  shell.rm('starter-tmp/README.md');
+  rimrafError = await rimraf(path.join(newProjectDirPath, "starter-tmp", ".git"));
+  shell.mv('starter-tmp/*', 'app');
+  rimrafError = await rimraf(path.join(newProjectDirPath, "starter-tmp"));
   spinner.succeed();
 
   // STEP 4
+  spinner = ora("Installing npm dependencies.").start();
+  shell.exec("npm install", { silent: true });
+  spinner.succeed();
+
+  // STEP 5
   // write project name and env variables to .remake file
   spinner = ora("Setting up .remake").start();
   const dotRemakeObj = {
@@ -70,6 +81,8 @@ const create = async (projectDir, options) => {
   if (dotRemakeReady) {
     showSuccessfulCreationMessage(projectDir);
   }
+
+  process.exit(0);
 }
 
 const clean = () => {
