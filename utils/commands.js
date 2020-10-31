@@ -7,6 +7,7 @@ const { promisify } = require('es6-promisify');
 const rimraf = promisify(require('rimraf'));
 const ora = require('ora');
 const process = require('process');
+const replace = require('replace');
 
 const { readDotRemake, writeDotRemake, generateDotRemakeContent } = require('./dot-remake');
 const {
@@ -20,68 +21,25 @@ const {
   backupApp } = require('./helpers');
 const { questions } = require('./inquirer-questions');
 const { showSuccessfulCreationMessage } = require('./messages');
+const { exit } = require('process');
 
 let spinner = null;
 
-const create = async (projectDir, options) => {
-  const cwd = process.cwd();
-  const newProjectDirPath = path.join(cwd, projectDir);
-  let rimrafError = null;
+const create = async (projectName, options) => {
+  const projectPath = getProjectPath(projectName);
 
-  if (fs.existsSync(newProjectDirPath)) {
+  if (fs.existsSync(projectPath)) {
     log(chalk.bgRed("Error: Cannot write to a directory that already exists."));
     process.exit();
   }
 
-  // STEP 1
-  spinner = ora("Creating new project.").start();
-  shell.exec(`git clone --branch feature/add-support-for-starters https://github.com/remake/remake-framework.git ${projectDir}`, { silent: true });
-  spinner.succeed();
-
-  // STEP 2a & 2b
-  spinner = ora("Tidy up new project directory.").start();
-  rimrafError = await rimraf(path.join(newProjectDirPath, ".git"));
-
-  if (rimrafError) {
-    spinner.fail(chalk.bgRed("Error: Couldn't remove old .git directory from new project."));
-    process.exit();
-  }
-  spinner.succeed();
-
-  // put project README in the right place
-  shell.mv(path.join(newProjectDirPath, "README-FOR-BUNDLE.md"), path.join(newProjectDirPath, "README.md"));
-
-  // STEP 3 - setup template
-  const { starter } = await inquirer.prompt([questions.CHOOSE_STARTER]);
-  spinner = ora(`Cloning ${starter}`).start();
-  shell.cd(newProjectDirPath);
-  shell.mkdir('starter-tmp');
-  shell.exec(`git clone ${starter} starter-tmp`, { silent: true });
-  shell.rm('starter-tmp/README.md');
-  rimrafError = await rimraf(path.join(newProjectDirPath, "starter-tmp", ".git"));
-  shell.mv('starter-tmp/*', 'app');
-  rimrafError = await rimraf(path.join(newProjectDirPath, "starter-tmp"));
-  spinner.succeed();
-
-  // STEP 4
-  spinner = ora("Installing npm dependencies.").start();
-  shell.exec("npm install", { silent: true });
-  spinner.succeed();
-
-  // STEP 5
-  // write project name and env variables to .remake file
-  spinner = ora("Setting up .remake").start();
-  const dotRemakeObj = {
-    ...generateDotRemakeContent(options.multitenant)
-  }
-  spinner.succeed();
-
-  const dotRemakeReady = writeDotRemake(dotRemakeObj);
-
-  if (dotRemakeReady) {
-    showSuccessfulCreationMessage(projectDir);
-  }
-
+  cloneRemakeFramework(projectName);
+  await removeDotGit(projectName);
+  cleanPackageJson(projectName);
+  moveReadme();
+  await setupTemplate();
+  installNpmPackages();
+  createDotRemakeFile(projectName, options);
   process.exit(0);
 }
 
@@ -227,3 +185,76 @@ const backup = async () => {
 }
 
 module.exports =  { create, deploy, clean, build, updateFramework, backup }
+
+function createDotRemakeFile(projectName, options) {
+  spinner = ora("Setting up .remake").start();
+
+  const dotRemakeObj = {
+    ...generateDotRemakeContent(options.multitenant)
+  };
+  spinner.succeed();
+
+  const dotRemakeReady = writeDotRemake(dotRemakeObj);
+  if (!dotRemakeReady) {
+    spinner.fail(chalk.bgRed("Error: Couldn't create .remake file"));
+    exit(1);
+  }
+  showSuccessfulCreationMessage(projectName);
+}
+
+function getProjectPath(projectName) {
+  const cwd = process.cwd();
+  const projectPath = path.join(cwd, projectName);
+  return projectPath;
+}
+
+function installNpmPackages() {
+  spinner = ora("Installing npm dependencies.").start();
+  shell.exec("npm install", { silent: true })
+  spinner.succeed();
+}
+
+async function setupTemplate() {
+  const { starter } = await inquirer.prompt([questions.CHOOSE_STARTER]);
+  spinner = ora(`Cloning ${starter}`).start();
+  shell.mkdir('starter-tmp');
+  shell.exec(`git clone ${starter} starter-tmp`, { silent: true });
+  shell.rm('starter-tmp/README.md');
+  rimrafError = await rimraf(path.join("starter-tmp", ".git"));
+  shell.mv('starter-tmp/*', 'app');
+  rimrafError = await rimraf(path.join("starter-tmp"));
+  spinner.succeed();
+}
+
+function moveReadme() {
+  shell.mv("README-FOR-BUNDLE.md", "README.md");
+}
+
+function cleanPackageJson(projectName) {
+  replace({
+    regex: `"name": "remake-framework"`,
+    replacement: `"name": "${projectName}"`,
+    paths: [`${projectName}/package.json`],
+    silent: true,
+  });
+  shell.cd(projectName);
+  shell.exec(`npm version 1.0.0`)
+  shell.cd(process.cwd());
+}
+
+async function removeDotGit(projectName) {
+  spinner = ora("Tidy up new project directory.").start();
+  const projectPath = getProjectPath(projectName);
+  const rimrafError = await rimraf(path.join(projectPath, ".git"));
+  if (rimrafError) {
+    spinner.fail(chalk.bgRed("Error: Couldn't remove old .git directory from new project."));
+    process.exit();
+  }
+  spinner.succeed();
+}
+
+function cloneRemakeFramework(projectName) {
+  spinner = ora("Creating new project.").start();
+  shell.exec(`git clone --branch feature/add-support-for-starters https://github.com/remake/remake-framework.git ${projectName}`, { silent: true });
+  spinner.succeed();
+}
