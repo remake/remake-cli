@@ -39,5 +39,8 @@
     "replace": "^1.2.0",
     "rimraf": "^3.0.0",
     "shelljs": "^0.8.4"
+  },
+  "devDependencies": {
+    "prettier": "2.1.2"
   }
 }
