@@ -27,7 +27,6 @@
   "dependencies": {
     "archiver": "^3.1.1",
     "axios": "^0.19.0",
-    "boxen": "^4.1.0",
     "chalk": "^2.4.2",
     "commander": "^3.0.0",
     "configstore": "^5.0.0",
