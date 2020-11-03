@@ -130,7 +130,6 @@ const createDeploymentZip = (projectName) => {
     archive.pipe(output);
     archive.glob("app/**/*");
     archive.glob("_remake/dist/**/*");
-    // archive.glob('_remake-data/*/*.json');
     archive.finalize();
   });
 };

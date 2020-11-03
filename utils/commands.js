@@ -45,6 +45,7 @@ const create = async (projectName, options) => {
   await setupTemplate();
   installNpmPackages();
   createDotRemakeFile(projectName, options);
+  initializeGitRepo();
   process.exit(0);
 };
 
@@ -272,6 +273,11 @@ function cleanPackageJson(projectName) {
   shell.cd(projectName);
   shell.exec(`npm version 1.0.0`);
   shell.cd(process.cwd());
+}
+
+function initializeGitRepo() {
+  shell.exec("git init");
+  shell.exec("git add . && git commit -m 'Initial commit'");
 }
 
 async function removeDotGit(projectName) {
