@@ -1,190 +1,110 @@
-<h1>Remake</h1>
+<p align="center">
+  <a href="https://storybook.js.org/">
+    <img src="https://user-images.githubusercontent.com/364330/98124113-bc603180-1e80-11eb-882e-e2246940c7a4.png" alt="Remake" width="400" />
+  </a>
+</p>
 
-### An easy-to-use web app framework
+<p align="center">Build full-stack web apps with only HTML and CSS</p>
 
-* **Create editable pages using only HTML templates**
-* **Easy to learn, powerful data attribute syntax**
-* **Perfect for rapidly prototyping ideas**
+<br/>
 
+<p align="center">
+  <a href="https://github.com/remake/remake-cli/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/remake/remake-cli" alt="License" />
+  </a>
+  <a href="https://discord.gg/FB3gNxw">
+    <img src="https://img.shields.io/badge/discord-join-7289DA.svg?logo=discord&longCache=true&style=flat" alt="Discord Channel" />
+  </a>
+  <a href="https://github.com/sponsors/remake">
+    <img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&link=<url>" alt="Sponsor" />
+  </a>
+  <a href="https://twitter.com/intent/follow?screen_name=remaketheweb">
+    <img src="https://badgen.net/twitter/follow/remaketheweb?icon=twitter&label=%40remake" alt="Remake Twitter" />
+  </a>
+</p>
 
-## Get started 
+Remake is a simple, open source framework. It lets you transform a static website into an interactive, editable web app with a few custom HTML attributes.
 
-1. Install the command line tool
+- Simple syntax
+- User accounts & persistent data
+- Inline editing & file uploads
+- No backend coding
+
+<b><a href="https://blog.remaketheweb.com/intro-to-remake-part-1-make-web-apps-with-html/">→ Learn more about Remake</a></b>
+
+## Why Remake?
+
+> What if every HTML webpage knew how to save, edit, and add new items to itself?
+
+![Diagram of how Remake works](https://user-images.githubusercontent.com/364330/98125645-b5d2b980-1e82-11eb-909f-527bf0ff224e.png)
+
+Remake is ideal for indie hackers who want to build editable web apps quickly. Have you ever created a static website and wished people could just start using it? Remake lets you do that.
+
+- **Remake lets you build full-stack apps with front-end code.** Remake comes with user accounts, a persistent database, and everything you need to deploy a working application.
+- **Remake lets you build CMS-like features on top of a static template.** Users can login to your site and edit their own copy of it.
+- **Remake is so easy to use it feels like prototyping.** But it's designed for building scalable, production web apps.
+- **Remake gives you control over your design.** You can use any CSS framework and style your pages however you want.
+- **Remake is server rendered.** This makes it ideal for SEO and loading pages quickly. The front-end framework isn't even loaded if a user can't edit the current page.
+
+<b><a href="#">→ Learn what makes Remake different</a></b> (coming later today)
+
+## Get started
+
+**1. Install [Node.js (12.16+)](https://nodejs.org/)**
+
+**2. Create a project using the Remake CLI**
 
 ```
-npm install remake -g
+npx remake create my-app
 ```
 
-2. Create a new project
+**3. Run the project**
 
 ```
-remake create <project-dir>
-```
-
-3. Run the development server
-
-```
-cd <project-dir>
+cd my-app
 npm run dev
 ```
 
-4. Start building a web app with Remake!
+You now have an app running at `http://localhost:3000`. Your app's code is in the `/app` directory and your database is in the `/_remake-data` directory.
 
+<b><a href="https://docs.remaketheweb.com/introducing-remake/">→ Start learning how to build a web app with Remake</a></b>
 
-## Example
+## What can you build?
 
-![Todos example app](https://remake-website.s3.amazonaws.com/todos-example.gif)
+Remake is **great at building page builders,** where each user can edit their own content.
 
-*An example of editing, adding, and removing items with the starter todos project.*
+- **[Todo app](https://docs.remaketheweb.com/a-simple-example-app/)** (Build time: 7 min)
+- **[Trello clone](https://tutorials.remaketheweb.com/)** (Build time: 30 min)
+- (In progress) **[Resume builder](https://resume-builder-remake.netlify.app/)** (Build time: 30 min)
+- (In progress) [**Reading list builder**](https://shelfpage.remakeapps.com/) (Build time: 30 min)
+- **Landing page builder** (planned)
+- **Directory website builder** (planned)
 
+<b><a href="https://blog.remaketheweb.com/intro-to-remake-part-2-what-you-can-and-cant-build/">→ Learn what else you can build with Remake</a></b>
 
-## What is Remake?
+![Trello clone built with Remake](https://user-images.githubusercontent.com/364330/98126081-2f6aa780-1e83-11eb-8367-e582daaf8997.png)
 
-**Remake is everything you need to create a web app in record time, with very little overhead.**
+<p align="center">An example app built with Remake in 30 minutes</p>
 
+## Remake’s Mission
 
-Remake provides all the tools you need to:
+Remake aims to equalize power on the internet. A few companies own the platforms where the rest of us publish posts and websites — but owning a platform is usually beyond our reach. Remake switches this narrative and empowers you to build your own publishing platform.
 
-* Instantly add [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) to your page
-* Have all your pages' data auto-save after it's been edited
-* Store your data in a format that's easy to access and understand
+<b><a href="https://discord.gg/FB3gNxw">→ Join and contribute to our Discord community</a></b>
 
-Out of the box, Remake comes with:
+## Contributing
 
-* **User accounts:** People can sign up and log in to your app!
-* **Flat file database:** No need to install, configure, or host a database
-* **Simple data handling:** Accessing and saving nested objects is easy
+Remake is an open-source, and contributions are always welcome. If you identify with Remake's mission, we'd be delighted to have you on board! 
 
-If you know how to build a website with HTML and CSS — and know the basics of [Handlebars](https://handlebarsjs.com/) templating — you can build a full web app with Remake!
+- Report bugs
+- Suggest features
+- Fix issues
+- Improve documentation
+- Make and share tutorials
 
+<b><a href="https://github.com/remake/remake-cli/issues/new?assignees=&labels=&template=feature_request.md&title=My%20first%20issue">→ Start by creating your first issue</a></b>
 
-## Quickstart resources
+## Our Contributors
 
-* [A simple todo list app in 12 lines of HTML](https://docs.remaketheweb.com/a-simple-example-app/)
-* [30 minute tutorial on how to build a Trello clone](https://tutorials.remaketheweb.com/)
-
-
-## How does it work?
-
-Remake is based around a simple idea: 
-
-**What if every HTML webpage knew how to save, edit, and add new items to itself?**
-
-* Remake uses simple data attributes, starting with `data-o` for attributes that output data and starting with `data-i` for attributes that input data
-* Using a simple data attribute (`data-i-editable`), you can make the data on an element editable and have it auto-save to the database
-* Using another simple data attribute (`data-i-new`), you can easily render back-end partial templates and add them to the page
-
-
-## Get to know how the data works
-
-#### Saving Data
-
-HTML is formatted like a tree 🌳 in that it has a root node and every other element on a page branches off of that root node.
-
-So, what if we were able to transform HTML into an **object** that we could save to a database just by looking at its natural tree structure?
-
-We can do this in Remake by tagging elements with data. **Remake will parse and save this data automatically** whenever it changes.
-
-Here's how it works in Remake:
-
-```html
-<div data-o-type="object"></div>
-```
-
-This element has been tagged as an `Object`, which means Remake will convert it into this:
-
-```javascript
-{}
-```
-
-Let's go through a few more examples:
-
-##### 1. Key/value pairs
-
-```html
-<div data-o-type="object" data-o-key-name="David"></div>
-```
-
-This will be converted into an object with a key/value pair inside of it:
-
-```javascript
-{name: "David"}
-```
-
-The first attribute (`data-o-type`) tells us which data type to expect. It can be set to *only* `object` or `list`.
-
-The second attribute (`data-o-key-name`) tells us that this `object` has a key of `name` (the key is always the part that comes after `data-o-key-`). And we look at the attribute's value to get the key's value.
-
-##### 2. Nested data
-
-```html
-<div data-o-type="object">
-  <div data-o-type="object" data-o-key="person" data-o-key-name="David">
-    </div>
-</div>
-```
-
-This example is a bit more advanced, as it relies on **nested** elements to create **nested** data:
-
-```javascript
-{person: {name: "David"}}
-```
-
-In this example, we use the `data-o-key` attribute — with nothing after it — to create an object inside of an object. The value of `data-o-key` tells us which key the nested object will be.
-
-#### 3. Lists/Arrays of objects
-
-Let's look at the only other data type that Remake supports: `Arrays`. In Remake, we use the term `list`.
-
-How do we create a list in Remake?
-
-```html
-<div data-o-type="list"></div>
-```
-
-This is a pretty simple example and will compile into just a simple, empty array:
-
-```
-[]
-```
-
-How would we go about adding objects to this array? We'd just nest them of course!
-
-```html
-<div data-o-type="list">
-  <div data-o-type="object" data-o-key-name="David">
-  <div data-o-type="object" data-o-key-name="John">
-  <div data-o-type="object" data-o-key-name="Mary">
-</div>
-```
-
-When Remake looks at this, all it sees is:
-
-```javascript
-[
-  {name: "David"},
-  {name: "John"},
-  {name: "Mary"}
-]
-```
-
-## Stay in the loop
-
-Sign up for [the newsletter](https://form.remaketheweb.com/) to get updates as this framework develops
-
-
-## Find out more
-
-* [Contact the author on Twitter](https://twitter.com/panphora)
-* [View the public roadmap](https://trello.com/b/BXvugSjT/remake)
-* [View a live production app: RequestCreative](https://requestcreative.com)
-
-## Contributors
-
-* **[Andrew de Jong](https://gitlab.com/android4682)**
-
-
-
-
-
-
+- [Andrew de Jong](https://gitlab.com/android4682)
+- [Painatalman](https://github.com/Painatalman)
