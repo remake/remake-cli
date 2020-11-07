@@ -76,9 +76,6 @@ const build = () => {
 };
 
 const deploy = async () => {
-  clean();
-  build();
-
   let dotRemakeObj = readDotRemake();
   if (!dotRemakeObj) {
     log(chalk.bgRed("You are not in the root directory of a remake project."));
@@ -296,7 +293,7 @@ async function removeDotGit(projectName) {
 function cloneRemakeFramework(projectName) {
   spinner = ora("Creating new project.").start();
   shell.exec(
-    `git clone --branch feature/add-support-for-starters https://github.com/remake/remake-framework.git ${projectName}`,
+    `git clone --branch new-syntax https://github.com/remake/remake-framework.git ${projectName}`,
     { silent: true }
   );
   spinner.succeed();

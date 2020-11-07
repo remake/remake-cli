@@ -38,18 +38,6 @@ program
   .action(() => deploy());
 
 program
-  .command("build")
-  .description("Build your Remake app")
-  .action(() => build());
-
-program
-  .command("clean")
-  .description(
-    "Wipe the local Remake environment including caches and build assets"
-  )
-  .action(() => clean());
-
-program
   .command("backup")
   .description("Backup the deployed version of your app")
   .action(() => backup());
