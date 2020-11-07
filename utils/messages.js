@@ -1,6 +1,6 @@
-const chalk = require('chalk');
+const chalk = require("chalk");
 
-function showSuccessfulCreationMessage (projectDir) {
+function showSuccessfulCreationMessage(projectDir) {
   log(`
     ${chalk.magenta.bold("Your new Remake project has been created!")}
 
@@ -18,4 +18,4 @@ function showSuccessfulCreationMessage (projectDir) {
 `);
 }
 
-module.exports = {showSuccessfulCreationMessage};
+module.exports = { showSuccessfulCreationMessage };

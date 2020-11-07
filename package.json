@@ -32,11 +32,21 @@
     "configstore": "^5.0.0",
     "es6-promisify": "^6.0.2",
     "form-data": "^2.5.1",
+    "husky": "^4.3.0",
     "inquirer": "^7.0.0",
     "nanoid": "^2.0.3",
     "ncp": "^2.0.0",
     "ora": "^4.0.2",
+    "replace": "^1.2.0",
     "rimraf": "^3.0.0",
     "shelljs": "^0.8.4"
+  },
+  "devDependencies": {
+    "prettier": "2.1.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "prettier --check ."
+    }
   }
 }
