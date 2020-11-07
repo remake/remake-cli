@@ -128,8 +128,10 @@ const createDeploymentZip = (projectName) => {
     });
 
     archive.pipe(output);
-    archive.glob("app/**/*");
-    archive.glob("_remake/dist/**/*");
+    archive.glob("app/assets/**/*");
+    archive.glob("app/layouts/**/*");
+    archive.glob("app/pages/**/*");
+    archive.glob("app/partials/**/*");
     archive.finalize();
   });
 };
