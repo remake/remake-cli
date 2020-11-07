@@ -30,6 +30,8 @@ Remake is a simple, open source framework. It lets you transform a static websit
 - Inline editing & file uploads
 - No backend coding
 
+**IMPORTANT:** This framework has just released version of the new syntax. For now, to learn it, use this [RECIPES page](https://recipes.remaketheweb.com/) instead of the offocial documentation below.
+
 <b><a href="https://blog.remaketheweb.com/intro-to-remake-part-1-make-web-apps-with-html/">→ Learn more about Remake</a></b>
 
 ## Why Remake?
