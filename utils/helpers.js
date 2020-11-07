@@ -128,6 +128,8 @@ const createDeploymentZip = (projectName) => {
     });
 
     archive.pipe(output);
+    archive.glob("app/data/bootstrap.json");
+    archive.glob("app/data/global.json");
     archive.glob("app/assets/**/*");
     archive.glob("app/layouts/**/*");
     archive.glob("app/pages/**/*");
