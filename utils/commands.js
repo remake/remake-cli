@@ -250,6 +250,7 @@ async function setupTemplate() {
   shell.mkdir("starter-tmp");
   shell.exec(`git clone ${starter} starter-tmp`, { silent: true });
   shell.rm("starter-tmp/README.md");
+  shell.rm("starter-tmp/.gitignore");
   rimrafError = await rimraf(path.join("starter-tmp", ".git"));
   shell.mv("starter-tmp/*", "app");
   rimrafError = await rimraf(path.join("starter-tmp"));
