@@ -294,7 +294,7 @@ async function removeDotGit(projectName) {
 function cloneRemakeFramework(projectName) {
   spinner = ora("Creating new project.").start();
   shell.exec(
-    `git clone --branch new-syntax https://github.com/remake/remake-framework.git ${projectName}`,
+    `git clone --branch master https://github.com/remake/remake-framework.git ${projectName}`,
     { silent: true }
   );
   spinner.succeed();
