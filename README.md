@@ -48,7 +48,7 @@ Remake is ideal for indie hackers who want to build editable web apps quickly. H
 - **Remake gives you control over your design.** You can use any CSS framework and style your pages however you want.
 - **Remake is server rendered.** This makes it ideal for SEO and loading pages quickly. The front-end framework isn't even loaded if a user can't edit the current page.
 
-<b><a href="#">→ Learn what makes Remake different</a></b> (coming later today)
+<b><a href="#">→ Learn what makes Remake different</a></b> (coming soon)
 
 ## Get started
 
