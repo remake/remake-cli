@@ -1,3 +1,9 @@
+# 2.0.0 (November 7, 2020)
+
+- Brand new syntax: https://recipes.remaketheweb.com/
+- Brand new, much simpler directory structure
+- ... more updates coming soon
+
 # 1.11.2 (August 9, 2020)
 
 - Deprecated old repositories (https://github.com/panphora/remake & https://github.com/panphora/remake-framework) and switched them to the new official "remake" organization (https://github.com/remake/remake & https://github.com/remake/remake-framework)
