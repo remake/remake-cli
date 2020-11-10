@@ -2,7 +2,7 @@
 
 - Brand new syntax: https://recipes.remaketheweb.com/
 - Brand new, much simpler directory structure
-- ... more updates coming soon
+- [Read the migration guide](https://docs.google.com/document/d/1dXM7cgyg0W5M7im2RfexSsX9Gn6EfAbtY-kTp__H3A4/edit?usp=sharing)
 
 # 1.11.2 (August 9, 2020)
 
