@@ -1,4 +1,15 @@
-# 2.0.0 (November 7, 2020)
+# 2.0.2 (November 11, 2020)
+
+- Remove 10 unused NPM packages
+- Update 2 outdated NPM packages
+- Fix bug: You can now use #for loops in partial templates (oops!)
+
+# 2.0.1 (November 8, 2020)
+
+- Major update to README
+- Multi-tenant fixes: uploading and saving data to correct directories
+
+# 2.0.0 (November 7, 2020) 🚀
 
 - Brand new syntax: https://recipes.remaketheweb.com/
 - Brand new, much simpler directory structure
