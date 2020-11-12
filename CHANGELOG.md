@@ -3,6 +3,7 @@
 - Remove 10 unused NPM packages
 - Update 2 outdated NPM packages
 - Fix bug: You can now use #for loops in partial templates (oops!)
+- Simplified signature of `Remake.callSaveFunction()` so you can just pass in an HTML element instead of an object
 
 # 2.0.1 (November 8, 2020)
 
