@@ -88,6 +88,16 @@ Remake is **great at building page builders,** where each user can edit their ow
 
 <p align="center">An example app built with Remake in 30 minutes</p>
 
+## Technology
+
+✨ Built on Express.js
+✨ Uses Passport.js and Bcrypt for secure user accounts
+✨ Handlebars renders templates server-side
+✨ One-click file uploads with express-fileupload
+✨ One line instant deploy command
+✨ Sync client state and server state automatically
+✨ Built-in inline edit popovers
+
 ## Remake’s Mission
 
 Remake aims to equalize power on the internet. A few companies own the platforms where the rest of us publish posts and websites — but owning a platform is usually beyond our reach. Remake switches this narrative and empowers you to build your own publishing platform.
