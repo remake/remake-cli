@@ -23,14 +23,14 @@
   </a>
 </p>
 
+**NOTE:** Remake v2.0 is fully operational and all the documentation has been updated!
+
 Remake is a simple, open source framework. It lets you transform a static website into an interactive, editable web app with a few custom HTML attributes.
 
 - Simple syntax
 - User accounts & persistent data
 - Inline editing & file uploads
 - No backend coding
-
-**IMPORTANT:** A NEW VERSION of this framework was just released. **Don't use the current docs**. For now, you can use this [thorough recipes page](https://recipes.remaketheweb.com/) to learn the new syntax.
 
 <b><a href="https://blog.remaketheweb.com/intro-to-remake-part-1-make-web-apps-with-html/">→ Learn more about Remake</a></b>
 
