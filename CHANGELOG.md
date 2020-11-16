@@ -1,3 +1,7 @@
+# 2.0.3 (November 16, 2020)
+
+- Fix `remake-build` internal build process to use correct source mapping url for "remake.min.js" script
+
 # 2.0.2 (November 11, 2020)
 
 - Remove 10 unused NPM packages
