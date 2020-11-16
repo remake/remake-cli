@@ -23,7 +23,7 @@
   </a>
 </p>
 
-**UPDATE 🎉:** Remake v2.0 is fully operational, their are [step-by-step recipes](https://recipes.remaketheweb.com/) to learn it, and [all the documentation](https://docs.remaketheweb.com/) is up-to-date!
+**UPDATE 🎉:** Remake v2.0 is fully operational, there are [step-by-step recipes](https://recipes.remaketheweb.com/) so you can learn it fast, and [all the documentation](https://docs.remaketheweb.com/) is up-to-date!
 
 Remake is a simple, open source framework. It lets you transform an HTML & CSS design into an interactive, editable web app (with just a few custom HTML attributes).
 
