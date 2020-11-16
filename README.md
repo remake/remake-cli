@@ -23,32 +23,32 @@
   </a>
 </p>
 
-Remake is a simple, open source framework. It lets you transform a static website into an interactive, editable web app with a few custom HTML attributes.
+**UPDATE 🎉:** Remake v2.0 is fully operational, there are [new step-by-step recipes](https://recipes.remaketheweb.com/), and [all the documentation](https://docs.remaketheweb.com/) is up-to-date!
+
+Remake is a simple, open source framework. It lets you transform an HTML & CSS design into an interactive, editable web app (with just a few custom HTML attributes).
 
 - Simple syntax
 - User accounts & persistent data
 - Inline editing & file uploads
 - No backend coding
 
-**IMPORTANT:** A NEW VERSION of this framework was just released. **Don't use the current docs**. For now, you can use this [thorough recipes page](https://recipes.remaketheweb.com/) to learn the new syntax.
-
-<b><a href="https://blog.remaketheweb.com/intro-to-remake-part-1-make-web-apps-with-html/">→ Learn more about Remake</a></b>
+<b><a href="https://blog.remaketheweb.com/intro-to-remake-part-1-make-web-apps-with-html/">→ Learn more about what Remake is</a></b>
 
 ## Why Remake?
 
-> What if every HTML webpage knew how to save, edit, and add new items to itself?
+> What if every HTML webpage knew how to save, edit, and add items to itself?
 
 ![Diagram of how Remake works](https://user-images.githubusercontent.com/364330/98125645-b5d2b980-1e82-11eb-909f-527bf0ff224e.png)
 
-Remake is ideal for indie hackers who want to build editable web apps quickly. Have you ever created a static website and wished people could just start using it? Remake lets you do that.
+Remake was made for indie makers who want to build editable web apps quickly. Have you ever created a design and wished people could just start using it? Remake lets you do that.
 
-- **Remake lets you build full-stack apps with front-end code.** Remake comes with user accounts, a persistent database, and everything you need to deploy a working application.
-- **Remake lets you build CMS-like features on top of a static template.** Users can login to your site and edit their own copy of it.
-- **Remake is so easy to use it feels like prototyping.** But it's designed for building scalable, production web apps.
-- **Remake gives you control over your design.** You can use any CSS framework and style your pages however you want.
-- **Remake is server rendered.** This makes it ideal for SEO and loading pages quickly. The front-end framework isn't even loaded if a user can't edit the current page.
+- **Not a templating library.** Remake lets you build *full-stack* web apps with *just* front-end code. Remake takes care of the rest: user accounts, persistent data, and instant deployments.
+- **Not a front-end framework.** Remake renders templates server-side (with Handlebars.js). This means your pages will load quickly, even on low-powered devices and over slow connections.
+- **Not a CMS.** Remake lets you build a CMS on top of HTML & CSS templates using a few custom HTML attributes. You can make a page editable in just a few minutes &mdash; and users can login and have their own data.
+- **Not a prototyping tool.** Remake lets you build real apps for real users. It has security and scalability built in. It's easy to build with, so it feels like prototyping, but it's meant for building full apps.
+- **Not a no-code tool.** Remake is an open source framework that you download and add your own HTML & CSS code to. You own the code. There's no platform lock-in and you have 100% control over your app's design. 
 
-<b><a href="#">→ Learn what makes Remake different</a></b> (coming soon)
+<b><a href="https://blog.remaketheweb.com/intro-to-remake-part-3-what-makes-remake-better/">→ Learn more about what makes Remake better</a></b>
 
 ## Get started
 
