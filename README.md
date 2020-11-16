@@ -25,7 +25,7 @@
 
 **UPDATE 🎉:** Remake v2.0 is fully operational and all the documentation is up-to-date!
 
-Remake is a simple, open source framework. It lets you transform an HTML & CSS design into an interactive, editable web app with custom HTML attributes.
+Remake is a simple, open source framework. It lets you transform an HTML & CSS design into an interactive, editable web app (with just a few custom HTML attributes).
 
 - Simple syntax
 - User accounts & persistent data
