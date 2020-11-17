@@ -1,3 +1,25 @@
+# 2.0.3 (November 16, 2020)
+
+- Fix `remake-build` internal build process to use correct source mapping url for "remake.min.js" script
+
+# 2.0.2 (November 11, 2020)
+
+- Remove 10 unused NPM packages
+- Update 2 outdated NPM packages
+- Fix bug: You can now use #for loops in partial templates (oops!)
+- Simplified signature of `Remake.callSaveFunction()` so you can just pass in an HTML element instead of an object
+
+# 2.0.1 (November 8, 2020)
+
+- Major update to README
+- Multi-tenant fixes: uploading and saving data to correct directories
+
+# 2.0.0 (November 7, 2020) 🚀
+
+- Brand new syntax: https://recipes.remaketheweb.com/
+- Brand new, much simpler directory structure
+- [Read the migration guide](https://docs.google.com/document/d/1dXM7cgyg0W5M7im2RfexSsX9Gn6EfAbtY-kTp__H3A4/edit?usp=sharing)
+
 # 1.11.2 (August 9, 2020)
 
 - Deprecated old repositories (https://github.com/panphora/remake & https://github.com/panphora/remake-framework) and switched them to the new official "remake" organization (https://github.com/remake/remake & https://github.com/remake/remake-framework)
