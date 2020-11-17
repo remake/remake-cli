@@ -89,10 +89,10 @@ Remake is **great at building page builders,** where each user can edit their ow
 
 ## Technology
 
-✨ Built on Express.js<br>
-✨ Uses Passport.js and Bcrypt for secure user accounts<br>
-✨ Handlebars renders templates server-side<br>
-✨ One-click file uploads with express-fileupload<br>
+✨ Built on `Express.js`<br>
+✨ Uses `Passport.js` and `Bcrypt` to secure user accounts<br>
+✨ `Handlebars` renders templates server-side<br>
+✨ One-click file uploads with `express-fileupload`<br>
 ✨ One line instant deploy command<br>
 ✨ Sync client state and server state automatically<br>
 ✨ Built-in inline edit popovers<br>
