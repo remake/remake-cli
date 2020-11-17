@@ -43,7 +43,7 @@ Remake is a simple, open source framework. It lets you transform an HTML & CSS d
 Have you ever designed something and wished people could just start using it? Remake lets you do that.
 
 - **Build full-stack web apps with front-end code.** Remake takes care of the rest: user accounts, persistent data, instant deployments, and routing. Each user gets their own account and data.
-- **Produces real apps, not prototypes.** Remake feels like prototyping because it's so easy. It was designed to feel like using a template and a single JSON file, but you get a real app from it.
+- **Produces real apps, not prototypes.** Remake feels like prototyping because it was designed to. The goal was to make web development feel like using a single template and a single JSON file.
 - **You control your app and its design.** Remake is open source. You own the code. There's no platform lock-in and you have 100% control over your app's design.
 - **Secure, scalable, and fast.** Highly secure authentication. And server-rendered, so your pages load quickly even on low-power devices or slow connections.
 
