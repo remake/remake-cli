@@ -198,6 +198,31 @@ const getAppsList = async () => {
   }
 };
 
+const addDomain = async (appName, domain) => {
+  const spinner = ora(`Linking ${domain} to ${appName}.remakeapps.com`);
+  try {
+    const response = await axios({
+      method: "post",
+      url: `${remakeServiceHost}/service/domain`,
+      headers: {
+        Authorization: `Bearer ${remakeCliConfig.get("user.authToken")}`,
+      },
+      data: {
+        domain,
+        appName,
+      },
+    });
+    if (response.status === 200) {
+      spinner.succeed();
+    } else {
+      spinner.fail();
+    }
+  } catch (err) {
+    spinner.fail();
+    return null;
+  }
+};
+
 const backupApp = async (appId) => {
   const spinner = ora("Generating and downlading zip.").start();
   try {
@@ -247,4 +272,5 @@ module.exports = {
   pushZipToServer,
   getAppsList,
   backupApp,
+  addDomain,
 };

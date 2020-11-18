@@ -1,8 +1,19 @@
+const isValidDomain = require("is-valid-domain");
+
 const validateSubdomain = (subdomain) => {
   const subdomainRegex = /^[a-z]+[a-z0-9\-]*$/;
   if (!subdomainRegex.test(subdomain))
     return "The project name should start with a lowercase letter and should contain only lowercase letters, numbers and dashes.";
   else return true;
+};
+
+const validateDomain = (domain) => {
+  const domainParts = domain.split(".");
+  if (domainParts.length !== 2) {
+    return "Remake doesn't support subdomains. Please use a valid domain.";
+  } else {
+    return isValidDomain(domain);
+  }
 };
 
 const validateEmail = (email) => {
@@ -75,6 +86,17 @@ Your app will be accessible at <subdomain>.remakeapps.com
     name: "appId",
     type: "list",
     choices: [],
+  },
+  INPUT_DOMAIN: {
+    message: `Domain:`,
+    name: "domain",
+    type: "input",
+    validate: validateDomain,
+  },
+  CONFIRM_DNS: {
+    name: "dnsOk",
+    message: "I've added the DNS records. Let's proceed",
+    type: "confirm",
   },
 };
 

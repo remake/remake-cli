@@ -2,12 +2,11 @@ const program = require("commander");
 const Configstore = require("configstore");
 
 const {
-  clean,
-  build,
   deploy,
   backup,
   updateFramework,
   create,
+  linkDomain,
 } = require("./utils/commands");
 const { version, name } = require("./package.json");
 
@@ -41,6 +40,11 @@ program
   .command("backup")
   .description("Backup the deployed version of your app")
   .action(() => backup());
+
+program
+  .command("link-domain")
+  .description("Link a custom domain to your application")
+  .action(() => linkDomain());
 
 module.exports = async () => {
   program.parse(process.argv);
