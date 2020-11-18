@@ -36,7 +36,7 @@ function showCustomDomainInfoMessage() {
 
 function showDnsMessage(domain) {
   log(chalk.green(`Add the following two records in your DNS manager:`));
-  log(`A       @      159.89.45.187`);
+  log(`A       @      45.55.126.252`);
   log(`CNAME   www    @`);
 
   log(
