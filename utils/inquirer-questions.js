@@ -1,3 +1,5 @@
+const isValidDomain = require("is-valid-domain");
+
 const validateSubdomain = (subdomain) => {
   const subdomainRegex = /^[a-z]+[a-z0-9\-]*$/;
   if (!subdomainRegex.test(subdomain))
@@ -75,6 +77,17 @@ Your app will be accessible at <subdomain>.remakeapps.com
     name: "appId",
     type: "list",
     choices: [],
+  },
+  INPUT_DOMAIN: {
+    message: `Domain:`,
+    name: "domain",
+    type: "input",
+    validate: isValidDomain,
+  },
+  CONFIRM_DNS: {
+    name: "dnsOk",
+    message: "I've added the DNS records. Let's proceed",
+    type: "confirm",
   },
 };
 
