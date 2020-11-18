@@ -7,15 +7,6 @@ const validateSubdomain = (subdomain) => {
   else return true;
 };
 
-const validateDomain = (domain) => {
-  const domainParts = domain.split(".");
-  if (domainParts.length !== 2) {
-    return "Remake doesn't support subdomains. Please use a valid domain.";
-  } else {
-    return isValidDomain(domain);
-  }
-};
-
 const validateEmail = (email) => {
   // regex source: https://stackoverflow.com/a/46181
   const emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
@@ -91,7 +82,7 @@ Your app will be accessible at <subdomain>.remakeapps.com
     message: `Domain:`,
     name: "domain",
     type: "input",
-    validate: validateDomain,
+    validate: isValidDomain,
   },
   CONFIRM_DNS: {
     name: "dnsOk",

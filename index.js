@@ -42,7 +42,7 @@ program
   .action(() => backup());
 
 program
-  .command("link-domain")
+  .command("custom-domain")
   .description("Link a custom domain to your application")
   .action(() => linkDomain());
 

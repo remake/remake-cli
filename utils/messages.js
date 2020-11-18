@@ -19,19 +19,7 @@ function showSuccessfulCreationMessage(projectDir) {
 }
 
 function showCustomDomainInfoMessage() {
-  log(
-    chalk.green(
-      `Type a valid domain you own. Remake will take care of pointing the domain to your application.`
-    )
-  );
-  log(
-    `Remake doesn't work with subdomains at the moment. Remake doesn't offer a service for buying/managing domains.`
-  );
-  log(
-    `Please make sure you already own the domain before initiating this step.`
-  );
-  log(`Good example: example.com`);
-  log(`Bad examples: www.example.com, app.exapmple.com`);
+  log(chalk.green(`Type a valid domain you own (e.g. myawesomeapp.com):`));
 }
 
 function showDnsMessage(domain) {
@@ -42,6 +30,7 @@ function showDnsMessage(domain) {
   log(
     `Your application will be available at https://${domain} and https://www.${domain}`
   );
+  log(`DNS propagation sometimes takes 4 hours or more.`);
 }
 
 module.exports = {

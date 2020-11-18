@@ -238,7 +238,20 @@ const linkDomain = async () => {
 
   showCustomDomainInfoMessage();
   const domainAnswer = await inquirer.prompt([questions.INPUT_DOMAIN]);
-  showDnsMessage(domainAnswer.domain);
+  let domain = domainAnswer.domain;
+  domain = domain.replace(/^(https?:\/\/)?(www.)?/i, "").replace(/\/$/, "");
+
+  if (domain.split(".").length > 2) {
+    log(
+      chalk.yellow(
+        "Remake doesn't support sub-domains at the moment (e.g. app.myawesomeapp.com)"
+      )
+    );
+    log(chalk.yellow("You must use a root domain (e.g. myawesomeapp.com)"));
+    process.exit();
+  }
+
+  showDnsMessage(domain);
   const dnsAnswer = await inquirer.prompt([questions.CONFIRM_DNS]);
   if (dnsAnswer.dnsOk === false) {
     process.exit();
