@@ -1,3 +1,11 @@
+# 2.1.1 (November 18, 2020)
+
+- Remake has support for custom domains! 🎉
+- Added `remake custom-domain` command
+- Fixed bug: `callWatchFunctionsOnElements()` wasn't working
+- Fixed bug: allow `edit:` attribute to get last to args in any order
+- Updated README
+
 # 2.0.3 (November 16, 2020)
 
 - Fix `remake-build` internal build process to use correct source mapping url for "remake.min.js" script
