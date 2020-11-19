@@ -1,9 +1,10 @@
-# 2.1.1 (November 18, 2020)
+# 2.1.2 (November 18, 2020)
 
 - Remake has support for custom domains! 🎉
 - Added `remake custom-domain` command
 - Fixed bug: `callWatchFunctionsOnElements()` wasn't working
 - Fixed bug: allow `edit:` attribute to get last to args in any order
+- Fixed minor issue with CLI message text
 - Updated README
 
 # 2.0.3 (November 16, 2020)
