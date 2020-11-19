@@ -23,9 +23,14 @@ const {
   pushZipToServer,
   getAppsList,
   backupApp,
+  addDomain,
 } = require("./helpers");
 const { questions } = require("./inquirer-questions");
-const { showSuccessfulCreationMessage } = require("./messages");
+const {
+  showSuccessfulCreationMessage,
+  showCustomDomainInfoMessage,
+  showDnsMessage,
+} = require("./messages");
 const { exit } = require("process");
 
 let spinner = null;
@@ -214,7 +219,57 @@ const backup = async () => {
   }
 };
 
-module.exports = { create, deploy, clean, build, updateFramework, backup };
+const linkDomain = async () => {
+  let dotRemakeObj = readDotRemake();
+  if (!dotRemakeObj) {
+    log(chalk.bgRed("You are not in the root directory of a remake project."));
+    process.exit();
+  }
+  if (!dotRemakeObj.projectName) {
+    log(
+      chalk.bgRed(
+        "Please deploy your application first by running: remake deploy"
+      )
+    );
+    process.exit();
+  }
+
+  await registerUser();
+
+  showCustomDomainInfoMessage();
+  const domainAnswer = await inquirer.prompt([questions.INPUT_DOMAIN]);
+  let domain = domainAnswer.domain;
+  domain = domain.replace(/^(https?:\/\/)?(www.)?/i, "").replace(/\/$/, "");
+
+  if (domain.split(".").length > 2) {
+    log(
+      chalk.yellow(
+        "Remake doesn't support sub-domains at the moment (e.g. app.myawesomeapp.com)"
+      )
+    );
+    log(chalk.yellow("You must use a root domain (e.g. myawesomeapp.com)"));
+    process.exit();
+  }
+
+  showDnsMessage(domain);
+  const dnsAnswer = await inquirer.prompt([questions.CONFIRM_DNS]);
+  if (dnsAnswer.dnsOk === false) {
+    process.exit();
+  }
+
+  await addDomain(dotRemakeObj.projectName, domainAnswer.domain);
+  process.exit();
+};
+
+module.exports = {
+  create,
+  deploy,
+  clean,
+  build,
+  updateFramework,
+  backup,
+  linkDomain,
+};
 
 function createDotRemakeFile(projectName, options) {
   spinner = ora("Setting up .remake").start();
