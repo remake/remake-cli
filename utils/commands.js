@@ -124,7 +124,7 @@ const deploy = async () => {
       process.exit();
     }
     spinner.succeed(
-      `${subdomainAnswer.subdomain}.remakeapps.com is belonging to your app.`
+      `${subdomainAnswer.subdomain}.remakeapps.com belongs to your app.`
     );
 
     spinner = ora(`Writing .remake file.`).start();
