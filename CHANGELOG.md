@@ -1,3 +1,20 @@
+# 2.2.0 (November 20, 2020)
+
+- **BIG CHANGE:** Generating unique ids for every object is now turned off by default. These ids were confusing and unhelpful to a lot of people. Remake will always support unique ids, however. Until we come up with a more elegant solution, you can turn them back on by editing your `.remake` file and adding the line: `"generateUniqueIds": true`
+- Added new handlebars helper `checked` to set the `checked` attribute of a `<input type="checked">` element. You pass in a value and it generates a `checked="checked"` attribute if the value is truthy. Use it like this: `{{{checked todo.done}}}`.
+- Added new `run:watch` attribute. When it's attached to an element with `watch:` attributes, those watch attributes will be triggered as soon as the page loads
+- Added new `prevent-default` attribute for preventing a DOM element's default behavior
+- Added `onRemoveItem()` callback
+- Changed the values that the `toggle` attribute and `<input type="checkbox">` element toggle between. Now it's "true" and "false" instead of "on" and "off".
+- Added some default watch functions that you can use to handle computations and set data:
+  - `setMailToLink`: for setting an `href` attribute to a `mailto:` email link
+  - `setLink`: for setting an `href` attribute to a valid link that has `"https://"` prepended
+  - `countKeys`: counts the number of keys that match the current key, filters out any with falsey values, and uses the passed in `selector` element to update another element with this count
+  - `sumKeyValues`: sums the number values of keys that match the current key and uses the passed in `selector` element to update another element with this sum
+- FIX BUG: deleting all the content from a user's `user-app-data` json file won't stall the app. The data will just default to an empty object.
+
+
+
 # 2.1.2 (November 18, 2020)
 
 - Remake has support for custom domains! 🎉
