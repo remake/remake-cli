@@ -1,3 +1,9 @@
+# 2.3.1 (November 23, 2020)
+
+- Added support for generating two more starter apps:
+  - Resume/CV builder
+  - Reading list sharer app
+
 # 2.2.0 (November 20, 2020)
 
 - **BIG CHANGE:** Generating unique ids for every object is now turned off by default. These ids were confusing and unhelpful to a lot of people. Remake will always support unique ids, however. Until we come up with a more elegant solution, you can turn them back on by editing your `.remake` file and adding the line: `"generateUniqueIds": true`
