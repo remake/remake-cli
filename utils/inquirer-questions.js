@@ -30,12 +30,16 @@ const questions = {
     type: "list",
     choices: [
       {
+        name: "Default starter",
+        value: "https://github.com/remake/default-starter",
+      },
+      {
         name: "Kanban starter",
         value: "https://github.com/remake/kanban-starter",
       },
       {
-        name: "Default starter",
-        value: "https://github.com/remake/default-starter",
+        name: "Reading list app starter",
+        value: "https://github.com/remake/reading-list-app-starter",
       },
     ],
   },
