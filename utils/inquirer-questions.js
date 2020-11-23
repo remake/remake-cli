@@ -41,6 +41,10 @@ const questions = {
         name: "Reading list app starter",
         value: "https://github.com/remake/reading-list-app-starter",
       },
+      {
+        name: "Resume/CV builder starter",
+        value: "https://github.com/remake/resume-builder-starter",
+      },
     ],
   },
   NEW_USER: {
