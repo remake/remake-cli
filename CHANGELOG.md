@@ -1,3 +1,7 @@
+# 2.3.2 (November 28, 2020)
+
+- Fixed bug on Windows causing the `remake create` command to not work ([See the fix](https://stackoverflow.com/a/16951241/87432))
+
 # 2.3.1 (November 23, 2020)
 
 - Added support for generating two more starter apps:
