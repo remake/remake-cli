@@ -330,7 +330,7 @@ function cleanPackageJson(projectName) {
 
 function initializeGitRepo() {
   shell.exec("git init --quiet");
-  shell.exec("git add . && git commit -m 'Initial commit' --quiet");
+  shell.exec(`git add . && git commit -m "Initial commit" --quiet`);
 }
 
 async function removeDotGit(projectName) {
