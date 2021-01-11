@@ -2,6 +2,10 @@
 
 This is the Remake CLI, which you should use to generate a Remake application. 
 
+The main framework is here: [Remake Framework](https://github.com/remake/remake-framework/).
+
+And you can find the available starter project repositories here: https://github.com/remake
+
 ## How to generate a Remake application
 
 **1. Install [Node.js (12.16+)](https://nodejs.org/)**
