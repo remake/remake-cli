@@ -188,6 +188,33 @@ const updateFramework = async () => {
     remakeFrameworkPathInApplicationDirectory
   );
 
+  // 5. EXTEND APP'S PACKAGE.JSON WITH FRAMEWORK'S PACKAGE.JSON
+  try {
+    let packageJsonFromApp = JSON.parse(
+      fs.readFileSync(path.join(cwd, "package.json"))
+    );
+    let packageJsonFromFramework = JSON.parse(
+      fs.readFileSync(path.join(cwd, "remake-framework/package.json"))
+    );
+    Object.assign(
+      packageJsonFromApp.dependencies,
+      packageJsonFromFramework.dependencies
+    );
+    Object.assign(
+      packageJsonFromApp.devDependencies,
+      packageJsonFromFramework.devDependencies
+    );
+    fs.writeFileSync(
+      path.join(cwd, "package.json"),
+      JSON.stringify(packageJsonFromApp, null, 2)
+    );
+  } catch (packageJsonError) {
+    spinner.fail(
+      "Error with package.json: Couldn't copy dependencies from framework to app's package.json."
+    );
+    return;
+  }
+
   rimrafError = await rimraf(path.join(cwd, "remake-framework"));
 
   if (rimrafError) {
