@@ -225,6 +225,8 @@ const updateFramework = async () => {
   }
   spinner.succeed();
 
+  installNpmPackages();
+
   log(chalk.greenBright("Framework successfully updated."));
 };
 
