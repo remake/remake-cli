@@ -1,9 +1,18 @@
-# 2.4.4
+# 2.4.6
+
+- If the current port is in use, make the Remake server choose a new one at random
+- Add Remake's first 3 tests!
+  - Make it so Remake's client-side code can run inside Node.js
+- Expand the element properties (e.g. `autofocus`, `contentEditable`) that can be gotten and set from an element using Remake
+
+
+# 2.4.5
 
 - Provide a `{{cacheBustString}}` variable so CSS and JS can be freed from the browser cache
   - To read more about cache busting: https://css-tricks.com/strategies-for-cache-busting-css/
 - Allow `Remake.init()` to be called more than once on a page
   - Useful for the Remake client-side demo: https://codepen.io/panphora/pen/rNMVYZz
+- Pass `triggerEditOnElem` to `_defaultAddItemCallback` when it's overwritten, so user can trigger the edit popover when a new item has been added to the page
 - Fixed bug: Not able to import `lodash-es` or `deepdash-es`
 
 # 2.4.1
