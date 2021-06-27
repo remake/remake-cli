@@ -58,7 +58,11 @@ const registerUser = async () => {
         remakeCliConfig.set("user.authToken", res.data.token);
         spinner.succeed("Created your account and logged you in.");
       } catch (err) {
-        spinner.fail("Could not create your account. Please try again.");
+        if (err.response.data && err.response.data.message) {
+          spinner.fail(err.response.data.message);
+        } else {
+          spinner.fail("Could not create your account. Please try again.");
+        }
         process.exit();
       }
     }
