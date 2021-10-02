@@ -1,25 +1,38 @@
-# 2.4.6
+# 2.5.7 (October 2, 2021)
+
+- Update to Remake's CLI: when updating the framework, also update package.json (fields: "ava", "scripts", "nodemonConfig", "husky", "dependencies", "devDependencies"
+- live reload with live.js (much better than the old way)
+  - add live.js (live reload) script to Remake
+  - prevent logging requests from live.js
+  - remove old, slow auto-reload code
+  - prevent nodemon from reload the server on html/css changes
+  - make nodemon ignore entire app/ directory
+
+# 2.4.7 (June 26, 2021)
+
+- Update to Remake's CLI: show error for registerUser client-side if there is one
+
+# 2.4.6 (June 10, 2021)
 
 - If the current port is in use, make the Remake server choose a new one at random
 - Add Remake's first 3 tests!
   - Make it so Remake's client-side code can run inside Node.js
 - Expand the element properties (e.g. `autofocus`, `contentEditable`) that can be gotten and set from an element using Remake
 
+# 2.4.5 (June 10, 2021)
 
-# 2.4.5
-
-- Provide a `{{cacheBustString}}` variable so CSS and JS can be freed from the browser cache
+- Provide a `{{cacheBustString}}` variable so dev can easily break CSS and JS from browser cache
   - To read more about cache busting: https://css-tricks.com/strategies-for-cache-busting-css/
 - Allow `Remake.init()` to be called more than once on a page
   - Useful for the Remake client-side demo: https://codepen.io/panphora/pen/rNMVYZz
 - Pass `triggerEditOnElem` to `_defaultAddItemCallback` when it's overwritten, so user can trigger the edit popover when a new item has been added to the page
 - Fixed bug: Not able to import `lodash-es` or `deepdash-es`
 
-# 2.4.1
+# 2.4.1 (May 7, 2021)
 
 - The Remake CLI will now install missing npm packages after the user updates the framework using `remake update-framework`
 
-# 2.4.0
+# 2.4.0 (May 4, 2021)
 
 - Generate unique ids for new items automatically 🧙‍♂️
 - Added an attribute argument `:edit` for the `new:` attribute (e.g. use like this: `new:example-item:edit`). It automatically triggers an edit popover when a new item is created!
