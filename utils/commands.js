@@ -8,6 +8,7 @@ const rimraf = promisify(require("rimraf"));
 const ora = require("ora");
 const process = require("process");
 const replace = require("replace");
+const deepExtend = require("deep-extend");
 
 const {
   readDotRemake,
@@ -196,14 +197,17 @@ const updateFramework = async () => {
     let packageJsonFromFramework = JSON.parse(
       fs.readFileSync(path.join(cwd, "remake-framework/package.json"))
     );
-    Object.assign(
-      packageJsonFromApp.dependencies,
-      packageJsonFromFramework.dependencies
-    );
-    Object.assign(
-      packageJsonFromApp.devDependencies,
-      packageJsonFromFramework.devDependencies
-    );
+    let keysToDeepExtend = [
+      "ava",
+      "scripts",
+      "nodemonConfig",
+      "husky",
+      "dependencies",
+      "devDependencies",
+    ];
+    keysToDeepExtend.forEach((key) => {
+      deepExtend(packageJsonFromApp[key], packageJsonFromFramework[key]);
+    });
     fs.writeFileSync(
       path.join(cwd, "package.json"),
       JSON.stringify(packageJsonFromApp, null, 2)
