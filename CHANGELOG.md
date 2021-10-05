@@ -1,3 +1,12 @@
+# 2.5.8 (October 4, 2021)
+
+- Made [main README](https://github.com/remake/remake-framework/blob/master/README.md) simpler & easier to read
+- Update all NPM packages to secure versions after running `npm audit` (for both the CLI and the framework)
+- Bug fixes
+  - Fixed unresolved passport callbacks
+  - Prevent live.js from reloading the page when new data is saved
+  - Not setting NODE_ENV to "development" mode by default
+
 # 2.5.7 (October 2, 2021)
 
 - Update to Remake's CLI: when updating the framework, also update package.json (fields: "ava", "scripts", "nodemonConfig", "husky", "dependencies", "devDependencies"
