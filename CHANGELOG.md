@@ -1,3 +1,12 @@
+# 2.6.0 (December 30, 2022)
+
+- Allowing multiple Remake apps to run on localhost at the same time
+- FIXED: randomly being logged out from a Remake app because session not destroyed
+- Allow passing in sortableOptions when initializing Remake
+- Update `esbuild` so it works on m1 macs 
+- FIXED: Don't save twice. Removed save when syncing data into page, since setting keys saves anyways
+
+
 # 2.5.8 (October 4, 2021)
 
 - Made [main README](https://github.com/remake/remake-framework/blob/master/README.md) simpler & easier to read
