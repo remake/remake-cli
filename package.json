@@ -31,7 +31,7 @@
     "form-data": "^2.5.1",
     "inquirer": "^7.0.0",
     "is-valid-domain": "0.0.17",
-    "nanoid": "^2.0.3",
+    "nanoid": "^3.1.31",
     "ncp": "^2.0.0",
     "ora": "^4.0.2",
     "replace": "^1.2.0",
