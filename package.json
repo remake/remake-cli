@@ -1,6 +1,6 @@
 {
   "name": "remake",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "Generate a full-stack Remake web app",
   "license": "MIT",
   "homepage": "https://www.remaketheweb.com",
@@ -24,22 +24,22 @@
     "archiver": "^3.1.1",
     "axios": "^0.22.0",
     "chalk": "^2.4.2",
-    "commander": "^3.0.0",
-    "configstore": "^5.0.0",
+    "commander": "^3.0.2",
+    "configstore": "^5.0.1",
     "deep-extend": "^0.6.0",
-    "es6-promisify": "^6.0.2",
+    "es6-promisify": "^6.1.1",
     "form-data": "^2.5.1",
-    "inquirer": "^7.0.0",
+    "inquirer": "^7.3.3",
     "is-valid-domain": "0.0.17",
-    "nanoid": "^2.0.3",
+    "nanoid": "^2.1.11",
     "ncp": "^2.0.0",
-    "ora": "^4.0.2",
-    "replace": "^1.2.0",
-    "rimraf": "^3.0.0",
-    "shelljs": "^0.8.4"
+    "ora": "^4.1.1",
+    "replace": "^1.2.2",
+    "rimraf": "^3.0.2",
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
-    "husky": "^7.0.0",
+    "husky": "^7.0.4",
     "prettier": "2.1.2"
   },
   "scripts": {
