@@ -112,7 +112,7 @@ const createDeploymentZip = (projectName) => {
     const cwd = process.cwd();
     const output = fs.createWriteStream(
       path.join(cwd, `deployment-${projectName}.zip`),
-      { encoding: "base64" }
+      { encoding: "base64" },
     );
     const archive = archiver("zip", { zlib: { level: 9 } });
 
