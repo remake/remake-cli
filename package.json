@@ -21,29 +21,30 @@
     "remake": "bin/remake"
   },
   "dependencies": {
-    "archiver": "^3.1.1",
-    "axios": "^0.22.0",
-    "chalk": "^2.4.2",
-    "commander": "^3.0.2",
-    "configstore": "^5.0.1",
+    "archiver": "^6.0.1",
+    "axios": "^1.5.1",
+    "chalk": "^5.3.0",
+    "commander": "^11.1.0",
+    "configstore": "^6.0.0",
     "deep-extend": "^0.6.0",
-    "es6-promisify": "^6.1.1",
-    "form-data": "^2.5.1",
-    "inquirer": "^7.3.3",
-    "is-valid-domain": "0.0.17",
-    "nanoid": "^2.1.11",
+    "es6-promisify": "^7.0.0",
+    "form-data": "^4.0.0",
+    "inquirer": "^9.2.11",
+    "is-valid-domain": "0.1.6",
+    "nanoid": "^5.0.2",
     "ncp": "^2.0.0",
-    "ora": "^4.1.1",
+    "ora": "^7.0.1",
     "replace": "^1.2.2",
-    "rimraf": "^3.0.2",
+    "rimraf": "^5.0.5",
     "shelljs": "^0.8.5"
   },
   "devDependencies": {
-    "husky": "^7.0.4",
-    "prettier": "2.1.2"
+    "husky": "^8.0.3",
+    "prettier": "3.0.3"
   },
   "scripts": {
     "prepare": "husky install",
-    "prettier-check": "prettier --check ."
+    "prettier-check": "prettier --check .",
+    "prettier-fix": "prettier --write ."
   }
 }
