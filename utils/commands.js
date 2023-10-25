@@ -92,16 +92,16 @@ const deploy = async () => {
   if (!dotRemakeObj.projectName) {
     const subdomainAnswer = await inquirer.prompt([questions.INPUT_SUBDOMAIN]);
     spinner = ora(
-      `Checking if ${subdomainAnswer.subdomain}.remakeapps.com is available`
+      `Checking if ${subdomainAnswer.subdomain}.remakeapps.com is available`,
     ).start();
 
     // check if name is available
     const isSubdomainAvailable = await checkSubdomain(
-      subdomainAnswer.subdomain
+      subdomainAnswer.subdomain,
     );
     if (!isSubdomainAvailable) {
       spinner.fail(
-        `${subdomainAnswer.subdomain}.remakeapps.com is not available`
+        `${subdomainAnswer.subdomain}.remakeapps.com is not available`,
       );
       process.exit();
     }
@@ -118,14 +118,14 @@ const deploy = async () => {
 
     spinner = ora(`Registering ${subdomainAnswer.subdomain}`).start();
     const subdomainRegistered = await registerSubdomain(
-      subdomainAnswer.subdomain
+      subdomainAnswer.subdomain,
     );
     if (!subdomainRegistered.success) {
       spinner.fail(subdomainRegistered.message);
       process.exit();
     }
     spinner.succeed(
-      `${subdomainAnswer.subdomain}.remakeapps.com belongs to your app.`
+      `${subdomainAnswer.subdomain}.remakeapps.com belongs to your app.`,
     );
 
     spinner = ora(`Writing .remake file.`).start();
@@ -144,8 +144,8 @@ const deploy = async () => {
     removeDeploymentZip(dotRemakeObj.projectName);
     log(
       chalk.greenBright(
-        `The app is accessible at the URL: https://${dotRemakeObj.projectName}.remakeapps.com`
-      )
+        `The app is accessible at the URL: https://${dotRemakeObj.projectName}.remakeapps.com`,
+      ),
     );
     process.exit();
   } catch (err) {
@@ -180,24 +180,25 @@ const updateFramework = async () => {
   spinner = ora("Copying latest framework into _remake directory.").start();
   shell.exec(
     "git clone --depth 1 https://github.com/remake/remake-framework.git",
-    { silent: true }
+    { silent: true },
   );
 
   // 4. MOVE THE _remake DIRECTORY TO WHERE THE OLD _remake DIRECTORY WAS
   shell.mv(
     path.join(cwd, "remake-framework/_remake"),
-    remakeFrameworkPathInApplicationDirectory
+    remakeFrameworkPathInApplicationDirectory,
   );
 
   // 5. EXTEND APP'S PACKAGE.JSON WITH FRAMEWORK'S PACKAGE.JSON
   try {
     let packageJsonFromApp = JSON.parse(
-      fs.readFileSync(path.join(cwd, "package.json"))
+      fs.readFileSync(path.join(cwd, "package.json")),
     );
     let packageJsonFromFramework = JSON.parse(
-      fs.readFileSync(path.join(cwd, "remake-framework/package.json"))
+      fs.readFileSync(path.join(cwd, "remake-framework/package.json")),
     );
     let keysToDeepExtend = [
+      "engines",
       "ava",
       "scripts",
       "nodemonConfig",
@@ -205,25 +206,61 @@ const updateFramework = async () => {
       "dependencies",
       "devDependencies",
     ];
+
+    let insertMapping = new Map([
+      ["engines", "main"],
+      ["ava", "engines"],
+      ["scripts", "ava"],
+      ["nodemonConfig", "scripts"],
+      ["husky", "alias"],
+      ["dependencies", "husky"],
+      ["devDependencies", "devDependencies"],
+    ]);
+
+    spinner.succeed();
+
+    insertMapping.forEach((insertAt, key, _) => {
+      if (!packageJsonFromApp.hasOwnProperty(key)) {
+        spinner = ora("Migrating package.json key '" + key + "'.").start();
+        let newPackageJsonFromApp = {};
+        for (var item in packageJsonFromApp) {
+          newPackageJsonFromApp[item] = packageJsonFromApp[item];
+          if (item === insertAt) {
+            newPackageJsonFromApp[key] = {};
+          }
+        }
+        packageJsonFromApp = newPackageJsonFromApp;
+        spinner.succeed();
+      }
+    });
+
+    spinner = ora("Updating package.json.").start();
+
     keysToDeepExtend.forEach((key) => {
       deepExtend(packageJsonFromApp[key], packageJsonFromFramework[key]);
     });
     fs.writeFileSync(
       path.join(cwd, "package.json"),
-      JSON.stringify(packageJsonFromApp, null, 2)
+      JSON.stringify(packageJsonFromApp, null, 2),
     );
   } catch (packageJsonError) {
     spinner.fail(
-      "Error with package.json: Couldn't copy dependencies from framework to app's package.json."
+      "Error with package.json: Couldn't copy dependencies from framework to app's package.json.\n" +
+        packageJsonError +
+        "\n" +
+        packageJsonError.stack,
     );
     return;
   }
+
+  spinner.succeed();
+  spinner = ora("Removing temporary files.").start();
 
   rimrafError = await rimraf(path.join(cwd, "remake-framework"));
 
   if (rimrafError) {
     spinner.fail(
-      "Error cleaning up: Couldn't remove the ./remake-framework directory."
+      "Error cleaning up: Couldn't remove the ./remake-framework directory.",
     );
     return;
   }
@@ -261,8 +298,8 @@ const linkDomain = async () => {
   if (!dotRemakeObj.projectName) {
     log(
       chalk.bgRed(
-        "Please deploy your application first by running: remake deploy"
-      )
+        "Please deploy your application first by running: remake deploy",
+      ),
     );
     process.exit();
   }
@@ -277,8 +314,8 @@ const linkDomain = async () => {
   if (domain.split(".").length > 2) {
     log(
       chalk.yellow(
-        "Remake doesn't support sub-domains at the moment (e.g. app.myawesomeapp.com)"
-      )
+        "Remake doesn't support sub-domains at the moment (e.g. app.myawesomeapp.com)",
+      ),
     );
     log(chalk.yellow("You must use a root domain (e.g. myawesomeapp.com)"));
     process.exit();
@@ -372,7 +409,9 @@ async function removeDotGit(projectName) {
   const rimrafError = await rimraf(path.join(projectPath, ".git"));
   if (rimrafError) {
     spinner.fail(
-      chalk.bgRed("Error: Couldn't remove old .git directory from new project.")
+      chalk.bgRed(
+        "Error: Couldn't remove old .git directory from new project.",
+      ),
     );
     process.exit();
   }
@@ -383,7 +422,7 @@ function cloneRemakeFramework(projectName) {
   spinner = ora("Creating new project.").start();
   shell.exec(
     `git clone --branch master https://github.com/remake/remake-framework.git ${projectName}`,
-    { silent: true }
+    { silent: true },
   );
   spinner.succeed();
 }
