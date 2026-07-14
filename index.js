@@ -7,6 +7,7 @@ const {
   updateFramework,
   create,
   linkDomain,
+  uploadUserData,
 } = require("./utils/commands");
 const { version, name } = require("./package.json");
 
@@ -35,6 +36,11 @@ program
   .command("deploy")
   .description("Deploy your Remake app on the Remake server")
   .action(() => deploy());
+
+program
+  .command("upload-user-data")
+  .description("Upload local user data to your production Remake app")
+  .action(() => uploadUserData());
 
 program
   .command("backup")

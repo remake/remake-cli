@@ -154,6 +154,79 @@ const deploy = async () => {
   }
 };
 
+const uploadUserData = async () => {
+  let dotRemakeObj = readDotRemake();
+  if (!dotRemakeObj) {
+    log(chalk.bgRed("You are not in the root directory of a remake project."));
+    process.exit();
+  }
+  await registerUser();
+
+  if (!dotRemakeObj.projectName) {
+    const subdomainAnswer = await inquirer.prompt([questions.INPUT_SUBDOMAIN]);
+    spinner = ora(
+      `Checking if ${subdomainAnswer.subdomain}.remakeapps.com is available`
+    ).start();
+
+    // check if name is available
+    const isSubdomainAvailable = await checkSubdomain(
+      subdomainAnswer.subdomain
+    );
+    if (!isSubdomainAvailable) {
+      spinner.fail(
+        `${subdomainAnswer.subdomain}.remakeapps.com is not available`
+      );
+      process.exit();
+    }
+    spinner.succeed(`${subdomainAnswer.subdomain}.remakeapps.com is available`);
+
+    // prompt yes to confirm
+    const confirmSubdomainAnswer = await inquirer.prompt([
+      questions.CONFIRM_SUBDOMAIN,
+    ]);
+    if (confirmSubdomainAnswer.deployOk === false) {
+      log(chalk.bgRed("Stopped deployment."));
+      process.exit();
+    }
+
+    spinner = ora(`Registering ${subdomainAnswer.subdomain}`).start();
+    const subdomainRegistered = await registerSubdomain(
+      subdomainAnswer.subdomain
+    );
+    if (!subdomainRegistered.success) {
+      spinner.fail(subdomainRegistered.message);
+      process.exit();
+    }
+    spinner.succeed(
+      `${subdomainAnswer.subdomain}.remakeapps.com belongs to your app.`
+    );
+
+    spinner = ora(`Writing .remake file.`).start();
+    dotRemakeObj.projectName = subdomainAnswer.subdomain;
+    const writtenDotRemake = writeDotRemake(dotRemakeObj);
+    if (!writtenDotRemake) {
+      spinner.fail("Could not write subdomain to .remake");
+      process.exit();
+    }
+    spinner.succeed();
+  }
+
+  try {
+    await createDeploymentZip(dotRemakeObj.projectName);
+    await pushZipToServer(dotRemakeObj.projectName);
+    removeDeploymentZip(dotRemakeObj.projectName);
+    log(
+      chalk.greenBright(
+        `The app is accessible at the URL: https://${dotRemakeObj.projectName}.remakeapps.com`
+      )
+    );
+    process.exit();
+  } catch (err) {
+    log(chalk.bgRed(err.message));
+    process.exit();
+  }
+};
+
 const updateFramework = async () => {
   let rimrafError = null;
   const cwd = process.cwd();
@@ -302,6 +375,7 @@ module.exports = {
   updateFramework,
   backup,
   linkDomain,
+  uploadUserData,
 };
 
 function createDotRemakeFile(projectName, options) {
