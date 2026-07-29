@@ -9,7 +9,8 @@ const validateSubdomain = (subdomain) => {
 
 const validateEmail = (email) => {
   // regex source: https://stackoverflow.com/a/46181
-  const emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
+  const emailRegex =
+    /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
   if (!emailRegex.test(email)) {
     return "Please provide a valid email address.";
   } else return true;

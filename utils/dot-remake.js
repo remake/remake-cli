@@ -9,7 +9,7 @@ const log = console.log;
 function getUniqueId() {
   return nanoidGenerate(
     "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    30
+    30,
   );
 }
 

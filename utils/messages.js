@@ -28,7 +28,7 @@ function showDnsMessage(domain) {
   log(`CNAME   www    @`);
 
   log(
-    `Your application will be available at https://${domain} and https://www.${domain}`
+    `Your application will be available at https://${domain} and https://www.${domain}`,
   );
   log(`DNS propagation sometimes takes 4 hours or more.`);
 }

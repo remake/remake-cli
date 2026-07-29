@@ -44,6 +44,7 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "prettier-check": "prettier --check ."
+    "prettier-check": "prettier --check .",
+    "prettier-fix": "prettier --write ."
   }
 }
